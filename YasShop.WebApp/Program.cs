@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using YasShop.Application.Contracts.Mappings;
 using YasShop.Infrastructure.Core.Configuration;
 using YasShop.Infrastructure.Logger.SeriLoger;
 using YasShop.Infrastructure.Seed.Base.Main;
@@ -39,6 +40,7 @@ WebApplication app = null;
 
     builder.Services.AddCustomIdentity();
     builder.Services.AddJwtAuthentication();
+    //builder.Services.AddAutoMapper(typeof(UserProfile));
 }
 #endregion ConfigureServices
 

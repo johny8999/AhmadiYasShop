@@ -4,6 +4,8 @@ using Framework.Application.Services.Localizer;
 using Framework.Common.ExMethods;
 using Framework.Const;
 using Framework.Infrastructure;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Net;
@@ -38,6 +40,10 @@ namespace YasShop.Application.Users
             _EmailSender = emailSender;
         }
 
+        public async Task<tblUsers> FindByIdAsync(string userId)
+        {
+            return await _UserRepository.FindByIdAsync(userId);
+        }
         public async Task<OperationResult> RegisterByEmailPasswordAsync(InpRegisterByEmailPassword Input)
         {
 
@@ -360,7 +366,7 @@ namespace YasShop.Application.Users
                     return new OperationResult().Failed(_Localizer["your Account is disable"]);
 
                 var _Result = await _UserRepository.PasswordSignInAsync(qUser, input.Password, false, true);
-                
+
                 if (_Result.Succeeded)
                 {
                     return new OperationResult().Successed(qUser.Id.ToString());
@@ -384,6 +390,40 @@ namespace YasShop.Application.Users
             {
                 _Logger.Error(ex);
                 return new OperationResult().Failed("Error500");
+            }
+        }
+
+        public async Task<OutIGetAllDetailsForUser> GetAllDetailsForUserAsync(InpGetAllDetailsForUser input)
+        {
+            try
+            {
+                #region Validation
+                input.CheckModelState(_ServiceProvider);
+                #endregion Validation
+
+                return await _UserRepository.GetNoTraking.Where(a => a.Id == input.UserId.ToGuid()).Select(a => new OutIGetAllDetailsForUser()
+                {
+                    Id = a.Id.ToString(),
+                    UserName = a.UserName,
+                    Email = a.Email,
+                    PhoneNumber = a.PhoneNumber,
+                    FullName = a.FullName,
+                    AccessLevelId = a.AccessLevelId.ToString(),
+                    Date = a.Date,
+                    IsActive = a.IsActive,
+                    AccessLevelTitle = a.tblAccessLevel.Name
+
+                }).SingleOrDefaultAsync();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
             }
         }
     }
