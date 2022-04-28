@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.csproj" />
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PresentationDTO\ViewModels\" />
+  </ItemGroup>
+
+</Project>

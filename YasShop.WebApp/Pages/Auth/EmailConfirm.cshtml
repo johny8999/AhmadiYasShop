@@ -1,0 +1,30 @@
+﻿@page "/{culture}/Auth/EmailConfirm"
+@model YasShop.WebApp.Pages.Auth.EmailConfirmModel
+@{
+    ViewData["Title"] = Localizer["Register"];
+    Layout = "~/Pages/Shared/_MainLayout.cshtml";
+}
+<div class="main-container container">
+    <ul class="breadcrumb">
+        <li><a href="/"><i class="fa fa-home"></i></a></li>
+        <li><a href="/@CultureInfo.CurrentCulture.Parent.Name/Auth/Register">@ViewData["Title"]</a></li>
+    </ul>
+    @Model.IsSuccess
+    <div class="row">
+        <div id="content" class="col-sm-12">
+            @if (Model.IsSuccess)
+            {
+                <div class="alert-success">
+                    @Localizer["Your Email has been accepted and you can log in with botton link",
+                $"{CultureInfo.CurrentCulture.Parent.Name}/Auth/Login"];
+                </div>
+            }
+            else
+            {
+                <div class="alert-danger">
+                    @Localizer["Your Email has not been accepted"]
+                </div>
+            }
+        </div>
+    </div>
+</div>

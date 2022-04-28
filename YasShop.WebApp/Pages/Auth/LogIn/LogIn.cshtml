@@ -1,0 +1,56 @@
+﻿@page "/{culture}/Auth/Login"
+@model YasShop.WebApp.Pages.Auth.LogIn.LogInModel
+@{
+    Layout="~/Pages/Shared/_MainLayout.cshtml";
+}
+
+	<div class="main-container container">
+		<ul class="breadcrumb">
+			<li><a href="login.html#"><i class="fa fa-home"></i></a></li>
+			<li><a href="login.html#">Account</a></li>
+			<li><a href="login.html#">Login</a></li>
+		</ul>
+		
+		<div class="row">
+			<div id="content" class="col-sm-12">
+				<div class="page-login">
+				
+					<div class="account-border">
+						<div class="row">
+							<div class="col-sm-6 new-customer">
+								<div class="well">
+									<h2><i class="fa fa-file-o" aria-hidden="true"></i> New Customer</h2>
+									<p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
+								</div>
+								<div class="bottom-form">
+									<a href="login.html#" class="btn btn-default pull-right">Continue</a>
+								</div>
+							</div>
+							
+							<form id="FrmLogIn" >
+								<div class="col-sm-6 customer-login">
+									<div class="well">
+										<h2><i class="fa fa-file-text-o" aria-hidden="true"></i> Returning Customer</h2>
+										<p><strong>I am a returning customer</strong></p>
+										<div class="form-group">
+											<label class="control-label " asp-for="input.Email"></label>
+											<input asp-for="input.Email" class="form-control" />
+										</div>
+										<div class="form-group">
+											<label class="control-label " asp-for=input.Password></label>
+											<input  asp-for="input.Password" class="form-control" />
+										</div>
+									</div>
+									<div class="bottom-form">
+										<a href="login.html#" class="forgot">Forgotten Password</a>
+										<button type="button" onclick="SendForm('@CultureInfo.CurrentCulture.Parent.Name/Auth/Login','FrmLogIn')" class="btn btn-default pull-right">@Localizer["LogIn"]</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>

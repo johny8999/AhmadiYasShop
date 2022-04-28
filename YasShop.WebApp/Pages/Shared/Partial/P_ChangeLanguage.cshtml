@@ -1,0 +1,48 @@
+﻿@inject YasShop.Application.Languages.ILanguagesApplication _LanguagesApplication
+
+@{
+    var qLang = await _LanguagesApplication.GetAllLanguageSiteLangAsync();
+}
+
+<div class="form-group languages-block ">
+    <form action="index.html" method="post" enctype="multipart/form-data" id="bt-language">
+        <a class="btn btn-xs dropdown-toggle" data-toggle="dropdown">
+            <img src="/main/image/demo/flags/gb.png" alt="English" title="English">
+            <span class="hidden-xs">English</span>
+            <span class="fa fa-angle-down"></span>
+        </a>
+        <ul class="dropdown-menu">
+            @foreach (var item in qLang)
+            {
+                <li>
+                    <a href="@SetLang(item.Abbr)">
+                        @*<img class="image_flag" src="@item.FlagUrl" alt="@item.NativeName" title="@item.NativeName" />*@
+                        @item.NativeName
+                    </a>
+                </li>
+            }
+        </ul>
+    </form>
+</div>
+
+@functions{
+    //Set lang
+    string SetLang(string Abbr)
+    {
+        var _Request = Context.Request;
+
+        //Get URl
+        string Host = _Request.Scheme + "://" + _Request.Host;//Https://google.com
+        string Path = _Request.Path;// /fa/...
+        string Parameters = _Request.QueryString.HasValue ? _Request.QueryString.Value : "";
+
+        //TrimStart
+        //TrimEnd
+        var SplitPath = Path.Trim('/').Split("/").ToList();
+        SplitPath.RemoveAt(0);
+
+        Path = "/" + Abbr + "/" + string.Join("/", SplitPath);
+
+        return Host + Path + Parameters;
+    }
+}

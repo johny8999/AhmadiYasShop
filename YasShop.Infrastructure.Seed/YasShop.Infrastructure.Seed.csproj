@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Demo\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YasShop.Application\YasShop.Application.csproj" />
+    <ProjectReference Include="..\YasShop.Domain\YasShop.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

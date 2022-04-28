@@ -1,0 +1,13 @@
+﻿@{ 
+    if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+    {
+        ViewData["LangDir"] = "rtl";
+    }
+    else
+    {
+        ViewData["LangDir"] = "ltr";
+    }
+
+    ViewData["Culture"] = CultureInfo.CurrentCulture.Parent.Name;
+
+}
