@@ -18,5 +18,7 @@ namespace YasShop.Application.Contracts.PresentationDTO.ViewInputs
         [Display(Name = nameof(Password))]
         [StringLength(100)]
         public string Password { get; set; }
+
+        public bool RememberMe { get; set; }
     }
 }

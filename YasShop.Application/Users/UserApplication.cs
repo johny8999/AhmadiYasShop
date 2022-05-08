@@ -333,8 +333,7 @@ namespace YasShop.Application.Users
                     return new OperationResult().Failed(_Localizer["Username or password is incorect"]);
                 var _Result = await LoginAsync(new InpLogin() { UserId = qUser.Id.ToString(), Password = input.Password });
                 if (_Result.IsSuccess)
-                    //TODO :JWT
-                    return default;
+                    return _Result;
                 else
                     return new OperationResult().Failed(_Result.Message);
             }
@@ -368,9 +367,8 @@ namespace YasShop.Application.Users
                 var _Result = await _UserRepository.PasswordSignInAsync(qUser, input.Password, false, true);
 
                 if (_Result.Succeeded)
-                {
                     return new OperationResult().Successed(qUser.Id.ToString());
-                }
+
                 else
                 {
                     if (_Result.IsLockedOut)

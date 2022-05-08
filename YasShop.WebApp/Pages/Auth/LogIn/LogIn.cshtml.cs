@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using YasShop.Application.Contracts.ApplicationDTO.Users;
 using YasShop.Application.Contracts.PresentationDTO.ViewInputs;
 using YasShop.Application.Users;
+using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
 using YasShop.WebApp.Common.Utilities.MessageBox;
 
 namespace YasShop.WebApp.Pages.Auth.LogIn
@@ -24,7 +25,9 @@ namespace YasShop.WebApp.Pages.Auth.LogIn
         private readonly IMsgBox _MsgBox;
         private readonly IUserApplication _UserApplication;
         private readonly IMapper _Mapper;
-        public LogInModel(ILocalizer localizer, IServiceProvider serviceProvider, ILogger logger, IMsgBox msgBox, IUserApplication userApplication, IMapper mapper)
+        private readonly IJwtBuilder _JwtBuilder;
+        public LogInModel(ILocalizer localizer, IServiceProvider serviceProvider,
+            ILogger logger, IMsgBox msgBox, IUserApplication userApplication, IMapper mapper, IJwtBuilder jwtBuilder)
         {
             _localizer = localizer;
             _ServiceProvider = serviceProvider;
@@ -32,6 +35,7 @@ namespace YasShop.WebApp.Pages.Auth.LogIn
             _MsgBox = msgBox;
             _UserApplication = userApplication;
             _Mapper = mapper;
+            _JwtBuilder = jwtBuilder;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -51,7 +55,11 @@ namespace YasShop.WebApp.Pages.Auth.LogIn
                 var _Result=await _UserApplication.LoginByEmailPasswordAsync(_MappedData);
 
                 if (_Result.IsSuccess)
+                {
+                   var _GeneratedToken= await _JwtBuilder.CreateTokenAsync(_Result.Message);
+                    Response.CreateAuthCookies(_GeneratedToken, input.RememberMe);
                     return _MsgBox.SucssessMsg(_localizer[_Result.Message]);
+                }
                 else
                     return _MsgBox.FailMsg(_localizer[_Result.Message]);
             }

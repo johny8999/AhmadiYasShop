@@ -186,6 +186,9 @@
   <data name="ReguiredStringMsg" xml:space="preserve">
     <value>{0} را وارد کنید</value>
   </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>مرا به خاطر بسپار</value>
+  </data>
   <data name="RetypePassword" xml:space="preserve">
     <value>تکرار کلمه عبور</value>
   </data>
