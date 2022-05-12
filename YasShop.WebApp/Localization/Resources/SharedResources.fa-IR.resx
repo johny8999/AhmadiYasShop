@@ -123,6 +123,9 @@
   <data name="AccessDeniedMsg" xml:space="preserve">
     <value>دسترسی غیر مجاز</value>
   </data>
+  <data name="All Categories" xml:space="preserve">
+    <value>تمام محصولات</value>
+  </data>
   <data name="Call us to free" xml:space="preserve">
     <value>تماس با ما </value>
   </data>
@@ -174,8 +177,14 @@
   <data name="MaxLengthStringMsg" xml:space="preserve">
     <value>{0} نباید بیشتر از {1} باشد</value>
   </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>پروفایل من</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>باشه</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>یا</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>کلمه عبور</value>
@@ -192,6 +201,9 @@
   <data name="RetypePassword" xml:space="preserve">
     <value>تکرار کلمه عبور</value>
   </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>ورورد</value>
+  </data>
   <data name="The user has not been finded" xml:space="preserve">
     <value>کابر مورد نطر پیدا نشده است</value>
   </data>
@@ -203,6 +215,9 @@
   </data>
   <data name="Username or password is incorect" xml:space="preserve">
     <value>ایمیل یا رمز عبور اشتباه است</value>
+  </data>
+  <data name="Welcome to market" xml:space="preserve">
+    <value>به فروشگاه خودتان خوش آمدید</value>
   </data>
   <data name="your Account is disable" xml:space="preserve">
     <value>حساب کاربری شما غیر فعال است</value>
