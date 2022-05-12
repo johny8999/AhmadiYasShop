@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,6 +14,7 @@ using YasShop.Application.Contracts.ApplicationDTO.Users;
 using YasShop.Application.Contracts.PresentationDTO.ViewInputs;
 using YasShop.Application.Users;
 using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
+using YasShop.WebApp.Common.Types;
 using YasShop.WebApp.Common.Utilities.MessageBox;
 
 namespace YasShop.WebApp.Pages.Auth.LogIn
@@ -51,14 +53,14 @@ namespace YasShop.WebApp.Pages.Auth.LogIn
                 input.CheckModelState(_ServiceProvider);
                 #endregion Validation
 
-                var _MappedData =_Mapper.Map<InpLoginByEmailPassword>(input);
-                var _Result=await _UserApplication.LoginByEmailPasswordAsync(_MappedData);
+                var _MappedData = _Mapper.Map<InpLoginByEmailPassword>(input);
+                var _Result = await _UserApplication.LoginByEmailPasswordAsync(_MappedData);
 
                 if (_Result.IsSuccess)
                 {
-                   var _GeneratedToken= await _JwtBuilder.CreateTokenAsync(_Result.Message);
+                    var _GeneratedToken = await _JwtBuilder.CreateTokenAsync(_Result.Message);
                     Response.CreateAuthCookies(_GeneratedToken, input.RememberMe);
-                    return _MsgBox.SucssessMsg(_localizer[_Result.Message]);
+                    return new JsResult($"location.href ='/{CultureInfo.CurrentCulture.Parent.Name}/User/TestAuth'");
                 }
                 else
                     return _MsgBox.FailMsg(_localizer[_Result.Message]);

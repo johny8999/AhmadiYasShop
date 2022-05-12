@@ -11,8 +11,9 @@ namespace YasShop.Infrastructure.EfCore.Repository.Roles
     public class RoleRepository : BaseRepository<tblRoles>, IRoleRepository
     {
         private readonly UserManager<tblUsers> _userManager;
-        public RoleRepository(MainContext context) : base(context)
+        public RoleRepository(MainContext context, UserManager<tblUsers> userManager) : base(context)
         {
+            _userManager = userManager;
         }
         public async Task<IList<string>> GetRolesAsync(tblUsers user)
         {

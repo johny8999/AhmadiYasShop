@@ -28,6 +28,7 @@
                         </div>
 
                         <form id="FrmLogIn">
+                            @Html.AntiForgeryToken()
                             <div class="col-sm-6 customer-login">
                                 <div class="well">
                                     <h2><i class="fa fa-file-text-o" aria-hidden="true"></i> Returning Customer</h2>
@@ -51,7 +52,7 @@
                                 </div>
                                 <div class="bottom-form">
                                     <a href="login.html#" class="forgot">Forgotten Password</a>
-                                    <button type="button" onclick="SendForm('@CultureInfo.CurrentCulture.Parent.Name/Auth/Login','FrmLogIn')" class="btn btn-default pull-right">@Localizer["LogIn"]</button>
+                                    <button type="button" onclick="SendForm('/@CultureInfo.CurrentCulture.Parent.Name/Auth/Login','FrmLogIn')" class="btn btn-default pull-right">@Localizer["LogIn"]</button>
                                 </div>
                             </div>
                         </form>

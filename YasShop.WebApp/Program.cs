@@ -1,4 +1,5 @@
-﻿using Framework.Infrastructure;
+﻿using Framework.Const;
+using Framework.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -62,7 +63,7 @@ WebApplication app = null;
 
     app.UseRouting();
     app.UseCustomLocalization();
-    app.UseJWTAuthentication();
+    app.UseJWTAuthentication(AuthConst.SecretKey,AuthConst.CookieName);
 
     app.UseMiddleware<RedirectToValidLangMiddleware>();
     app.UseEndpoints(endpoints =>

@@ -11,22 +11,26 @@ namespace YasShop.WebApp.Authentication
     public class JwtAuthenticationMiddleware
     {
         private readonly RequestDelegate _next;
-
-        public JwtAuthenticationMiddleware(RequestDelegate next)
+        private readonly string _CookieName;
+        private readonly string _SecretKey;
+        public JwtAuthenticationMiddleware(RequestDelegate next, string cookieName, string secretKey)
         {
             _next = next;
+            _CookieName = cookieName;
+            _SecretKey = secretKey;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
+
             string _EncryptedToken = null;
 
-            for (int i = 1; i <= 10; i++)
-                if (context.Request.Cookies.Any(a => a.Key == AuthConst.CookieName + i))
-                    _EncryptedToken = context.Request.Cookies[AuthConst.CookieName] + i.ToString();
+            for (int i = 0; i <= 10; i++)
+                if (context.Request.Cookies.Any(a => a.Key == _CookieName + i))
+                    _EncryptedToken = context.Request.Cookies[_CookieName + i];
 
             if (_EncryptedToken != null)
-                context.Request.Headers.Add("Authorization", _EncryptedToken.AesDecrypt(AuthConst.SecretKey));
+                context.Request.Headers.Add("Authorization", _EncryptedToken.AesDecrypt(_SecretKey));
 
             await _next(context);
         }

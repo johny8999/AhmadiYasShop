@@ -8,7 +8,7 @@ namespace Framework.Common.ExMethods
 {
     public static class ResponseEx
     {
-        public static HttpContext CreateAuthCookies(this HttpResponse Response, string AuthToken, bool RememberMe)
+        public static void CreateAuthCookies(this HttpResponse Response, string AuthToken, bool RememberMe)
         {
             #region Remove cookies
             {

@@ -40,9 +40,9 @@ namespace YasShop.WebApp.Authentication
         }
 
         //use token
-        public static void UseJWTAuthentication(this IApplicationBuilder app)
+        public static void UseJWTAuthentication(this IApplicationBuilder app,string SecretKey,string CookieName)
         {
-            app.UseMiddleware<JwtAuthenticationMiddleware>();
+            app.UseMiddleware<JwtAuthenticationMiddleware>(CookieName, SecretKey);
             app.UseAuthentication();
             app.UseAuthorization();
         }
