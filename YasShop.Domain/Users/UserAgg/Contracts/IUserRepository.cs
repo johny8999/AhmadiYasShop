@@ -14,6 +14,7 @@ namespace YasShop.Domain.Users.UserAgg.Contracts
         Task<tblUsers> FindByEmailAsync(string email);
         Task<tblUsers> FindByIdAsync(string userId);
         Task<string> GenerateEmailConfirmationTokenAsync(tblUsers user);
+        Task<string> GeneratePasswordResetTokenAsync(tblUsers user);
         Task<IList<string>> GetRolesAsync(tblUsers user);
         Task<SignInResult> PasswordSignInAsync(tblUsers user, string password, bool isPersistent, bool lockoutOnFailure);
         Task<IdentityResult> RemoveFromRolesAsync(tblUsers user, IEnumerable<string> roles);

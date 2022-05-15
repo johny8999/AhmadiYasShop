@@ -11,6 +11,7 @@ namespace YasShop.Application.Users
         Task<OperationResult> ChangeUserRoleByAccessLevelIdAsync(InpChangeUserRoleByAccessLevelId Input);
         Task<OperationResult> EmailConfirmationAsync(InpEmailConfirmation Input);
         Task<tblUsers> FindByIdAsync(string userId);
+        Task<OperationResult> ForgetPasswordAsync(InpForgetPassword Input);
         Task<OutIGetAllDetailsForUser> GetAllDetailsForUserAsync(InpGetAllDetailsForUser input);
         Task<OperationResult> LoginByEmailPasswordAsync(InpLoginByEmailPassword input);
         Task<OperationResult> RegisterByEmailPasswordAsync(InpRegisterByEmailPassword Input);

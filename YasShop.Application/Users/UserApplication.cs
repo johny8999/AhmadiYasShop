@@ -4,7 +4,6 @@ using Framework.Application.Services.Localizer;
 using Framework.Common.ExMethods;
 using Framework.Const;
 using Framework.Infrastructure;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -320,18 +319,18 @@ namespace YasShop.Application.Users
             }
         }
 
-        public async Task<OperationResult> LoginByEmailPasswordAsync(InpLoginByEmailPassword input)
+        public async Task<OperationResult> LoginByEmailPasswordAsync(InpLoginByEmailPassword Input)
         {
             try
             {
                 #region Validation
-                input.CheckModelState(_ServiceProvider);
+                Input.CheckModelState(_ServiceProvider);
                 #endregion Validation
 
-                var qUser = await _UserRepository.FindByEmailAsync(input.Email);
+                var qUser = await _UserRepository.FindByEmailAsync(Input.Email);
                 if (qUser is null)
                     return new OperationResult().Failed(_Localizer["Username or password is incorect"]);
-                var _Result = await LoginAsync(new InpLogin() { UserId = qUser.Id.ToString(), Password = input.Password });
+                var _Result = await LoginAsync(new InpLogin() { UserId = qUser.Id.ToString(), Password = Input.Password });
                 if (_Result.IsSuccess)
                     return _Result;
                 else
@@ -391,15 +390,15 @@ namespace YasShop.Application.Users
             }
         }
 
-        public async Task<OutIGetAllDetailsForUser> GetAllDetailsForUserAsync(InpGetAllDetailsForUser input)
+        public async Task<OutIGetAllDetailsForUser> GetAllDetailsForUserAsync(InpGetAllDetailsForUser Input)
         {
             try
             {
                 #region Validation
-                input.CheckModelState(_ServiceProvider);
+                Input.CheckModelState(_ServiceProvider);
                 #endregion Validation
 
-                return await _UserRepository.GetNoTraking.Where(a => a.Id == input.UserId.ToGuid()).Select(a => new OutIGetAllDetailsForUser()
+                return await _UserRepository.GetNoTraking.Where(a => a.Id == Input.UserId.ToGuid()).Select(a => new OutIGetAllDetailsForUser()
                 {
                     Id = a.Id.ToString(),
                     UserName = a.UserName,
@@ -412,6 +411,69 @@ namespace YasShop.Application.Users
                     AccessLevelTitle = a.tblAccessLevel.Name
 
                 }).SingleOrDefaultAsync();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
+        }
+
+        public async Task<OperationResult> ForgetPasswordAsync(InpForgetPassword Input)
+        {
+            try
+            {
+                #region Validation
+                Input.CheckModelState(_ServiceProvider);
+                #endregion Validation
+
+                #region CheckUser
+                tblUsers qUser = null;
+                {
+                    qUser = await _UserRepository.FindByEmailAsync(Input.Email);
+
+                    if (qUser is null)
+                        return new OperationResult().Failed("Email not found");
+
+                    if (!qUser.IsActive)
+                        return new OperationResult().Failed("Email not found");
+                }
+                #endregion CheckUser
+
+                #region GenerateToken
+                string Token = null;
+                {
+                    Token = await _UserRepository.GeneratePasswordResetTokenAsync(qUser);
+                    Token = Token.AesEncrypt(AuthConst.SecretKey);
+                    Token= WebUtility.UrlEncode(Token);
+                }
+                #endregion GenerateToken
+
+                #region GenerateLink
+                string GenerateLink = null;
+                {
+                    GenerateLink = Input.ForgetPasswordUrl.Replace("[TOKEN]", Token);
+                }
+                #endregion GenerateLink
+
+                #region Generate Email Template
+                string GenerateEmailTemplate = "<a href=[Link]></a>";//TODO : Create email Eemplate table and from database
+                {
+                    GenerateEmailTemplate = GenerateEmailTemplate.Replace("[Link]", Token);
+                }
+                #endregion Generate Email Template
+
+                #region SendEmail
+                {
+                    await _EmailSender.SendAsync(qUser.Email, AuthConst.Issuer + _Localizer["PasswordRecovery"], GenerateEmailTemplate);
+                }
+                #endregion SendEmail
+                return new OperationResult().Successed("Email has been sent and you should click link");
             }
             catch (ArgumentInvalidException ex)
             {

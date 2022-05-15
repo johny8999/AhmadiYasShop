@@ -138,6 +138,9 @@
   <data name="Email Confirmation has been Succssed" xml:space="preserve">
     <value>ایمیل تایید شده است</value>
   </data>
+  <data name="Email has been sent and you should click link" xml:space="preserve">
+    <value>ایمیل با موفقیت ارسال شده است و لطفا روی لینک ارسال شده کلیک کنید</value>
+  </data>
   <data name="EmailConfirm" xml:space="preserve">
     <value>تایید ایمیل</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Error500" xml:space="preserve">
     <value>عملیات با شکست مواجه شد</value>
+  </data>
+  <data name="ForgetPassword" xml:space="preserve">
+    <value>فراموشی رمز عبور</value>
   </data>
   <data name="FullName" xml:space="preserve">
     <value>نام</value>
@@ -189,6 +195,9 @@
   <data name="Password" xml:space="preserve">
     <value>کلمه عبور</value>
   </data>
+  <data name="PasswordRecovery" xml:space="preserve">
+    <value>بازیابی رمز عبور</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>ثبت نام</value>
   </data>
@@ -200,6 +209,9 @@
   </data>
   <data name="RetypePassword" xml:space="preserve">
     <value>تکرار کلمه عبور</value>
+  </data>
+  <data name="SendCode" xml:space="preserve">
+    <value>ارسال کد</value>
   </data>
   <data name="Sign in" xml:space="preserve">
     <value>ورورد</value>
