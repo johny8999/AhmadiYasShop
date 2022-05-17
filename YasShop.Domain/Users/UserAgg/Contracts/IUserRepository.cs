@@ -18,5 +18,6 @@ namespace YasShop.Domain.Users.UserAgg.Contracts
         Task<IList<string>> GetRolesAsync(tblUsers user);
         Task<SignInResult> PasswordSignInAsync(tblUsers user, string password, bool isPersistent, bool lockoutOnFailure);
         Task<IdentityResult> RemoveFromRolesAsync(tblUsers user, IEnumerable<string> roles);
+        Task<IdentityResult> ResetPasswordAsync(tblUsers user, string token, string newPassword);
     }
 }

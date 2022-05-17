@@ -195,6 +195,9 @@
   <data name="Password" xml:space="preserve">
     <value>کلمه عبور</value>
   </data>
+  <data name="Password mismatch" xml:space="preserve">
+    <value>کلمه عبور با تکرار ان یکسان نیست</value>
+  </data>
   <data name="PasswordRecovery" xml:space="preserve">
     <value>بازیابی رمز عبور</value>
   </data>
@@ -242,5 +245,8 @@
   </data>
   <data name="Your Email has not been accepted" xml:space="preserve">
     <value>ایمیل شما تایید نشده است و عملیات تایید ایمیل با شکست مواجه شد</value>
+  </data>
+  <data name="Your password has been changed successly" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -15,5 +15,6 @@ namespace YasShop.Application.Users
         Task<OutIGetAllDetailsForUser> GetAllDetailsForUserAsync(InpGetAllDetailsForUser input);
         Task<OperationResult> LoginByEmailPasswordAsync(InpLoginByEmailPassword input);
         Task<OperationResult> RegisterByEmailPasswordAsync(InpRegisterByEmailPassword Input);
+        Task<OperationResult> ResetPasswordAsync(InpResetPassword Input);
     }
 }

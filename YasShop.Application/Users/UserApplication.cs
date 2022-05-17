@@ -4,6 +4,7 @@ using Framework.Application.Services.Localizer;
 using Framework.Common.ExMethods;
 using Framework.Const;
 using Framework.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -440,8 +441,12 @@ namespace YasShop.Application.Users
                     if (qUser is null)
                         return new OperationResult().Failed("Email not found");
 
+                    //if(!qUser.EmailConfirmed)
+                    //    return new OperationResult().Failed("Email not found");
+
                     if (!qUser.IsActive)
                         return new OperationResult().Failed("Email not found");
+                    
                 }
                 #endregion CheckUser
 
@@ -449,6 +454,7 @@ namespace YasShop.Application.Users
                 string Token = null;
                 {
                     Token = await _UserRepository.GeneratePasswordResetTokenAsync(qUser);
+                    Token = qUser.Id +", "+Token ;
                     Token = Token.AesEncrypt(AuthConst.SecretKey);
                     Token= WebUtility.UrlEncode(Token);
                 }
@@ -462,9 +468,9 @@ namespace YasShop.Application.Users
                 #endregion GenerateLink
 
                 #region Generate Email Template
-                string GenerateEmailTemplate = "<a href=[Link]></a>";//TODO : Create email Eemplate table and from database
+                string GenerateEmailTemplate = "<a href=\"[Link]\">ClickMe</a>";//TODO : Create email Eemplate table and from database
                 {
-                    GenerateEmailTemplate = GenerateEmailTemplate.Replace("[Link]", Token);
+                    GenerateEmailTemplate = GenerateEmailTemplate.Replace("[Link]", GenerateLink);
                 }
                 #endregion Generate Email Template
 
@@ -474,6 +480,54 @@ namespace YasShop.Application.Users
                 }
                 #endregion SendEmail
                 return new OperationResult().Successed("Email has been sent and you should click link");
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
+        }
+
+        public async Task<OperationResult> ResetPasswordAsync(InpResetPassword Input)
+        {
+            try
+            {
+                #region Validation
+                Input.CheckModelState(_ServiceProvider);
+                #endregion Validation
+
+                #region Token decrypte
+                string Token = null;
+                string UserId = null;
+                {
+                    Token = Token.AesDecrypt(AuthConst.SecretKey);
+                    UserId = Token.Split(", ")[0];
+                    Token = Token.Split(", ")[1];
+                }
+                #endregion Token decrypte
+
+                #region Get user
+                tblUsers qUser = null;
+                {
+                    qUser =await _UserRepository.FindByIdAsync(UserId);
+                }
+                #endregion Get user
+
+                #region Reset password
+                {
+                   var _Result= await _UserRepository.ResetPasswordAsync(qUser, Token, Input.Password);
+                    if (_Result.Succeeded)
+                        return new OperationResult().Successed(_Localizer["Your password has been changed successly"]);
+
+                    else
+                        return new OperationResult().Failed(String.Join(',',_Result.Errors.Select(a=>a.Description)));
+                }
+                #endregion Reset password
             }
             catch (ArgumentInvalidException ex)
             {

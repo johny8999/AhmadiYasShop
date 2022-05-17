@@ -66,5 +66,10 @@ namespace YasShop.Infrastructure.EfCore.Repository.Users
         {
             return await _UserManager.GeneratePasswordResetTokenAsync(user);
         }
+
+        public async Task<IdentityResult> ResetPasswordAsync(tblUsers user, string token, string newPassword)
+        {
+            return await _UserManager.ResetPasswordAsync(user, token, newPassword);
+        }
     }
 }
