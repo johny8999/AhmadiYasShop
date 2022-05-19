@@ -505,7 +505,7 @@ namespace YasShop.Application.Users
                 string Token = null;
                 string UserId = null;
                 {
-                    Token = Token.AesDecrypt(AuthConst.SecretKey);
+                    Token = Input.Token.AesDecrypt(AuthConst.SecretKey);
                     UserId = Token.Split(", ")[0];
                     Token = Token.Split(", ")[1];
                 }

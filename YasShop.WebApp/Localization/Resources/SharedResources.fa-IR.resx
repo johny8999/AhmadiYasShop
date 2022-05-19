@@ -247,6 +247,6 @@
     <value>ایمیل شما تایید نشده است و عملیات تایید ایمیل با شکست مواجه شد</value>
   </data>
   <data name="Your password has been changed successly" xml:space="preserve">
-    <value />
+    <value>رمز عبور شما با موفقیت تعقیر کرد</value>
   </data>
 </root>
