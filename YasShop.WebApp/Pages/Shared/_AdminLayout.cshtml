@@ -22,8 +22,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- bootstrap rtl -->
     <link rel="stylesheet" href="/admin/css/bootstrap-rtl.min.css">
     <!-- template rtl version -->
-    <link rel="stylesheet" href="/admin/css/custom-style.css">
 
+    <link rel="stylesheet" href="/lib/KendoUI/css/Theme/Bs-Kendo-Theme.min.css">
+
+    @if (ViewData["LangDir"] == "rtl")
+    {
+          <link rel="stylesheet" href="/lib/KendoUI/css/kendo.rtl.min.css">
+    }
+    else
+    {
+        <link rel="stylesheet" href="/lib/KendoUI/css/kendo.ltr.min.css">
+    }
+
+    <link rel="stylesheet" href="/admin/css/custom-style.css">
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <!-- Kendo -->
+    <script src="/lib/KendoUI/js/jszip.min.js"></script>
+    <script src="/lib/KendoUI/js/kendo.all.min.js"></script>
+    <script src="/lib/KendoUI/js/kendo.aspnetmvc.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -176,7 +192,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
-                                 <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="@CultureInfo.CurrentCulture.Parent.Name/Admin/Index" class="nav-link">
                                     <i class="nav-icon fa fa-dashboard"></i>
                                     <p>
@@ -220,7 +236,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </ul>
                             </li>
 
-                            
+
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->
@@ -254,7 +270,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ./wrapper -->
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <script src="/lib/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->

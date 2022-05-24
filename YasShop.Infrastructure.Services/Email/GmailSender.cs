@@ -72,7 +72,7 @@ namespace YasShop.Infrastructure.Services.Email
                 _MailMessage.BodyEncoding = Encoding.UTF8;
                 _MailMessage.Priority = MailPriority.Normal;
 
-               // send proccess
+                // send proccess
                 SmtpClient smtp = new("smtp.gmail.com", _Port);
                 smtp.EnableSsl = _UseSsl;
                 smtp.Credentials = new NetworkCredential(_UserName, _Password);
@@ -93,7 +93,7 @@ namespace YasShop.Infrastructure.Services.Email
         {
             try
             {
-                string tokan = (string)args.UserState;
+                string tokan = (string)args.UserState ?? "";
                 if (args.Cancelled)
                 {
 
@@ -104,8 +104,8 @@ namespace YasShop.Infrastructure.Services.Email
                 }
                 else
                 {
-                  //success
-                  
+                    //success
+
                 }
             }
             catch (Exception ex)

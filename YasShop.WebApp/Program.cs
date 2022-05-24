@@ -17,7 +17,7 @@ WebApplication app = null;
 
 #region ConfigureServices
 {
-
+   
     if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
     {
         builder.Host.UseSerilog_Console();
@@ -33,7 +33,8 @@ WebApplication app = null;
 
     builder.Services.AddRazorPage()
             .AddCustomViewLocalization()
-            .AddCustomDataAnnotationLocalization(builder.Services);
+            .AddCustomDataAnnotationLocalization(builder.Services)
+            .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()); 
 
     builder.Services.Config();
     builder.Services.AddInject();
@@ -42,6 +43,8 @@ WebApplication app = null;
     builder.Services.AddCustomIdentity();
     builder.Services.AddJwtAuthentication();
     //builder.Services.AddAutoMapper(typeof(UserProfile));
+
+    builder.Services.AddKendo();
 }
 #endregion ConfigureServices
 
