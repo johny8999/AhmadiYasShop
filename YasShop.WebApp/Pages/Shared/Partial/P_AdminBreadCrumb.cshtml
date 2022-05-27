@@ -1,0 +1,18 @@
+﻿@model List<viAdminBreadCrumb>
+@using Framework.Common.ExMethods
+
+
+<ol class="breadcrumb float-sm-left">
+    @foreach (var item in Model)
+    {
+        @if (item is not null)
+        {
+            <li class="breadcrumb-item"><a href="@item.Url">@item.Title</a></li>
+        }
+
+        else
+        {
+            <li class="breadcrumb-item">@item.Title</li>
+        }
+    }
+</ol>

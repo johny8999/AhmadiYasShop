@@ -10,8 +10,4 @@
 
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PresentationDTO\ViewModels\" />
-  </ItemGroup>
-
 </Project>

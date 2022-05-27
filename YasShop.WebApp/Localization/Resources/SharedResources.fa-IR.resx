@@ -120,8 +120,14 @@
   <data name="Abbr" xml:space="preserve">
     <value>مخفف</value>
   </data>
+  <data name="Access level list" xml:space="preserve">
+    <value>دسترسی لیست دسترسی</value>
+  </data>
   <data name="AccessDeniedMsg" xml:space="preserve">
     <value>دسترسی غیر مجاز</value>
+  </data>
+  <data name="Admin Panel" xml:space="preserve">
+    <value>پنل مدیریت</value>
   </data>
   <data name="All Categories" xml:space="preserve">
     <value>تمام محصولات</value>
@@ -167,6 +173,9 @@
   </data>
   <data name="GUIDMsg" xml:space="preserve">
     <value>قالب {0} باید Guid باشد</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>خانه</value>
   </data>
   <data name="IAgree" xml:space="preserve">
     <value>موافقت با قوانین</value>

@@ -1,4 +1,5 @@
 ﻿@page "/{Culture}/Admin/AccessLevel/List"
+
 @model YasShop.WebApp.Pages.Admin.AccessLevels.ListAccessLevelModel
 @{
     Layout = "~/Pages/shared/_AdminLayout.cshtml";
@@ -10,14 +11,16 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">صفحه سریع</h1>
+                    <h1 class="m-0 text-dark">@Localizer["Access level list"]</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-left">
-                        <li class="breadcrumb-item"><a href="#">خانه</a></li>
-                        <li class="breadcrumb-item"><a href="#">پنل مدیریت</a></li>
-                        <li class="breadcrumb-item active">صفحه سریع</li>
-                    </ol>
+                    <partial name="~/Pages/Shared/Partial/P_AdminBreadCrumb.cshtml" model='new List<viAdminBreadCrumb>(){
+                        new viAdminBreadCrumb(){Title=@Localizer["Home"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}"},
+                        new viAdminBreadCrumb(){Title=@Localizer["Admin Panel"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}/Admin/Index"},
+                        new viAdminBreadCrumb(){Title=@Localizer["Access level list"],Url=null},
+                    }' ) />
+
+
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -27,7 +30,19 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-               <!-- Write Code Here-->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="k-lang">
+                                @(Html.Kendo()
+                                      .Grid<vmListAccessLevelModel>()
+                                      .Name("ListAccessLevel")
+                                      
+                                )
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->

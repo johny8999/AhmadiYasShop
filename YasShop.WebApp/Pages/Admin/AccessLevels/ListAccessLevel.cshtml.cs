@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
+using YasShop.Application.Contracts.PresentationDTO.ViewInputs;
+using YasShop.Application.Contracts.PresentationDTO.ViewModels;
 
 namespace YasShop.WebApp.Pages.Admin.AccessLevels
 {
+    [Authorize]
     public class ListAccessLevelModel : PageModel
     {
         public IActionResult OnGet()
@@ -16,6 +20,7 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
             return Page();
         }
 
-        public int MyProperty { get; set; }
+        public viListAccessLevelModel input { get; set; }
+        public vmListAccessLevelModel  Data { get; set; }
     }
 }
