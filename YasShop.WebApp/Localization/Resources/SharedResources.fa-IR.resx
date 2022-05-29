@@ -138,6 +138,9 @@
   <data name="Continue" xml:space="preserve">
     <value>ادامه</value>
   </data>
+  <data name="CountUser" xml:space="preserve">
+    <value>تعداد کاربر</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>ایمیل</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="Error500" xml:space="preserve">
     <value>عملیات با شکست مواجه شد</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>اولین</value>
   </data>
   <data name="ForgetPassword" xml:space="preserve">
     <value>فراموشی رمز عبور</value>
@@ -186,8 +192,14 @@
   <data name="IReadTerm" xml:space="preserve">
     <value>من با &lt;a href="{0}"&gt;قوانین &lt;/a&gt; موافق هستم</value>
   </data>
+  <data name="ItemNotFound" xml:space="preserve">
+    <value>موردی یافت نشد</value>
+  </data>
   <data name="LanguageIsDuplicate" xml:space="preserve">
     <value>زبان وارد شده تکراری است</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>اخرین</value>
   </data>
   <data name="MaxLengthStringMsg" xml:space="preserve">
     <value>{0} نباید بیشتر از {1} باشد</value>
@@ -195,11 +207,17 @@
   <data name="MyAccount" xml:space="preserve">
     <value>پروفایل من</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>بعدی</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>باشه</value>
   </data>
   <data name="or" xml:space="preserve">
     <value>یا</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>صحفه</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>کلمه عبور</value>
@@ -209,6 +227,12 @@
   </data>
   <data name="PasswordRecovery" xml:space="preserve">
     <value>بازیابی رمز عبور</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>قبلی</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>بارگذاری مجدد</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>ثبت نام</value>
@@ -227,6 +251,18 @@
   </data>
   <data name="Sign in" xml:space="preserve">
     <value>ورورد</value>
+  </data>
+  <data name="TelerikItemsPerPage" xml:space="preserve">
+    <value>مورد بر صحفه</value>
+  </data>
+  <data name="TelerikMorePages" xml:space="preserve">
+    <value>صفحات بیشتر</value>
+  </data>
+  <data name="TelerikOf" xml:space="preserve">
+    <value>از {0}</value>
+  </data>
+  <data name="TelerikPageToFrom" xml:space="preserve">
+    <value>{0} تا {1} از {2}</value>
   </data>
   <data name="The user has not been finded" xml:space="preserve">
     <value>کابر مورد نطر پیدا نشده است</value>

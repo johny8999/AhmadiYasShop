@@ -35,9 +35,14 @@
                         <div class="card-body">
                             <div class="k-lang">
                                 @(Html.Kendo()
-                                      .Grid<vmListAccessLevelModel>()
-                                      .Name("ListAccessLevel")
-                                      
+                                .Grid<vmListAccessLevelModel>()
+                                .Name("ListAccessLevel")
+                                .DefaultSettings(Localizer)
+                                .Columns(col=>{
+                                col.Bound(a=>a.Id).Hidden().HtmlAttributes(new{@class="RowId"}).Sortable(false);
+                                col.Bound(a=>a.Name).Sortable(false);
+                                col.Bound(a=>a.CountUser).Sortable(false).Width(150);
+                                })
                                 )
                             </div>
                         </div>
