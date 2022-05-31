@@ -41,15 +41,7 @@ function SendForm(_Url, _FormId, _CallBack = function (res) { }) {
         }
     });
 }
-function Test() {
-    Swal.fire({
-        title: 'Test',
-        html: 'Html',
-        icon: 'info',
-        confirmButtonText: 'OK',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            alert("OK")
-        }
-    });
+
+let ForgeryToken = () => {
+    return kendo.antiForgeryToken()
 }

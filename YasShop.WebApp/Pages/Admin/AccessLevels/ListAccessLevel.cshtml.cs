@@ -1,3 +1,4 @@
+using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,10 +18,16 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
 
         public async Task<IActionResult> OnPostAsync()
         {
+
             return Page();
         }
 
+        public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest Request)
+        {
+
+        }
+
         public viListAccessLevelModel input { get; set; }
-        public vmListAccessLevelModel  Data { get; set; }
+        public vmListAccessLevelModel Data { get; set; }
     }
 }
