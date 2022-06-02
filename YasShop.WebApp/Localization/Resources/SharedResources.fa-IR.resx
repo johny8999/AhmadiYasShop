@@ -231,6 +231,9 @@
   <data name="Previous" xml:space="preserve">
     <value>قبلی</value>
   </data>
+  <data name="RangeMsg" xml:space="preserve">
+    <value>{0} باید بین {1} تا {2} باشد</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>بارگذاری مجدد</value>
   </data>

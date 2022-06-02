@@ -1,4 +1,5 @@
-﻿using Framework.Common.ExMethods;
+﻿using Framework.Application.Exceptions;
+using Framework.Common.ExMethods;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -58,7 +59,7 @@ namespace YasShop.Application.AccessLevel
                 return await _AccessLevelRoleRepository.GetNoTraking.Where(a => a.AccessLevelId == Input.AccessLevelId.ToGuid())
                                 .Select(a => a.RoleId.ToString()).ToListAsync();
 
-                
+
             }
             catch (ArgumentException ex)
             {
@@ -75,6 +76,48 @@ namespace YasShop.Application.AccessLevel
         public async Task<string> GetAccessLevelIdbyNameAsync(InpGetAccessLevelIdbyName Input)
         {
             return await _AccessLevelRepository.GetNoTraking.Where(a => a.Name == Input.AccessLevelName).Select(a => a.Id.ToString()).FirstOrDefaultAsync();
+        }
+
+        public async Task<OutGetAccessLevelForAdmin> GetAccessLevelForAdmin(InpGetAccessLevelForAdmin Input)
+        {
+            try
+            {
+                #region Validation
+                {
+                    Input.CheckModelState(_ServiceProvider);
+                }
+                #endregion Validation
+
+                #region GetAccessLevel
+                IQueryable<OutGetAccessLevelForAdmin> qGet = null;
+                {
+                    qGet = _AccessLevelRepository.GetNoTraking
+                                    .Select(a => new OutGetAccessLevelForAdmin
+                                    {
+                                        Id = a.Id.ToString(),
+                                        Name = a.Name,
+                                        UserCount = a.tblUsers.Count()
+                                    });
+
+                }
+                #endregion GetAccessLevel
+
+                #region PagingDate
+                {
+                    qGet.Skip(Input.Page).Take(Input.Take);
+                }
+                #endregion PagingDate
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
         }
     }
 }
