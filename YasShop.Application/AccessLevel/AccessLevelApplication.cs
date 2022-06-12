@@ -1,5 +1,6 @@
 ﻿using Framework.Application.Exceptions;
 using Framework.Common.ExMethods;
+using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -78,7 +79,7 @@ namespace YasShop.Application.AccessLevel
             return await _AccessLevelRepository.GetNoTraking.Where(a => a.Name == Input.AccessLevelName).Select(a => a.Id.ToString()).FirstOrDefaultAsync();
         }
 
-        public async Task<OutGetAccessLevelForAdmin> GetAccessLevelForAdmin(InpGetAccessLevelForAdmin Input)
+        public async Task<(OutPagingData PageData,List<OutGetAccessLevelForAdmin> LstItems)> GetAccessLevelForAdmin(InpGetAccessLevelForAdmin Input)
         {
             try
             {
@@ -89,9 +90,9 @@ namespace YasShop.Application.AccessLevel
                 #endregion Validation
 
                 #region GetAccessLevel
-                IQueryable<OutGetAccessLevelForAdmin> qGet = null;
+                IQueryable<OutGetAccessLevelForAdmin> qData = null;
                 {
-                    qGet = _AccessLevelRepository.GetNoTraking
+                    qData = _AccessLevelRepository.GetNoTraking
                                     .Select(a => new OutGetAccessLevelForAdmin
                                     {
                                         Id = a.Id.ToString(),
@@ -103,20 +104,23 @@ namespace YasShop.Application.AccessLevel
                 #endregion GetAccessLevel
 
                 #region PagingDate
+                OutPagingData _PagingData = null;
                 {
-                    qGet.Skip(Input.Page).Take(Input.Take);
+                    int CountAllItem = await qData.CountAsync();
+                     _PagingData = PagingData.Calculate(CountAllItem, Input.Page, Input.Take);
                 }
                 #endregion PagingDate
+                return (_PagingData,await (qData.OrderBy(a=>a.Name).Skip(_PagingData.Skip).Take(_PagingData.Take)).ToListAsync());
             }
             catch (ArgumentInvalidException ex)
             {
                 _Logger.Debug(ex);
-                return null;
+                return (null,null);
             }
             catch (Exception ex)
             {
                 _Logger.Error(ex);
-                return null;
+                return (null,null);
             }
         }
     }
