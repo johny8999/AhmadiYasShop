@@ -27,7 +27,7 @@ WebApplication app = null;
         builder.Host.UseSerilog_SqlServer();
     }
 
-    builder.Services.AddAntiforgery(a => a.HeaderName = "XSRF-TOKEN");
+    //builder.Services.AddAntiforgery(a => a.HeaderName = "XSRF-TOKEN");
 
     builder.Services.AddCustomLocalization();
 

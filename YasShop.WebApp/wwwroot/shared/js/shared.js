@@ -42,6 +42,7 @@ function SendForm(_Url, _FormId, _CallBack = function (res) { }) {
     });
 }
 
-let ForgeryToken = () => {
-    return kendo.antiForgeryToken()
+function ForgeryToken() {
+    
+    return kendo.antiForgeryTokens()
 }

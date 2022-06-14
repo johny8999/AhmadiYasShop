@@ -1,5 +1,6 @@
 using AutoMapper;
 using Framework.Infrastructure;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Threading.Tasks;
 using YasShop.Application.AccessLevel;
+using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
 using YasShop.Application.Contracts.PresentationDTO.ViewInputs;
 using YasShop.Application.Contracts.PresentationDTO.ViewModels;
 using YasShop.WebApp.Common.Utilities.MessageBox;
@@ -45,9 +47,21 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
 
         public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest Request)
         {
+            var qData = await _AccessLevelApplication.GetAccessLevelForAdminAsync(new InpGetAccessLevelForAdmin
+            {
+                Name = null,
+                Page = (short)Request.Page,
+                Take = (short)Request.PageSize
+            });
 
+            var DataGrid = qData.LstItems.ToDataSourceResult(Request);
+            DataGrid.Total = (int)qData.PageData.CountAllItem;
+            DataGrid.Data = qData.LstItems;
+            return new JsonResult(DataGrid);
         }
 
+
+        [BindProperty]
         public viListAccessLevelModel input { get; set; }
         public vmListAccessLevelModel Data { get; set; }
     }

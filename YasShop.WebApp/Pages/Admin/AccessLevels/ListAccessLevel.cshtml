@@ -46,7 +46,7 @@
                                         .ClientHeaderTemplate("<button class='btn btn-success btn-sm' onclick='add()'><i class='fa fa-plus'></i></button>")
                                         .ClientTemplateId("DropDownCmd");
                                 })
-                                .DataSource(ds=>ds.Ajax().PageSize(10).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/List?Handler=ReadDate").Data("ForgeryToken")))
+                                .DataSource(ds=>ds.Ajax().PageSize(10).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/List?handler=ReadData").Data("ForgeryToken")))
 
                                 )
                             </div>
@@ -61,12 +61,12 @@
 </div>
 
 <script id="DropDownCmd">
-    <div class="dropdown">
-        <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
-            <i class="fa fa-bars fs-16 text-dark"></i>
-        </a>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
-        </div>
-    </div>
+    //<div class="dropdown">
+    //    <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
+    //        <i class="fa fa-bars fs-16 text-dark"></i>
+    //    </a>
+    //    <div class="dropdown-menu">
+    //        <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
+    //    </div>
+    //</div>
 </script>

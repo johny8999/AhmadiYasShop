@@ -79,7 +79,7 @@ namespace YasShop.Application.AccessLevel
             return await _AccessLevelRepository.GetNoTraking.Where(a => a.Name == Input.AccessLevelName).Select(a => a.Id.ToString()).FirstOrDefaultAsync();
         }
 
-        public async Task<(OutPagingData PageData,List<OutGetAccessLevelForAdmin> LstItems)> GetAccessLevelForAdmin(InpGetAccessLevelForAdmin Input)
+        public async Task<(OutPagingData PageData,List<OutGetAccessLevelForAdmin> LstItems)> GetAccessLevelForAdminAsync(InpGetAccessLevelForAdmin Input)
         {
             try
             {
