@@ -27,7 +27,9 @@ WebApplication app = null;
         builder.Host.UseSerilog_SqlServer();
     }
 
-    //builder.Services.AddAntiforgery(a => a.HeaderName = "XSRF-TOKEN");
+    builder.Services.AddAntiforgery(a => a.HeaderName = "XSRF-TOKEN");
+
+    builder.Services.WebEncoderConfig();
 
     builder.Services.AddCustomLocalization();
 
@@ -85,9 +87,10 @@ WebApplication app = null;
         var Services = ServiceScope.ServiceProvider;
         try
         {
+            //TODO:Convert to page
             var _SeedMain = Services.GetRequiredService<ISeed_main>();
 
-            _SeedMain.RunAsync().Wait();
+            //_SeedMain.RunAsync().Wait();
             //var q= _SeedMain.RunAsync().Result;   //for return result
         }
         catch (Exception ex)

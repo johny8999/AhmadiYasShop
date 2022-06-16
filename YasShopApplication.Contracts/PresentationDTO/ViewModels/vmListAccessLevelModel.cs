@@ -9,8 +9,8 @@ namespace YasShop.Application.Contracts.PresentationDTO.ViewModels
         [Display(Name = nameof(Name))]
         public string Name { get; set; }
 
-        [Display(Name = nameof(CountUser))]
-        public int CountUser { get; set; }
+        [Display(Name = nameof(UserCount))]
+        public string UserCount { get; set; }
 
     }
 }

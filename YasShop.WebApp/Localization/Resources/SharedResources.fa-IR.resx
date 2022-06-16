@@ -141,6 +141,9 @@
   <data name="CountUser" xml:space="preserve">
     <value>تعداد کاربر</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>ایمیل</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="MyAccount" xml:space="preserve">
     <value>پروفایل من</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>نام</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>بعدی</value>
@@ -275,6 +281,9 @@
   </data>
   <data name="Token is invalid" xml:space="preserve">
     <value>لینک منقضی شده است</value>
+  </data>
+  <data name="UserCount" xml:space="preserve">
+    <value>تعدا د کاربران</value>
   </data>
   <data name="Username or password is incorect" xml:space="preserve">
     <value>ایمیل یا رمز عبور اشتباه است</value>

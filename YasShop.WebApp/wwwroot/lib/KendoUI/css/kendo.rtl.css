@@ -24,3 +24,7 @@
         text-align: right;
         display: inline-block;
     }
+
+.k-grid tbody td:last-child {
+    overflow: visible !important
+}

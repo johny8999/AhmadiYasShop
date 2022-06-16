@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "wwwroot/lib/KendoUI/css/kendo.rtl.min.css",
+    "inputFiles": [
+      "wwwroot/lib/KendoUI/css/kendo.rtl.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/KendoUI/css/kendo.ltr.min.css",
+    "inputFiles": [
+      "wwwroot/lib/KendoUI/css/kendo.ltr.css"
+    ]
+  }
+]

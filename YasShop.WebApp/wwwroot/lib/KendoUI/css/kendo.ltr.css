@@ -2,6 +2,10 @@
     direction: ltr
 }
 
+.k-grid tbody td:last-child {
+    overflow: visible !important
+}
+
     .k-lang .k-autocomplete .k-i-loading, .k-lang .k-multiselect .k-i-loading {
         left: auto;
         right: 3px

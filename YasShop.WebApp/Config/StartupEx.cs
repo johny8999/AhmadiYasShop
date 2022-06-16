@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.WebEncoders;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using YasShop.WebApp.Common.Utilities.IpAddress;
 using YasShop.WebApp.Common.Utilities.MessageBox;
 using YasShop.WebApp.Localization;
@@ -14,6 +17,13 @@ namespace YasShop.WebApp.Config
 {
     public static class StartupEx
     {
+        public static IServiceCollection WebEncoderConfig(this IServiceCollection services)
+        {
+           return services.Configure<WebEncoderOptions>(opt =>
+            {
+                opt.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.Arabic, UnicodeRanges.BasicLatin);
+            });
+        }
         public static IMvcBuilder AddRazorPage(this IServiceCollection services)
         {
             return services.AddRazorPages(opt =>

@@ -41,7 +41,7 @@
                                 .Columns(col=>{
                                      col.Bound(a=>a.Id).Hidden().HtmlAttributes(new{@class="RowId"}).Sortable(false);
                                      col.Bound(a=>a.Name).Sortable(false);
-                                     col.Bound(a=>a.CountUser).Sortable(false).Width(150);
+                                     col.Bound(a=>a.UserCount).Sortable(false).Width(150);
                                      col.Bound(a=>a).Width(50).Title(" ")
                                         .ClientHeaderTemplate("<button class='btn btn-success btn-sm' onclick='add()'><i class='fa fa-plus'></i></button>")
                                         .ClientTemplateId("DropDownCmd");
@@ -61,12 +61,12 @@
 </div>
 
 <script id="DropDownCmd">
-    //<div class="dropdown">
-    //    <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
-    //        <i class="fa fa-bars fs-16 text-dark"></i>
-    //    </a>
-    //    <div class="dropdown-menu">
-    //        <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
-    //    </div>
-    //</div>
+    <div class="dropdown">
+        <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
+            <i class="fa fa-bars fs-16 text-dark"></i>
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
+        </div>
+    </div>
 </script>
