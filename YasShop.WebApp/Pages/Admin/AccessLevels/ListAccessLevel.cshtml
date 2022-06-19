@@ -18,7 +18,7 @@
                         new viAdminBreadCrumb(){Title=@Localizer["Home"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}"},
                         new viAdminBreadCrumb(){Title=@Localizer["Admin Panel"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}/Admin/Index"},
                         new viAdminBreadCrumb(){Title=@Localizer["Access level list"],Url=null},
-                    }' ) />
+                    }' )/>
 
 
                 </div><!-- /.col -->
@@ -66,7 +66,9 @@
             <i class="fa fa-bars fs-16 text-dark"></i>
         </a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit"></i>@Localizer["Edit"]</a>
+            <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit "></i>@Localizer["Edit"]</a>
+            <a class="dropdown-item" onclick="removeData('',{})"><i class="dropdown-icon fa fa-trash "></i>@Localizer["Delete"]</a>
         </div>
     </div>
 </script>
+

@@ -141,6 +141,12 @@
   <data name="CountUser" xml:space="preserve">
     <value>تعداد کاربر</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="deleteMsg" xml:space="preserve">
+    <value>آیا مطمین هستید؟</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>ویرایش</value>
   </data>
@@ -216,6 +222,9 @@
   <data name="Next" xml:space="preserve">
     <value>بعدی</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>خیر</value>
+  </data>
   <data name="OK" xml:space="preserve">
     <value>باشه</value>
   </data>
@@ -290,6 +299,9 @@
   </data>
   <data name="Welcome to market" xml:space="preserve">
     <value>به فروشگاه خودتان خوش آمدید</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>بله</value>
   </data>
   <data name="your Account is disable" xml:space="preserve">
     <value>حساب کاربری شما غیر فعال است</value>
