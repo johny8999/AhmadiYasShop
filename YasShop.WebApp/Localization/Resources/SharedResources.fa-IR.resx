@@ -126,6 +126,9 @@
   <data name="AccessDeniedMsg" xml:space="preserve">
     <value>دسترسی غیر مجاز</value>
   </data>
+  <data name="AccessLevel has User" xml:space="preserve">
+    <value>سطح دسترسی دارای کاربرانی میباشد و امکان حذف آن وجود ندارد</value>
+  </data>
   <data name="Admin Panel" xml:space="preserve">
     <value>پنل مدیریت</value>
   </data>
@@ -194,6 +197,9 @@
   </data>
   <data name="IAgree" xml:space="preserve">
     <value>موافقت با قوانین</value>
+  </data>
+  <data name="Id not Found" xml:space="preserve">
+    <value>شناسه نامعتبر است</value>
   </data>
   <data name="If you already have an account with us, please click" xml:space="preserve">
     <value>اگر ثبت نام کرده اید لطفا روی &lt;a href="{0}"&gt;صحفه ورود&lt;/a&gt; کلیک کنید</value>

@@ -1,4 +1,6 @@
 using AutoMapper;
+using Framework.Application.Exceptions;
+using Framework.Common.ExMethods;
 using Framework.Infrastructure;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
@@ -9,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using YasShop.Application.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
+using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.PresentationDTO.ViewInputs;
 using YasShop.Application.Contracts.PresentationDTO.ViewModels;
 using YasShop.WebApp.Common.Utilities.MessageBox;
@@ -18,6 +21,7 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
     [Authorize]
     public class ListAccessLevelModel : PageModel
     {
+
         private readonly ILogger _Logger;
         private readonly IMapper _Mapper;
         private readonly IMsgBox _MsgBox;
@@ -60,6 +64,34 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
             return new JsonResult(DataGrid);
         }
 
+        public async Task<IActionResult> OnPostDeleteAsync(viDeleteAccessLevel input)
+        {
+            try
+            {
+                #region Validation
+                {
+                    input.CheckModelState(_ServiceProvider);
+                }
+                #endregion Validation
+
+                var _Result = await _AccessLevelApplication.DeleteAccessLevelAsync(new InputDeleteAccessLevel { Id = input.Id });
+                if (!_Result.IsSuccess)
+                    return _MsgBox.FailMsg(_Result.Message);
+
+                return Page();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
+        }
 
         [BindProperty]
         public viListAccessLevelModel input { get; set; }
