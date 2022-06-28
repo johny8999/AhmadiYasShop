@@ -258,6 +258,9 @@
   <data name="Refresh" xml:space="preserve">
     <value>بارگذاری مجدد</value>
   </data>
+  <data name="refreshDataGrid" xml:space="preserve">
+    <value />
+  </data>
   <data name="Register" xml:space="preserve">
     <value>ثبت نام</value>
   </data>
@@ -274,7 +277,7 @@
     <value>ارسال کد</value>
   </data>
   <data name="Sign in" xml:space="preserve">
-    <value>ورورد</value>
+    <value>ورود</value>
   </data>
   <data name="TelerikItemsPerPage" xml:space="preserve">
     <value>مورد بر صحفه</value>

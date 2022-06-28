@@ -1,5 +1,6 @@
 using AutoMapper;
 using Framework.Application.Exceptions;
+using Framework.Application.Services.Localizer;
 using Framework.Common.ExMethods;
 using Framework.Infrastructure;
 using Kendo.Mvc.Extensions;
@@ -11,17 +12,17 @@ using System;
 using System.Threading.Tasks;
 using YasShop.Application.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
-using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.PresentationDTO.ViewInputs;
 using YasShop.Application.Contracts.PresentationDTO.ViewModels;
 using YasShop.WebApp.Common.Utilities.MessageBox;
+using YasShop.WebApp.Localization;
 
 namespace YasShop.WebApp.Pages.Admin.AccessLevels
 {
     [Authorize]
     public class ListAccessLevelModel : PageModel
     {
-
+        private readonly ILocalizer _localizer;
         private readonly ILogger _Logger;
         private readonly IMapper _Mapper;
         private readonly IMsgBox _MsgBox;
@@ -29,13 +30,14 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
         private readonly IAccessLevelApplication _AccessLevelApplication;
 
         public ListAccessLevelModel(ILogger logger, IMapper mapper, IMsgBox msgBox,
-            IServiceProvider serviceProvider, IAccessLevelApplication accessLevelApplication)
+            IServiceProvider serviceProvider, IAccessLevelApplication accessLevelApplication, ILocalizer localizer)
         {
             _Logger = logger;
             _Mapper = mapper;
             _MsgBox = msgBox;
             _ServiceProvider = serviceProvider;
             _AccessLevelApplication = accessLevelApplication;
+            _localizer = localizer;
         }
 
         public IActionResult OnGet()
@@ -76,9 +78,9 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
 
                 var _Result = await _AccessLevelApplication.DeleteAccessLevelAsync(new InputDeleteAccessLevel { Id = input.Id });
                 if (!_Result.IsSuccess)
-                    return _MsgBox.FailMsg(_Result.Message);
+                    return _MsgBox.FailMsg(_localizer[_Result.Message]);
 
-                return Page();
+                return _MsgBox.SucssessMsg(_localizer[_Result.Message],"refreshGrid()");
             }
             catch (ArgumentInvalidException ex)
             {

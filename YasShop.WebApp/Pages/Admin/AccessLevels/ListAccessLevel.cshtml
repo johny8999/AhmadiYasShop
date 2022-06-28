@@ -65,10 +65,14 @@
         <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
             <i class="fa fa-bars fs-16 text-dark"></i>
         </a>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu" >
             <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit "></i>@Localizer["Edit"]</a>
-            <a class="dropdown-item" onclick="removeData('/Admin/AccessLevel/Delete',{Id})"><i class="dropdown-icon fa fa-trash "></i>@Localizer["Delete"]</a>
+            <a class="dropdown-item" onclick="removeData('/@ViewData["Culture"]/Admin/AccessLevel/List?handler=Delete','#:Id#')"><i class="dropdown-icon fa fa-trash "></i>@Localizer["Delete"]</a>
         </div>
     </div>
 </script>
-
+<script>
+function refreshGrid(){
+    refreshDataGrid('ListAccessLevel');
+}
+</script>

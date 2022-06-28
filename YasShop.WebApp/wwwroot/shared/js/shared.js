@@ -95,11 +95,15 @@ function sendData(_Url, _data, _CallBack = function (res) { }) {
     });
 }
 
-
-
-function removeData(_url, _data = {}) {
+function removeData(_url, _id) {
     confirm(_deleteMsg, "", function (){
-        sendData(_url,_data)
+        sendData(_url, {Id:_id})
     });
+}
+
+function refreshDataGrid(_gridId) {
+    let _grid = $('#' + _gridId).data('kendoGrid');
+    _grid.dataSource.read();
+    _grid.refresh();
 }
 

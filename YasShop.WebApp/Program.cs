@@ -90,7 +90,7 @@ WebApplication app = null;
             //TODO:Convert to page
             var _SeedMain = Services.GetRequiredService<ISeed_main>();
 
-            //_SeedMain.RunAsync().Wait();
+            _SeedMain.RunAsync().Wait();
             //var q= _SeedMain.RunAsync().Result;   //for return result
         }
         catch (Exception ex)
