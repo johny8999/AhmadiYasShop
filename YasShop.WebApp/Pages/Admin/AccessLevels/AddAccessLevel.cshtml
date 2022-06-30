@@ -1,0 +1,62 @@
+﻿@page "/{Culture}/Admin/AccessLevel/Add"
+@model YasShop.WebApp.Pages.Admin.AccessLevels.AddAccessLevelModel
+@{
+    Layout = "~/Pages/shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "";
+}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">@Localizer["Add Access Level"]</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <partial name="~/Pages/Shared/Partial/P_AdminBreadCrumb.cshtml" model='new List<viAdminBreadCrumb>(){
+                        new viAdminBreadCrumb(){Title=@Localizer["Home"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}"},
+                        new viAdminBreadCrumb(){Title=@Localizer["Admin Panel"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}/Admin/Index"},
+                        new viAdminBreadCrumb(){Title=@Localizer["Access level list"],Url=""},
+                        new viAdminBreadCrumb(){Title=@Localizer["Add Access level"],Url=null},
+                    }' ) />
+
+
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="Input.Name"></label>
+                                            <input asp-for="Input.Name" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success mb-2">@Localizer["Save"]</button>
+                                            <button type="button" class="btn btn-primary mb-2">@Localizer["GoToBack"]</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>

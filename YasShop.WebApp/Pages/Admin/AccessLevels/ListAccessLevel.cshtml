@@ -3,6 +3,7 @@
 @model YasShop.WebApp.Pages.Admin.AccessLevels.ListAccessLevelModel
 @{
     Layout = "~/Pages/shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "";
 }
 
 <div class="content-wrapper">
@@ -18,7 +19,7 @@
                         new viAdminBreadCrumb(){Title=@Localizer["Home"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}"},
                         new viAdminBreadCrumb(){Title=@Localizer["Admin Panel"],Url=$"/{@CultureInfo.CurrentCulture.Parent.Name}/Admin/Index"},
                         new viAdminBreadCrumb(){Title=@Localizer["Access level list"],Url=null},
-                    }' )/>
+                    }' ) />
 
 
                 </div><!-- /.col -->
@@ -39,12 +40,12 @@
                                 .Name("ListAccessLevel")
                                 .DefaultSettings(Localizer)
                                 .Columns(col=>{
-                                     col.Bound(a=>a.Id).Hidden().HtmlAttributes(new{@class="RowId"}).Sortable(false);
-                                     col.Bound(a=>a.Name).Sortable(false);
-                                     col.Bound(a=>a.UserCount).Sortable(false).Width(150);
-                                     col.Bound(a=>a).Width(50).Title(" ")
-                                        .ClientHeaderTemplate("<button class='btn btn-success btn-sm' onclick='add()'><i class='fa fa-plus'></i></button>")
-                                        .ClientTemplateId("DropDownCmd");
+                                col.Bound(a=>a.Id).Hidden().HtmlAttributes(new{@class="RowId"}).Sortable(false);
+                                col.Bound(a=>a.Name).Sortable(false);
+                                col.Bound(a=>a.UserCount).Sortable(false).Width(150);
+                                col.Bound(a=>a).Width(50).Title(" ")
+                                .ClientHeaderTemplate("<button class='btn btn-success btn-sm' onclick='add()'><i class='fa fa-plus'></i></button>")
+                                .ClientTemplateId("DropDownCmd");
                                 })
                                 .DataSource(ds=>ds.Ajax().PageSize(10).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/List?handler=ReadData").Data("ForgeryToken")))
 
@@ -62,17 +63,20 @@
 
 <script id="DropDownCmd">
     <div class="dropdown">
-        <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
-            <i class="fa fa-bars fs-16 text-dark"></i>
+        <a href="javascript:void(0)" class="icon" data - toggle="dropdown">
+            <i class="fa fa-bars fs-16 text-dark"> </i>
         </a>
-        <div class="dropdown-menu" >
-            <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"><i class="dropdown-icon fa fa-edit "></i>@Localizer["Edit"]</a>
-            <a class="dropdown-item" onclick="removeData('/@ViewData["Culture"]/Admin/AccessLevel/List?handler=Delete','#:Id#')"><i class="dropdown-icon fa fa-trash "></i>@Localizer["Delete"]</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"> <i class="dropdown-icon fa fa-edit "> </i>@Localizer["Edit"]</a>
+            <a class="dropdown-item" onclick="removeData('/@ViewData["Culture"]/Admin/AccessLevel/List?handler=Delete','#:Id#')"> <i class="dropdown-icon fa fa-trash "> </i>@Localizer["Delete"]</a>
         </div>
     </div>
 </script>
 <script>
-function refreshGrid(){
-    refreshDataGrid('ListAccessLevel');
-}
+    function refreshGrid() {
+        refreshDataGrid('ListAccessLevel');
+    }
+    function add() {
+        location.href = '/@ViewData["Culture"]/Admin/AccessLevel/Add?ReturnUrl=@Request.GetCurrentEncodedUrl()';
+    }
 </script>

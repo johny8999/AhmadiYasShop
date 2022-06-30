@@ -66,17 +66,17 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
             return new JsonResult(DataGrid);
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(viDeleteAccessLevel input)
+        public async Task<IActionResult> OnPostDeleteAsync(viDeleteAccessLevel Input)
         {
             try
             {
                 #region Validation
                 {
-                    input.CheckModelState(_ServiceProvider);
+                    Input.CheckModelState(_ServiceProvider);
                 }
                 #endregion Validation
 
-                var _Result = await _AccessLevelApplication.DeleteAccessLevelAsync(new InputDeleteAccessLevel { Id = input.Id });
+                var _Result = await _AccessLevelApplication.DeleteAccessLevelAsync(new InputDeleteAccessLevel { Id = Input.Id });
                 if (!_Result.IsSuccess)
                     return _MsgBox.FailMsg(_localizer[_Result.Message]);
 

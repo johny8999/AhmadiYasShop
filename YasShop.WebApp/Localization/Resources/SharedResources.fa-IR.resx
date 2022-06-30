@@ -129,6 +129,9 @@
   <data name="AccessLevel has User" xml:space="preserve">
     <value>سطح دسترسی دارای کاربرانی میباشد و امکان حذف آن وجود ندارد</value>
   </data>
+  <data name="Add Access Level" xml:space="preserve">
+    <value>افزودن سطح دسترسی</value>
+  </data>
   <data name="Admin Panel" xml:space="preserve">
     <value>پنل مدیریت</value>
   </data>
@@ -188,6 +191,9 @@
         &lt;li&gt;خط فاصله&lt;/li&gt;
     &lt;/ul&gt;
 &lt;/div&gt;</value>
+  </data>
+  <data name="GoToBack" xml:space="preserve">
+    <value>بازگشت</value>
   </data>
   <data name="GUIDMsg" xml:space="preserve">
     <value>قالب {0} باید Guid باشد</value>
@@ -258,9 +264,6 @@
   <data name="Refresh" xml:space="preserve">
     <value>بارگذاری مجدد</value>
   </data>
-  <data name="refreshDataGrid" xml:space="preserve">
-    <value />
-  </data>
   <data name="Register" xml:space="preserve">
     <value>ثبت نام</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="RetypePassword" xml:space="preserve">
     <value>تکرار کلمه عبور</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>ذخیره</value>
   </data>
   <data name="SendCode" xml:space="preserve">
     <value>ارسال کد</value>
