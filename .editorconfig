@@ -2,3 +2,6 @@
 
 # CS1998: Async method lacks 'await' operators and will run synchronously
 dotnet_diagnostic.CS1998.severity = none
+
+# IDE0002: Simplify Member Access
+dotnet_diagnostic.IDE0002.severity = none

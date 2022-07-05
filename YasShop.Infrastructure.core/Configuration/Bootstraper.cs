@@ -1,5 +1,6 @@
 ﻿using Framework.Application.Services.Email;
 using Framework.Application.Services.IpList;
+using Framework.Common.Utilities.Downloader;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,7 +45,7 @@ namespace YasShop.Infrastructure.Core.Configuration
                 services.AddSingleton<ILogger, SeriLogger>();
                 services.AddSingleton<IIPList, IPList>();
                 services.AddSingleton<IEmailSender, GmailSender>();
-
+                services.AddSingleton<IDownloader,Downloader>();
                 services.AddScoped<IJwtBuilder, JwtBuilder>();
             }
             #endregion Add Services

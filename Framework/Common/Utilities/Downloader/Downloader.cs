@@ -4,8 +4,10 @@ using Framework.Common.Utilities.Downloader.Dto;
 using Framework.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Framework.Common.Utilities.Downloader
@@ -32,7 +34,43 @@ namespace Framework.Common.Utilities.Downloader
                 }
                 #endregion Validation
 
+                #region GenerateUrl
+                string UrlParameter = string.Empty;
+                string Url = string.Empty;
+                {
+                    if (Input.Data is not null)
+                        UrlParameter = UrlEncodedParametrGenerator(Input.Data);
 
+                    Url = Input.PageUrl + UrlParameter;
+                }
+                #endregion GenerateUrl
+
+                #region Parameter Amount => مقدار دهی به پارامتر
+                HttpWebRequest ObjRequest = (HttpWebRequest)HttpWebRequest.Create(Url);
+                {
+                    ObjRequest.ContentType = "text/html; charset=utf-8";
+                    ObjRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.53";
+                    ObjRequest.Method = "GET";
+                }
+                #endregion Parameter Amount => مقدار دهی به پارامتر
+
+                #region Add Headers
+                {
+                    if (Input.Headers is not null)
+                        foreach (var Header in Input.Headers)
+                            ObjRequest.Headers.Add(Header.Key, Header.Value);
+
+                    ObjRequest.Headers.Add("Accept-charset", "ISO-8859-9,URF-8;q=0.7,*;q=0.7");
+                    ObjRequest.Headers.Add("Accept-Encoding", "deflate");
+                }
+                #endregion Add Headers
+
+                HttpWebResponse Response = (HttpWebResponse)await ObjRequest.GetResponseAsync();
+                StreamReader stream = new(Response.GetResponseStream(), Encoding.UTF8);
+
+                string Result = await stream.ReadToEndAsync();
+                stream.Close();
+                return Result;
             }
             catch (ArgumentInvalidException ex)
             {
