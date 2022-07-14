@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using YasShop.Application.Contracts.Mappings;
 using YasShop.Infrastructure.Core.Configuration;
 using YasShop.Infrastructure.Logger.SeriLoger;
 using YasShop.Infrastructure.Seed.Base.Main;
@@ -17,7 +16,7 @@ WebApplication app = null;
 
 #region ConfigureServices
 {
-   
+
     if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
     {
         builder.Host.UseSerilog_Console();
@@ -36,7 +35,7 @@ WebApplication app = null;
     builder.Services.AddRazorPage()
             .AddCustomViewLocalization()
             .AddCustomDataAnnotationLocalization(builder.Services)
-            .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()); 
+            .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());
 
     builder.Services.Config();
     builder.Services.AddInject();
@@ -68,7 +67,7 @@ WebApplication app = null;
 
     app.UseRouting();
     app.UseCustomLocalization();
-    app.UseJWTAuthentication(AuthConst.SecretKey,AuthConst.CookieName);
+    app.UseJWTAuthentication(AuthConst.SecretKey, AuthConst.CookieName);
 
     app.UseMiddleware<RedirectToValidLangMiddleware>();
     app.UseEndpoints(endpoints =>
