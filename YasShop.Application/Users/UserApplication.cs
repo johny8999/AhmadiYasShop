@@ -94,7 +94,7 @@ namespace YasShop.Application.Users
                             #endregion Send Email
                         }
                         #endregion SendConfirmationEmail
-                        return new OperationResult().Successed();
+                        return new OperationResult().Succeeded();
                     }
                     else
                     {
@@ -141,7 +141,7 @@ namespace YasShop.Application.Users
                     if (Result.Succeeded)
                     {
 
-                        return new OperationResult().Successed(user.Id.ToString());
+                        return new OperationResult().Succeeded(user.Id.ToString());
                     }
                     else
                     {
@@ -208,7 +208,7 @@ namespace YasShop.Application.Users
                     });
                 }
                 #endregion Change user access level to confirmedUser
-                return new OperationResult().Successed("Email Confirmation has been Succssed");
+                return new OperationResult().Succeeded("Email Confirmation has been Succssed");
             }
             catch (ArgumentInvalidException ex)
             {
@@ -261,7 +261,7 @@ namespace YasShop.Application.Users
                 }
                 #endregion Change user role
 
-                return new OperationResult().Successed();
+                return new OperationResult().Succeeded();
             }
             catch (ArgumentInvalidException ex)
             {
@@ -306,7 +306,7 @@ namespace YasShop.Application.Users
                 }
                 #endregion Add new roles
 
-                return new OperationResult().Successed();
+                return new OperationResult().Succeeded();
             }
             catch (ArgumentInvalidException ex)
             {
@@ -340,7 +340,7 @@ namespace YasShop.Application.Users
             catch (ArgumentInvalidException ex)
             {
                 _Logger.Debug(ex.Message);
-                return new OperationResult().Successed(ex.Message);
+                return new OperationResult().Succeeded(ex.Message);
             }
             catch (Exception ex)
             {
@@ -367,7 +367,7 @@ namespace YasShop.Application.Users
                 var _Result = await _UserRepository.PasswordSignInAsync(qUser, input.Password, false, true);
 
                 if (_Result.Succeeded)
-                    return new OperationResult().Successed(qUser.Id.ToString());
+                    return new OperationResult().Succeeded(qUser.Id.ToString());
 
                 else
                 {
@@ -479,7 +479,7 @@ namespace YasShop.Application.Users
                     await _EmailSender.SendAsync(qUser.Email, AuthConst.Issuer + _Localizer["PasswordRecovery"], GenerateEmailTemplate);
                 }
                 #endregion SendEmail
-                return new OperationResult().Successed("Email has been sent and you should click link");
+                return new OperationResult().Succeeded("Email has been sent and you should click link");
             }
             catch (ArgumentInvalidException ex)
             {
@@ -522,7 +522,7 @@ namespace YasShop.Application.Users
                 {
                    var _Result= await _UserRepository.ResetPasswordAsync(qUser, Token, Input.Password);
                     if (_Result.Succeeded)
-                        return new OperationResult().Successed(_Localizer["Your password has been changed successly"]);
+                        return new OperationResult().Succeeded(_Localizer["Your password has been changed successly"]);
 
                     else
                         return new OperationResult().Failed(String.Join(',',_Result.Errors.Select(a=>a.Description)));

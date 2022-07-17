@@ -162,7 +162,7 @@ namespace YasShop.Application.AccessLevel
                 }
                 #endregion DeleteAccessLevel
 
-                return new OperationResult().Successed();
+                return new OperationResult().Succeeded();
             }
             catch (ArgumentInvalidException ex)
             {

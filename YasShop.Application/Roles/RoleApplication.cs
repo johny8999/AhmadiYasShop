@@ -1,6 +1,7 @@
 ﻿using Framework.Application.Exceptions;
 using Framework.Common.ExMethods;
 using Framework.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.ApplicationDTO.Role;
 using YasShop.Application.Users;
+using YasShop.Domain.Users.AccessLevelAgg.Contract;
 using YasShop.Domain.Users.RoleAgg.Contract;
 
 namespace YasShop.Application.Roles;
@@ -18,13 +20,14 @@ public class RoleApplication : IRoleApplication
     private readonly IRoleRepository _RoleRepository;
     private readonly IServiceProvider _ServiceProvider;
     private readonly IUserApplication _UserApplication;
-
-    public RoleApplication(ILogger logger, IRoleRepository roleRepository, IServiceProvider serviceProvider, IUserApplication userApplication)
+    private readonly IAccessLevelRoleRepository _AccessLevelRoleRepository;
+    public RoleApplication(ILogger logger, IRoleRepository roleRepository, IServiceProvider serviceProvider, IUserApplication userApplication, IAccessLevelRoleRepository accessLevelRoleRepository)
     {
         _Logger = logger;
         _RoleRepository = roleRepository;
         _ServiceProvider = serviceProvider;
         _UserApplication = userApplication;
+        _AccessLevelRoleRepository = accessLevelRoleRepository;
     }
 
     public async Task<List<string>> GetRoleByUserAsync(InpGetRoleByUser input)
@@ -54,17 +57,65 @@ public class RoleApplication : IRoleApplication
     {
         try
         {
+            #region Validation
+            {
+                Input.CheckModelState(_ServiceProvider);
+            }
+            #endregion Validation
 
+            #region Get Roles Name
+            List<string> qRoleNames = null;
+            {
+                qRoleNames = await _AccessLevelRoleRepository.GetNoTraking
+                                                   .Where(a => a.AccessLevelId.Equals(Input.AccessLevelId.ToGuid()))
+                                                   .Select(a => a.tblRole.Name)
+                                                   .ToListAsync();
+
+                //var q =  _RoleRepository.GetNoTraking
+                //                        .Where(b => b.tblAccessLevelRoles.Any(c=>c.AccessLevelId.Equals(Input.AccessLevelId.ToGuid())))
+                //                        .Select(a => a.Name);
+            }
+            #endregion Get Roles Name
+
+            return new OperationResult<List<string>>().Succeeded(qRoleNames);
         }
         catch (ArgumentInvalidException ex)
         {
-            _Logger.Debug(ex.Message);
-            return new OperationResult<>
+            _Logger.Debug(ex);
+            return new OperationResult<List<string>>().Failed(ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _Logger.Error(ex);
+            return new OperationResult<List<string>>().Failed("Error500");
+        }
+    }
+    public async Task<OperationResult<List<string>>> GetAllRolesByParentIdAsync(InpGetAllRolesByParentId Input)
+    {
+        try
+        {
+            return null;
+            #region Validation
+            {
+                Input.CheckModelState(_ServiceProvider);
+            }
+            #endregion Validation
 
-            throw;
+            #region Get Roles By ParentId
+            {
+                //var q=_RoleRepository.GetNoTraking.Where(a=>a.)
+            }
+            #endregion Get Roles By ParentId
+        }
+        catch (ArgumentInvalidException ex)
+        {
+            _Logger.Debug(ex);
+            return new OperationResult<List<string>>().Failed(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _Logger.Error(ex);
+            return new OperationResult<List<string>>().Failed("Error500");
         }
     }
 

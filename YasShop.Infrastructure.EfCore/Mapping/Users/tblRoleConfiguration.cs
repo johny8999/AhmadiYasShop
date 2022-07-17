@@ -11,6 +11,12 @@ namespace YasShop.Infrastructure.EfCore.Mapping.Users
         {
             builder.Property(a => a.PageName).IsRequired().HasMaxLength(100);
             builder.Property(a => a.Name).IsRequired().HasMaxLength(250);
+            builder.Property(a => a.ParentId).HasMaxLength(450);
+
+            builder.HasOne(a => a.tblRoleParent)
+                   .WithMany(a => a.tblRolesChilds)
+                   .HasPrincipalKey(a => a.ParentId)
+                   .HasForeignKey(a => a.ParentId);
         }
     }
 }

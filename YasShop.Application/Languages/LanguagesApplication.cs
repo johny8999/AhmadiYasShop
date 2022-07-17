@@ -51,7 +51,7 @@ namespace YasShop.Application.Languages
                     UseForSiteLanguage = Input.UseForSideLanguage
                 });
 
-                return new OperationResult().Successed();
+                return new OperationResult().Succeeded();
             }
             catch (ArgumentNullException ex)
             {
