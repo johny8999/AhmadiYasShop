@@ -1,5 +1,6 @@
 using Framework.Application.Exceptions;
 using Framework.Infrastructure;
+using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -61,6 +62,11 @@ public class Compo_ListRolesModel : PageModel
         return Page();
     }
 
+    public async Task<IActionResult> OnPostReadDataAsync([DataSourceRequest] DataSourceRequest request)
+    {
+        return Page();
+    }
+        
     [BindProperty(SupportsGet = true)]
     public viCompoListRoles Input { get; set; }
 }

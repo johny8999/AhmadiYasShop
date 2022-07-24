@@ -1,5 +1,45 @@
 ﻿@page "/{Culture}/Admin/AccessLevel/Compo/ListRoles"
 @model YasShop.WebApp.Pages.Admin.AccessLevels.Components.Compo_ListRolesModel
-@{
 
+@if(Model.Input.AccessLevelId is not null)
+{
+    <script>
+        function isSelected(_name) {
+            var RolesName = '@string.Join(",", (string[])ViewData["SelectedRoles"])';
+            if (RolesName.includes(_name+',')) {
+                return "checked";
+            }
+            else {
+                return "";
+            }
+        }
+    </script>    
 }
+else
+{
+    <script>
+        function isSelected(_name) {
+            return '';
+        }
+    </script>
+}
+
+
+<div class="k-lang">
+    @(Html.Kendo()
+    .Grid<vmCompoListRoles>()
+        .Name("ListRoles")
+        .DefaultSettings(Localizer)
+        .Columns(col=>{
+            col.Bound(a=>a.Id).Sortable(false).Width(50).ClientTemplate("<input #=isSelected(RoleName)# type='checkbox' class='k-checkbox' value='#=RoleName#'/>");
+            col.Bound(a=>a.PageName).Sortable(false);
+            col.Bound(a=>a.RoleName).Sortable(false);
+            col.Bound(a=>a.Description).Sortable(false);
+        })
+        .PersistSelection()
+        .Events(a=>{})
+        .DataSource(a=>a.Ajax().Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
+        )
+        
+
+</div>
