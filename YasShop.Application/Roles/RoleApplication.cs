@@ -90,11 +90,12 @@ public class RoleApplication : IRoleApplication
             return new OperationResult<List<string>>().Failed("Error500");
         }
     }
-    public async Task<OperationResult<List<string>>> GetAllRolesByParentIdAsync(InpGetAllRolesByParentId Input)
+
+    public async Task<OperationResult<List<OutGetAllRolesByParentId>>> GetAllRolesByParentIdAsync(InpGetAllRolesByParentId Input)
     {
         try
         {
-            return null;
+
             #region Validation
             {
                 Input.CheckModelState(_ServiceProvider);
@@ -102,20 +103,32 @@ public class RoleApplication : IRoleApplication
             #endregion Validation
 
             #region Get Roles By ParentId
+            List<OutGetAllRolesByParentId> qData = null;
             {
-                //var q=_RoleRepository.GetNoTraking.Where(a=>a.)
+                qData = await _RoleRepository.GetNoTraking
+                                        .Where(a => Input.ParentId != null ? a.ParentId == Input.ParentId.ToGuid() : true)
+                                         .Select(a => new OutGetAllRolesByParentId
+                                         {
+                                             Id = a.Id.ToString(),
+                                             name = a.Name,
+                                             Description = a.Description
+                                         })
+                                         .ToListAsync();
+
+
             }
             #endregion Get Roles By ParentId
+            return new OperationResult<List<OutGetAllRolesByParentId>>().Succeeded(qData);
         }
         catch (ArgumentInvalidException ex)
         {
             _Logger.Debug(ex);
-            return new OperationResult<List<string>>().Failed(ex.Message);
+            return new OperationResult<List<OutGetAllRolesByParentId>>().Failed(ex.Message);
         }
         catch (Exception ex)
         {
             _Logger.Error(ex);
-            return new OperationResult<List<string>>().Failed("Error500");
+            return new OperationResult<List<OutGetAllRolesByParentId>>().Failed("Error500");
         }
     }
 
