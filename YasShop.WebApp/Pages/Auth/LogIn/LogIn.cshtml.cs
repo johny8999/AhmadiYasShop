@@ -60,7 +60,7 @@ namespace YasShop.WebApp.Pages.Auth.LogIn
                 {
                     var _GeneratedToken = await _JwtBuilder.CreateTokenAsync(_Result.Message);
                     Response.CreateAuthCookies(_GeneratedToken, input.RememberMe);
-                    return new JsResult($"location.href ='/{CultureInfo.CurrentCulture.Parent.Name}/User/TestAuth'");
+                    return new JsResult($"location.href ='/{CultureInfo.CurrentCulture.Parent.Name}/Admin/AccessLevel/List'");
                 }
                 else
                     return _MsgBox.FailMsg(_localizer[_Result.Message]);

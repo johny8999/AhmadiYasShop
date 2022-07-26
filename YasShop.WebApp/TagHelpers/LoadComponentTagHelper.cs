@@ -33,8 +33,8 @@ namespace YasShop.WebApp.TagHelpers
             if (string.IsNullOrEmpty(Url))
                 throw new ArgumentNullException(nameof(Url), "Url can not be null");
 
-            if (HttpContext is null)
-                throw new ArgumentNullException(nameof(context), "Context can not be null");
+            ArgumentNullException.ThrowIfNull(HttpContext, "Context can not be null");
+
 
             Url = SiteSettingConst.SiteUrl + Url;
             string HtmlData = await _Downloader.GetHtmlForPageAsync(new InpGetHtmlForPage
@@ -44,16 +44,16 @@ namespace YasShop.WebApp.TagHelpers
                 Headers = HttpContext.Request.Headers.Select(a => new KeyValuePair<string, string>(a.Key, a.Value)).ToDictionary(k => k.Key, v => v.Value)
             });
 
-            if(string.IsNullOrEmpty(HtmlData))
-                throw new ArgumentNullException(nameof(HtmlData),"Sorce data is null");
+            if (string.IsNullOrEmpty(HtmlData))
+                throw new ArgumentNullException(nameof(HtmlData), "Sorce data is null");
 
             output.TagName = "div";
 
-            if(Id is not null) 
+            if (Id is not null)
                 output.Attributes.SetAttribute("id", Id);
 
-            if(Class is not null)
-                output.Attributes.SetAttribute("class",Class);
+            if (Class is not null)
+                output.Attributes.SetAttribute("class", Class);
 
             output.Content.SetHtmlContent(HtmlData);
         }

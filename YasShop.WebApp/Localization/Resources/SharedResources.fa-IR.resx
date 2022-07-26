@@ -153,6 +153,9 @@
   <data name="deleteMsg" xml:space="preserve">
     <value>آیا مطمین هستید؟</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>ویرایش</value>
   </data>
@@ -204,6 +207,9 @@
   <data name="IAgree" xml:space="preserve">
     <value>موافقت با قوانین</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>شناسه</value>
+  </data>
   <data name="Id not Found" xml:space="preserve">
     <value>شناسه نامعتبر است</value>
   </data>
@@ -246,6 +252,9 @@
   <data name="Page" xml:space="preserve">
     <value>صحفه</value>
   </data>
+  <data name="PageName" xml:space="preserve">
+    <value>نام صحفه</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>کلمه عبور</value>
   </data>
@@ -275,6 +284,9 @@
   </data>
   <data name="RetypePassword" xml:space="preserve">
     <value>تکرار کلمه عبور</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>نام نقش</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>ذخیره</value>

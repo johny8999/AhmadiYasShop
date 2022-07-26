@@ -13,7 +13,7 @@
 
         public OperationResult Succeeded(string _Message)
         {
-            return Succeeded(0, "Operation Was Succeeded");
+            return Succeeded(0, _Message);
         }
 
         public OperationResult Succeeded(int _Code, string _Message)

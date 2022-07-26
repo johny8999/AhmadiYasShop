@@ -61,7 +61,7 @@ namespace Framework.Common.Utilities.Downloader
                             ObjRequest.Headers.Add(Header.Key, Header.Value);
 
                     ObjRequest.Headers.Add("Accept-charset", "ISO-8859-9,URF-8;q=0.7,*;q=0.7");
-                    ObjRequest.Headers.Add("Accept-Encoding", "deflate");
+                    ObjRequest.Headers["Accept-Encoding"]= "deflate";
                 }
                 #endregion Add Headers
 
