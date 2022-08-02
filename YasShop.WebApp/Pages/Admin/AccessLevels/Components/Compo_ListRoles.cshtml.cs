@@ -94,7 +94,7 @@ public class Compo_ListRolesModel : PageModel
             return new JsonResult(DataGrid);
 
         }
-        catch (ArgumentNullException ex)
+        catch (ArgumentInvalidException ex)
         {
             return BadRequest();
         }

@@ -110,12 +110,26 @@ public class RoleApplication : IRoleApplication
                                          .Select(a => new OutGetAllRolesByParentId
                                          {
                                              Id = a.Id.ToString(),
-                                             name = a.Name,
+                                             RoleName = a.Name,
+                                             PageName = a.PageName,
+                                             ParentId = a.ParentId.ToString(),
+                                             HasChild = a.tblRolesChilds.Any(),
                                              Description = a.Description
                                          })
                                          .ToListAsync();
 
-
+                //qData = await (from a in _RoleRepository.GetNoTraking
+                //               where a.ParentId != null ? a.ParentId == Input.ParentId.ToGuid() : true
+                //               let hasChild=a.tblRolesChilds.Any()
+                //               select new OutGetAllRolesByParentId
+                //               {
+                //                   Id = a.Id.ToString(),
+                //                   RoleName = a.Name,
+                //                   PageName = a.PageName,
+                //                   ParentId = a.ParentId.ToString(),
+                //                   HasChild = hasChild,
+                //                   Description = a.Description
+                //               }).ToListAsync();
             }
             #endregion Get Roles By ParentId
             return new OperationResult<List<OutGetAllRolesByParentId>>().Succeeded(qData);

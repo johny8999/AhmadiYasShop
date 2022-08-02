@@ -37,9 +37,28 @@ else
             col.Bound(a=>a.Description).Sortable(false);
         })
         .PersistSelection()
-        .Events(a=>{})
+        .Events(a=>{
+            a.DataBound("onDataBound");
+        })
         .DataSource(a=>a.Ajax().Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
         )
         
 
 </div>
+
+<script>
+let onDataBound(ev) => {
+    let data = this.dataSource.data();
+    jQuery.each(data, function(i, row) {
+        if (!row.get("HasChild")) {
+            $(`tr[data-uid=${row.uid}]`).find('.k-hierarchy-cell a').remove();
+        }
+    });
+
+     let grid = $('#ListRoles').data('kendoGrid');
+    $('.k-master-row').each(function(index) {
+        grid.expandRow(this);
+        grid.collapsRow(this);
+    });
+}
+</script>
