@@ -40,11 +40,48 @@ else
         .Events(a=>{
             a.DataBound("onDataBound");
         })
-        .DataSource(a=>a.Ajax().Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
+        .ClientDetailTemplateId("ListAccLevelTmpl")
+        .DataSource(a=>a.Ajax().Model(a=>a.Id(b=>b.Id)).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
         )
-        
-
 </div>
+<script id="ListAccLevelTmpl">
+  @(Html.Kendo()
+    .Grid<vmCompoListRoles>()
+        .Name("ListRoles_Child#=Id#")
+        .DefaultSettings(Localizer)
+        .Columns(col=>{
+            col.Bound(a=>a.Id).Sortable(false).Width(50).ClientTemplate("<input \\#=isSelected(RoleName)\\# type='checkbox' class='k-checkbox' value='\\#=RoleName\\#'/>");
+            col.Bound(a=>a.PageName).Sortable(false);
+            col.Bound(a=>a.RoleName).Sortable(false);
+            col.Bound(a=>a.Description).Sortable(false);
+        })
+        .PersistSelection()
+        .Events(a=>{
+            a.DataBound("onDataBound");
+        })
+        .ClientDetailTemplateId("ListAccLevelTmpl_Child")
+        .DataSource(a=>a.Ajax().Model(a=>a.Id(b=>b.Id)).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
+        .ToClientTemplate())
+</script>
+
+<script id="ListAccLevelTmpl_Child">
+  @(Html.Kendo()
+    .Grid<vmCompoListRoles>()
+        .Name("ListRoles_Child#=Id#")
+        .DefaultSettings(Localizer)
+        .Columns(col=>{
+            col.Bound(a=>a.Id).Sortable(false).Width(50).ClientTemplate("<input \\#=isSelected(RoleName)\\# type='checkbox' class='k-checkbox' value='\\#=RoleName\\#'/>");
+            col.Bound(a=>a.PageName).Sortable(false);
+            col.Bound(a=>a.RoleName).Sortable(false);
+            col.Bound(a=>a.Description).Sortable(false);
+        })
+        .PersistSelection()
+        .Events(a=>{
+            a.DataBound("onDataBound");
+        })
+        .DataSource(a=>a.Ajax().Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
+        .ToClientTemplate())
+</script>
 
 <script>
 let onDataBound(ev) => {
