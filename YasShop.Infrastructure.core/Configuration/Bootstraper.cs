@@ -24,6 +24,7 @@ using YasShop.Infrastructure.Logger.SeriLoger;
 using YasShop.Infrastructure.Seed.Base.AccessLevel;
 using YasShop.Infrastructure.Seed.Base.Languages;
 using YasShop.Infrastructure.Seed.Base.Main;
+using YasShop.Infrastructure.Seed.Base.Roles;
 using YasShop.Infrastructure.Seed.Base.Users;
 using YasShop.Infrastructure.Services.Email;
 
@@ -56,6 +57,7 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddScoped<IAccessLevelRepository, AccessLevelRepository>();
             services.AddScoped<IAccessLevelRoleRepository, AccessLevelRoleRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             //Add Applications 
             services.AddScoped<ILanguagesApplication, LanguagesApplication>();
@@ -68,6 +70,7 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddTransient<ISeed_AccessLevel, Seed_AccessLevel>();
             services.AddTransient<ISeed_main, Seed_main>();
             services.AddTransient<ISeed_User, Seed_User>();
+            services.AddTransient<ISeed_Roles, Seed_Roles>();
 
 
         }

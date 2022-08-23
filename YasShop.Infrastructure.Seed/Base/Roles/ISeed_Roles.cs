@@ -1,6 +1,9 @@
-﻿namespace YasShop.Infrastructure.Seed.Base.Roles
+﻿using System.Threading.Tasks;
+
+namespace YasShop.Infrastructure.Seed.Base.Roles
 {
-    internal interface ISeed_Roles
+    public interface ISeed_Roles
     {
+        Task<bool> RunAsync();
     }
 }

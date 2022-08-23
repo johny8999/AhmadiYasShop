@@ -12,14 +12,14 @@ using YasShop.Infrastructure.EfCore.Context;
 namespace YasShop.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20220416172145_mg")]
-    partial class mg
+    [Migration("20220818170140__Initial")]
+    partial class _Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -221,6 +221,10 @@ namespace YasShop.Infrastructure.EfCore.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<Guid?>("ParentId")
+                        .HasMaxLength(450)
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
@@ -230,6 +234,8 @@ namespace YasShop.Infrastructure.EfCore.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -390,6 +396,15 @@ namespace YasShop.Infrastructure.EfCore.Migrations
                     b.Navigation("tblRole");
                 });
 
+            modelBuilder.Entity("YasShop.Domain.Users.RoleAgg.Entities.tblRoles", b =>
+                {
+                    b.HasOne("YasShop.Domain.Users.RoleAgg.Entities.tblRoles", "tblRoleParent")
+                        .WithMany("tblRolesChilds")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("tblRoleParent");
+                });
+
             modelBuilder.Entity("YasShop.Domain.Users.UserAgg.Entities.tblUserRole", b =>
                 {
                     b.HasOne("YasShop.Domain.Users.RoleAgg.Entities.tblRoles", null)
@@ -426,6 +441,8 @@ namespace YasShop.Infrastructure.EfCore.Migrations
             modelBuilder.Entity("YasShop.Domain.Users.RoleAgg.Entities.tblRoles", b =>
                 {
                     b.Navigation("tblAccessLevelRoles");
+
+                    b.Navigation("tblRolesChilds");
                 });
 #pragma warning restore 612, 618
         }

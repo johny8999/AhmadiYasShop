@@ -38,7 +38,7 @@ public class Seed_Roles : ISeed_Roles
                         NormalizedName = "AdminPage".ToUpper(),
                         Sort = 0,
                         Description = "توانایی دسترسی به پنل مدیریت",
-                    }, false);
+                    });
             }
             #endregion AdminPage
 
@@ -56,7 +56,7 @@ public class Seed_Roles : ISeed_Roles
                         NormalizedName = "CanManageAccessLevel".ToUpper(),
                         Sort = 10,
                         Description = "توانایی مدیریت سطوح دسترسی"
-                    }, false);
+                    });
                 }
                 else
                 {
@@ -82,14 +82,14 @@ public class Seed_Roles : ISeed_Roles
                 {
                     await _RoleRepository.AddAsync(new tblRoles
                     {
-                        Id = _Id,
-                        ParentId = null,
+                        Id = new Guid().SequentialGuid(),
+                        ParentId = _Id,
                         PageName = "AccessLevelPage",
                         Name = "CanAddAccessLevel",
                         NormalizedName = "CanAddAccessLevel".ToUpper(),
-                        Sort = 20,
+                        Sort = 30,
                         Description = "توانایی افزودن سطح دسترسی"
-                    }, false);
+                    });
                 }
 
                 //Edit
@@ -97,14 +97,14 @@ public class Seed_Roles : ISeed_Roles
                 {
                     await _RoleRepository.AddAsync(new tblRoles
                     {
-                        Id = _Id,
-                        ParentId = null,
+                        Id = new Guid().SequentialGuid(),
+                        ParentId = _Id,
                         PageName = "AccessLevelPage",
                         Name = "CanEditAccessLevel",
                         NormalizedName = "CanEditAccessLevel".ToUpper(),
-                        Sort = 30,
+                        Sort = 40,
                         Description = "توانایی ویرایش سطح دسترسی"
-                    }, false);
+                    });
                 }
 
                 //Delete
@@ -113,11 +113,11 @@ public class Seed_Roles : ISeed_Roles
                     await _RoleRepository.AddAsync(new tblRoles
                     {
                         Id = new Guid().SequentialGuid(),
+                        ParentId = _Id,
                         Name = "CanDeleteAccessLevel",
                         NormalizedName = "CanDeleteAccessLevel".ToUpper(),
                         PageName = "AccessLevelPage",
-                        ParentId = _Id,
-                        Sort = 40,
+                        Sort = 50,
                         Description = "توانایی حذف سطح دسترسی"
                     });
                 }
@@ -140,9 +140,9 @@ public class Seed_Roles : ISeed_Roles
                         PageName = "UserPage",
                         Name = "CanManageUser",
                         NormalizedName = "CanManageUser".ToUpper(),
-                        Sort = 10,
+                        Sort = 60,
                         Description = "توانایی مدیریت کاربران"
-                    }, false);
+                    });
                 }
                 else
                 {
@@ -158,7 +158,7 @@ public class Seed_Roles : ISeed_Roles
                         NormalizedName = "CanEditUser".ToUpper(),
                         PageName = "CanEditUser",
                         ParentId = _Id,
-                        Sort = 50,
+                        Sort = 70,
                         Description = "توانایی ویرایش کاربر"
                     });
                 }
@@ -173,7 +173,7 @@ public class Seed_Roles : ISeed_Roles
                         NormalizedName = "CanDeleteUser".ToUpper(),
                         PageName = "AccessLevelPage",
                         ParentId = _Id,
-                        Sort = 60,
+                        Sort = 80,
                         Description = "توانایی حذف کاربر"
                     });
                 }
@@ -188,7 +188,7 @@ public class Seed_Roles : ISeed_Roles
                         NormalizedName = "CanLockUser".ToUpper(),
                         PageName = "AccessLevelPage",
                         ParentId = _Id,
-                        Sort = 60,
+                        Sort = 90,
                         Description = "توانایی قفل حساب کاربر"
                     });
                 }
@@ -203,12 +203,14 @@ public class Seed_Roles : ISeed_Roles
                         NormalizedName = "CanUnlockUser".ToUpper(),
                         PageName = "AccessLevelPage",
                         ParentId = _Id,
-                        Sort = 60,
+                        Sort = 100,
                         Description = "توانایی باز کردن قفل حساب کاربر"
                     });
                 }
             }
             #endregion
+
+            return true;
         }
         catch (ArgumentInvalidException ex)
         {

@@ -15,7 +15,7 @@ namespace YasShop.Infrastructure.EfCore.Mapping.Users
 
             builder.HasOne(a => a.tblRoleParent)
                    .WithMany(a => a.tblRolesChilds)
-                   .HasPrincipalKey(a => a.ParentId)
+                   .HasPrincipalKey(a => a.Id)
                    .HasForeignKey(a => a.ParentId);
         }
     }

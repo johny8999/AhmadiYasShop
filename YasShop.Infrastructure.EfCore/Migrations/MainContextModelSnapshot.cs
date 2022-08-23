@@ -17,7 +17,7 @@ namespace YasShop.Infrastructure.EfCore.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -220,7 +220,6 @@ namespace YasShop.Infrastructure.EfCore.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid?>("ParentId")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier");
 
@@ -233,6 +232,8 @@ namespace YasShop.Infrastructure.EfCore.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -397,10 +398,7 @@ namespace YasShop.Infrastructure.EfCore.Migrations
                 {
                     b.HasOne("YasShop.Domain.Users.RoleAgg.Entities.tblRoles", "tblRoleParent")
                         .WithMany("tblRolesChilds")
-                        .HasForeignKey("ParentId")
-                        .HasPrincipalKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("tblRoleParent");
                 });

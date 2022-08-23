@@ -11,8 +11,8 @@ using YasShop.Infrastructure.EfCore.Contracts;
 
 namespace YasShop.Infrastructure.EfCore.Context
 {
-    public class MainContext : IdentityDbContext<tblUsers, tblRoles, Guid,IdentityUserClaim<Guid>,
-                                tblUserRole,IdentityUserLogin<Guid>,IdentityRoleClaim<Guid>,IdentityUserToken<Guid>>
+    public class MainContext : IdentityDbContext<tblUsers, tblRoles, Guid, IdentityUserClaim<Guid>,
+                                tblUserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
         public MainContext(DbContextOptions<MainContext> options) : base(options)
         {
