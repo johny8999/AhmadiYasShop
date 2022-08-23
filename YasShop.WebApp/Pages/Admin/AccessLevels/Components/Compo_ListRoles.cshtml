@@ -23,7 +23,25 @@ else
         }
     </script>
 }
+<script>
 
+        function onDataBound(ev){
+       var data = this.dataSource.data();
+
+        $.each(data, function (i, row) {
+            if (row.get("HasChild") == false) {
+                $('tr[data-uid="' + row.uid + '"]').find(".k-hierarchy-cell a").remove();
+            }
+        });
+
+
+         var grid = $('#ListRoles').data('kendoGrid');
+        $('.k-master-row').each(function(index) {
+            grid.expandRow(this);
+            grid.collapsRow(this);
+        });
+    }
+</script>
 
 <div class="k-lang">
     @(Html.Kendo()
@@ -41,7 +59,7 @@ else
             a.DataBound("onDataBound");
         })
         .ClientDetailTemplateId("ListAccLevelTmpl")
-        .DataSource(a=>a.Ajax().Model(a=>a.Id(b=>b.Id)).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
+        .DataSource(a=>a.Ajax().Model(a=>a.Id(b=>b.Id)).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData&ParentId=#=Id#").Data("ForgeryToken")))
         )
 </div>
 <script id="ListAccLevelTmpl">
@@ -60,7 +78,7 @@ else
             a.DataBound("onDataBound");
         })
         .ClientDetailTemplateId("ListAccLevelTmpl_Child")
-        .DataSource(a=>a.Ajax().Model(a=>a.Id(b=>b.Id)).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
+              .DataSource(a => a.Ajax().Model(a => a.Id(b => b.Id)).Read(a => a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData&ParentId=#=Id#").Data("ForgeryToken")))
         .ToClientTemplate())
 </script>
 
@@ -79,23 +97,7 @@ else
         .Events(a=>{
             a.DataBound("onDataBound");
         })
-        .DataSource(a=>a.Ajax().Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData").Data("ForgeryToken")))
+              .DataSource(a => a.Ajax().Read(a => a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/Compo/ListRoles?handler=ReadData&ParentId=#=Id#").Data("ForgeryToken")))
         .ToClientTemplate())
 </script>
 
-<script>
-let onDataBound(ev) => {
-    let data = this.dataSource.data();
-    jQuery.each(data, function(i, row) {
-        if (!row.get("HasChild")) {
-            $(`tr[data-uid=${row.uid}]`).find('.k-hierarchy-cell a').remove();
-        }
-    });
-
-     let grid = $('#ListRoles').data('kendoGrid');
-    $('.k-master-row').each(function(index) {
-        grid.expandRow(this);
-        grid.collapsRow(this);
-    });
-}
-</script>

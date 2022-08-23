@@ -106,7 +106,7 @@ public class RoleApplication : IRoleApplication
             List<OutGetAllRolesByParentId> qData = null;
             {
                 qData = await _RoleRepository.GetNoTraking
-                                        .Where(a => Input.ParentId != null ? a.ParentId == Input.ParentId.ToGuid() : true)
+                                        .Where(a =>a.ParentId==(Input.ParentId==null ? null:Input.ParentId.ToGuid()))
                                          .Select(a => new OutGetAllRolesByParentId
                                          {
                                              Id = a.Id.ToString(),

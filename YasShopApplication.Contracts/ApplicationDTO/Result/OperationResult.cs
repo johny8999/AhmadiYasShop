@@ -43,7 +43,7 @@
 
         public OperationResult<T> Succeeded(T _Data)
         {
-            return Succeeded("Operation Was Succeeded", Data);
+            return Succeeded("Operation Was Succeeded", _Data);
         }
         public OperationResult<T> Succeeded(string _Message, T _Data)
         {
