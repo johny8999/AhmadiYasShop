@@ -49,7 +49,7 @@ else
         .Name("ListRoles")
         .DefaultSettings(Localizer)
         .Columns(col=>{
-            col.Bound(a=>a.Id).Sortable(false).Width(50).ClientTemplate("<input #=isSelected(RoleName)# type='checkbox' class='k-checkbox' value='#=RoleName#'/>");
+            col.Bound(a => a.Id).Sortable(false).Width(50).ClientTemplate("<input #=isSelected(RoleName)# type='checkbox' name='Input.Roles' class='k-checkbox' value='#=RoleName#'/>");
             col.Bound(a=>a.PageName).Sortable(false);
             col.Bound(a=>a.RoleName).Sortable(false);
             col.Bound(a=>a.Description).Sortable(false);
@@ -68,7 +68,7 @@ else
         .Name("ListRoles_Child#=Id#")
         .DefaultSettings(Localizer)
         .Columns(col=>{
-            col.Bound(a=>a.Id).Sortable(false).Width(50).ClientTemplate("<input \\#=isSelected(RoleName)\\# type='checkbox' class='k-checkbox' value='\\#=RoleName\\#'/>");
+                col.Bound(a => a.Id).Sortable(false).Width(50).ClientTemplate("<input \\#=isSelected(RoleName)\\# type='checkbox' name='Input.Roles' class='k-checkbox' value='\\#=RoleName\\#'/>");
             col.Bound(a=>a.PageName).Sortable(false);
             col.Bound(a=>a.RoleName).Sortable(false);
             col.Bound(a=>a.Description).Sortable(false);
@@ -88,7 +88,7 @@ else
         .Name("ListRoles_Child#=Id#")
         .DefaultSettings(Localizer)
         .Columns(col=>{
-            col.Bound(a=>a.Id).Sortable(false).Width(50).ClientTemplate("<input \\#=isSelected(RoleName)\\# type='checkbox' class='k-checkbox' value='\\#=RoleName\\#'/>");
+                  col.Bound(a => a.Id).Sortable(false).Width(50).ClientTemplate("<input \\#=isSelected(RoleName)\\# type='checkbox' name='Input.Roles' class='k-checkbox' value='\\#=RoleName\\#'/>");
             col.Bound(a=>a.PageName).Sortable(false);
             col.Bound(a=>a.RoleName).Sortable(false);
             col.Bound(a=>a.Description).Sortable(false);

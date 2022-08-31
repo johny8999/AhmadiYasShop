@@ -106,7 +106,7 @@ public class RoleApplication : IRoleApplication
             List<OutGetAllRolesByParentId> qData = null;
             {
                 qData = await _RoleRepository.GetNoTraking
-                                        .Where(a =>a.ParentId==(Input.ParentId==null ? null:Input.ParentId.ToGuid()))
+                                        .Where(a => a.ParentId == (Input.ParentId == null ? null : Input.ParentId.ToGuid()))
                                          .Select(a => new OutGetAllRolesByParentId
                                          {
                                              Id = a.Id.ToString(),
@@ -146,4 +146,28 @@ public class RoleApplication : IRoleApplication
         }
     }
 
+    public async Task<OperationResult<string>> GetIdByRoleNameAsync(InpGetIdByRoleName Input)
+    {
+        try
+        {
+            #region Validation
+            {
+                Input.CheckModelState(_ServiceProvider);
+            }
+            #endregion Validation
+
+            var _Id = await _RoleRepository.GetNoTraking.Where(a => a.Name == Input.RoleName).Select(a => a.Id.ToString()).SingleOrDefaultAsync();
+            return new OperationResult<string>().Succeeded(_Id);
+        }
+        catch (ArgumentInvalidException ex)
+        {
+            _Logger.Debug(ex);
+            return new OperationResult<string>().Failed(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _Logger.Error(ex);
+            return new OperationResult<string>().Failed("Error500");
+        }
+    }
 }

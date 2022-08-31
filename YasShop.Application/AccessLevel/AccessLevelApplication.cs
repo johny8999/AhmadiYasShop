@@ -10,7 +10,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
+using YasShop.Application.Contracts.ApplicationDTO.Role;
+using YasShop.Application.Roles;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
+using YasShop.Domain.Users.AccessLevelAgg.Entities;
 
 namespace YasShop.Application.AccessLevel
 {
@@ -21,15 +24,17 @@ namespace YasShop.Application.AccessLevel
         private readonly ILocalizer _localizer;
         private readonly IServiceProvider _ServiceProvider;
         private readonly IAccessLevelRoleRepository _AccessLevelRoleRepository;
+        private readonly IRoleApplication _RoleApplication;
         public AccessLevelApplication(IAccessLevelRepository accessLevelRepository,
                                         ILogger logger, IServiceProvider serviceProvider,
-                                         IAccessLevelRoleRepository accessLevelRoleRepository, ILocalizer localizer)
+                                         IAccessLevelRoleRepository accessLevelRoleRepository, ILocalizer localizer, IRoleApplication roleApplication)
         {
             _AccessLevelRepository = accessLevelRepository;
             _Logger = logger;
             _ServiceProvider = serviceProvider;
             _AccessLevelRoleRepository = accessLevelRoleRepository;
             _localizer = localizer;
+            _RoleApplication = roleApplication;
         }
 
         public async Task<string> GetIdByNameAsync(InpGetIdByName input)
@@ -152,7 +157,7 @@ namespace YasShop.Application.AccessLevel
                 if (tAccessLevel is null)
                     return new OperationResult().Failed(_localizer["Id not Found"]);
 
-                if(tAccessLevel.HasUser)
+                if (tAccessLevel.HasUser)
                     return new OperationResult().Failed(_localizer["AccessLevel has User"]);
                 #endregion GetAccessLevel
 
@@ -174,6 +179,51 @@ namespace YasShop.Application.AccessLevel
             {
                 _Logger.Error(ex);
                 return new OperationResult().Failed(_localizer["Error500"]);
+            }
+        }
+
+        public async Task<OperationResult> AddAccessLevelAsync(InpAddAccessLevel Input)
+        {
+            try
+            {
+                #region Validation
+                {
+                    Input.CheckModelState(_ServiceProvider);
+                    if (_AccessLevelRepository.GetNoTraking.Any(a => a.Name == Input.Name))
+                        return new OperationResult().Failed("AccessLevel was existed");
+                }
+                #endregion Validation
+                #region Add AccessLeve by name
+                Guid _AccessLevelId = new Guid().SequentialGuid();
+                {
+                    await _AccessLevelRepository.AddAsync(new tblAccessLevel
+                    {
+                        Id = _AccessLevelId,
+                        Name = Input.Name,
+                    });
+                }
+                #endregion Add AccessLeve by name
+
+                #region Add Access level roles
+                {
+                    await _AccessLevelRoleRepository.AddRangeAsync(Input.Roles.Select(a => new tblAccessLevelRoles
+                    {
+                        Id = new Guid().SequentialGuid(),
+                        AccessLevelId = _AccessLevelId,
+                        RoleId= ( _RoleApplication.GetIdByRoleNameAsync(new InpGetIdByRoleName { RoleName = a })).Result.Data.ToGuid()
+                    })) ;
+                }
+                #endregion Add Access level roles
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return new OperationResult().Failed("Error500");
             }
         }
     }
