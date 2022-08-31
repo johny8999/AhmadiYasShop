@@ -1,6 +1,7 @@
 ﻿using Framework.Domain;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using YasShop.Domain.Users.AccessLevelAgg.Entities;
 
 namespace YasShop.Domain.Users.UserAgg.Entities
@@ -13,7 +14,7 @@ namespace YasShop.Domain.Users.UserAgg.Entities
         public DateTime Date { get; set; }
 
         public virtual tblAccessLevel tblAccessLevel { get; set; }
-
+        public virtual ICollection<tblUserRole> tblUserRole { get; set; }
 
     }
 }

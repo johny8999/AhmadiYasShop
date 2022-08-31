@@ -60,8 +60,8 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             //Add Applications 
-            services.AddScoped<ILanguagesApplication, LanguagesApplication>();
             services.AddScoped<IUserApplication, UserApplication>();
+            services.AddScoped<ILanguagesApplication, LanguagesApplication>();
             services.AddScoped<IAccessLevelApplication, AccessLevelApplication>();
             services.AddScoped<IRoleApplication, RoleApplication>();
 

@@ -193,6 +193,7 @@ namespace YasShop.Application.AccessLevel
                         return new OperationResult().Failed("AccessLevel was existed");
                 }
                 #endregion Validation
+
                 #region Add AccessLeve by name
                 Guid _AccessLevelId = new Guid().SequentialGuid();
                 {
@@ -206,14 +207,16 @@ namespace YasShop.Application.AccessLevel
 
                 #region Add Access level roles
                 {
-                    await _AccessLevelRoleRepository.AddRangeAsync(Input.Roles.Select(a => new tblAccessLevelRoles
+                    await _AccessLevelRoleRepository.AddRangeAsync(Input.Roles.Select(_RoleName => new tblAccessLevelRoles
                     {
                         Id = new Guid().SequentialGuid(),
                         AccessLevelId = _AccessLevelId,
-                        RoleId= ( _RoleApplication.GetIdByRoleNameAsync(new InpGetIdByRoleName { RoleName = a })).Result.Data.ToGuid()
-                    })) ;
+                        RoleId = (_RoleApplication.GetIdByRoleNameAsync(new InpGetIdByRoleName { RoleName = _RoleName })).Result.Data.ToGuid()
+                    }));
                 }
                 #endregion Add Access level roles
+
+                return new OperationResult().Succeeded();
             }
             catch (ArgumentInvalidException ex)
             {

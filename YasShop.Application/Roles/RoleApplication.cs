@@ -11,6 +11,7 @@ using YasShop.Application.Contracts.ApplicationDTO.Role;
 using YasShop.Application.Users;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
 using YasShop.Domain.Users.RoleAgg.Contract;
+using YasShop.Domain.Users.UserAgg.Contracts;
 
 namespace YasShop.Application.Roles;
 
@@ -19,15 +20,15 @@ public class RoleApplication : IRoleApplication
     private readonly ILogger _Logger;
     private readonly IRoleRepository _RoleRepository;
     private readonly IServiceProvider _ServiceProvider;
-    private readonly IUserApplication _UserApplication;
     private readonly IAccessLevelRoleRepository _AccessLevelRoleRepository;
-    public RoleApplication(ILogger logger, IRoleRepository roleRepository, IServiceProvider serviceProvider, IUserApplication userApplication, IAccessLevelRoleRepository accessLevelRoleRepository)
+    private readonly IUserRoleRepository _UserRoleRepository;
+    public RoleApplication(ILogger logger, IRoleRepository roleRepository, IServiceProvider serviceProvider, IAccessLevelRoleRepository accessLevelRoleRepository, IUserRoleRepository userRoleRepository)
     {
         _Logger = logger;
         _RoleRepository = roleRepository;
         _ServiceProvider = serviceProvider;
-        _UserApplication = userApplication;
         _AccessLevelRoleRepository = accessLevelRoleRepository;
+        _UserRoleRepository = userRoleRepository;
     }
 
     public async Task<List<string>> GetRoleByUserAsync(InpGetRoleByUser input)
@@ -38,8 +39,7 @@ public class RoleApplication : IRoleApplication
             input.CheckModelState(_ServiceProvider);
             #endregion Validation
 
-            var qUser = await _UserApplication.FindByIdAsync(input.UserId);
-            return (await _RoleRepository.GetRolesAsync(qUser)).ToList();
+            var qRoles=await _UserRoleRepository.GetNoTraking.Where(a=>a.UserId==input.UserId.ToGuid()).Select(a=>a)
         }
         catch (ArgumentInvalidException ex)
         {

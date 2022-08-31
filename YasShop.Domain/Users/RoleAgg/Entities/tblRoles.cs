@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using YasShop.Domain.Users.AccessLevelAgg.Entities;
+using YasShop.Domain.Users.UserAgg.Entities;
 
 namespace YasShop.Domain.Users.RoleAgg.Entities;
 
@@ -17,5 +18,6 @@ public class tblRoles : IdentityRole<Guid>, IEntity
     public virtual ICollection<tblAccessLevelRoles> tblAccessLevelRoles { get; set; }
 
     public virtual ICollection<tblRoles> tblRolesChilds { get; set; }
+    public virtual ICollection<tblUserRole> tblUserRoles { get; set; }
     public virtual tblRoles tblRoleParent { get; set; }
 }

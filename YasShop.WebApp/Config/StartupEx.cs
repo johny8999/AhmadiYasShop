@@ -93,8 +93,8 @@ namespace YasShop.WebApp.Config
         public static IServiceCollection AddInject(this IServiceCollection services)
         {
             services.AddSingleton<ILocalizer, Localizer>();
-            services.AddScoped<IIpAddressChecker, IpAddressChecker>();
-            services.AddScoped<IMsgBox,MsgBox>();
+            services.AddSingleton<IIpAddressChecker, IpAddressChecker>();
+            services.AddSingleton<IMsgBox,MsgBox>();
             return services;
         }
 
