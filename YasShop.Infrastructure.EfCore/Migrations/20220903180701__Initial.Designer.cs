@@ -12,7 +12,7 @@ using YasShop.Infrastructure.EfCore.Context;
 namespace YasShop.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20220818170140__Initial")]
+    [Migration("20220903180701__Initial")]
     partial class _Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -242,18 +242,23 @@ namespace YasShop.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("YasShop.Domain.Users.UserAgg.Entities.tblUserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RoleId")
+                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("UserId")
+                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
@@ -407,17 +412,21 @@ namespace YasShop.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("YasShop.Domain.Users.UserAgg.Entities.tblUserRole", b =>
                 {
-                    b.HasOne("YasShop.Domain.Users.RoleAgg.Entities.tblRoles", null)
-                        .WithMany()
+                    b.HasOne("YasShop.Domain.Users.RoleAgg.Entities.tblRoles", "tblRole")
+                        .WithMany("tblUserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YasShop.Domain.Users.UserAgg.Entities.tblUsers", null)
-                        .WithMany()
+                    b.HasOne("YasShop.Domain.Users.UserAgg.Entities.tblUsers", "tblUser")
+                        .WithMany("tblUserRole")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("tblRole");
+
+                    b.Navigation("tblUser");
                 });
 
             modelBuilder.Entity("YasShop.Domain.Users.UserAgg.Entities.tblUsers", b =>
@@ -443,6 +452,13 @@ namespace YasShop.Infrastructure.EfCore.Migrations
                     b.Navigation("tblAccessLevelRoles");
 
                     b.Navigation("tblRolesChilds");
+
+                    b.Navigation("tblUserRoles");
+                });
+
+            modelBuilder.Entity("YasShop.Domain.Users.UserAgg.Entities.tblUsers", b =>
+                {
+                    b.Navigation("tblUserRole");
                 });
 #pragma warning restore 612, 618
         }

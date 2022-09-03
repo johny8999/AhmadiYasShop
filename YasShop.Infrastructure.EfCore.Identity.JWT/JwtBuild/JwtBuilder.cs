@@ -54,7 +54,7 @@ namespace YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild
                 #region GetRole
                 List<string> _Roles = null;
                 {
-                    _Roles = await _RoleApplication.GetRoleByUserAsync(new InpGetRoleByUser()
+                    _Roles = await _RoleApplication.GetRoleNameByUserIdAsync(new InpGetRoleNameByUserId()
                     {
                         UserId = UserId
                     });

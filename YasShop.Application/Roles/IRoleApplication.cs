@@ -9,7 +9,7 @@ namespace YasShop.Application.Roles
     {
         Task<OperationResult<List<OutGetAllRolesByParentId>>> GetAllRolesByParentIdAsync(InpGetAllRolesByParentId Input);
         Task<OperationResult<string>> GetIdByRoleNameAsync(InpGetIdByRoleName Input);
-        Task<List<string>> GetRoleByUserAsync(InpGetRoleByUser input);
+        Task<List<string>> GetRoleNameByUserIdAsync(InpGetRoleNameByUserId input);
         Task<OperationResult<List<string>>> GetRoleNamesByAccessLevelIdAsync(InpGetRoleNamesByAccessLevelId Input);
     }
 }

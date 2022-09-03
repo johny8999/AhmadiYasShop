@@ -1,5 +1,6 @@
-﻿@page "/{Culture}/Admin/AccessLevel/Add"
-@model YasShop.WebApp.Pages.Admin.AccessLevels.AddAccessLevelModel
+﻿@page "/{Culture}/Admin/AccessLevel/Edit/{Id}"
+@model YasShop.WebApp.Pages.Admin.AccessLevels.EditAccessLevelModel
+
 @{
     Layout = "~/Pages/shared/_AdminLayout.cshtml";
     ViewData["Title"] = "";
@@ -46,7 +47,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <LoadComponet id="CompoListRoles"
-                                                          url="/@CultureInfo.CurrentCulture.Parent.Name/Admin/AccessLevel/Compo/ListRoles" 
+                                                          url="/@CultureInfo.CurrentCulture.Parent.Name/Admin/AccessLevel/Compo/ListRoles"
                                                           http-context="HttpContext"
                                                           data="new{}"></LoadComponet>
                                         </div>
@@ -71,8 +72,8 @@
     <!-- /.content -->
 </div>
 <script>
-    function GoToList()
-    {
+    function GoToList() {
         location.href = '@ViewData["ReturnUrl"]';
     }
 </script>
+

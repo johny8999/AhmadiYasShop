@@ -1,11 +1,14 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace YasShop.Application.Contracts.ApplicationDTO.Role
 {
     public class InpGetIdByRoleName
     {
+        [Display(Name =nameof(RoleName))]
         [RequiredString]
-        [GUID]
+        [MaxLengthString(100)]
         public string RoleName { get; set; }
     }
 }

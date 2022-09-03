@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.ApplicationDTO.Role;
-using YasShop.Application.Users;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
 using YasShop.Domain.Users.RoleAgg.Contract;
 using YasShop.Domain.Users.UserAgg.Contracts;
@@ -31,15 +30,19 @@ public class RoleApplication : IRoleApplication
         _UserRoleRepository = userRoleRepository;
     }
 
-    public async Task<List<string>> GetRoleByUserAsync(InpGetRoleByUser input)
+    public async Task<List<string>> GetRoleNameByUserIdAsync(InpGetRoleNameByUserId Input)
     {
         try
         {
             #region Validation
-            input.CheckModelState(_ServiceProvider);
+            Input.CheckModelState(_ServiceProvider);
             #endregion Validation
 
-            var qRoles=await _UserRoleRepository.GetNoTraking.Where(a=>a.UserId==input.UserId.ToGuid()).Select(a=>a)
+            return await _UserRoleRepository.GetNoTraking
+                                .Where(a => a.UserId == Input.UserId.ToGuid())
+                                .Select(a => a.tblRole.Name)
+                                .ToListAsync();
+
         }
         catch (ArgumentInvalidException ex)
         {

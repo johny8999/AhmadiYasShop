@@ -5,6 +5,7 @@ using Framework.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using YasShop.Application.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
@@ -30,8 +31,10 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
             _MsgBox = msgBox;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string ReturnUrl=null)
         {
+            ViewData["ReturnUrl"] = ReturnUrl?? $"/{CultureInfo.CurrentCulture.Parent.Name}/Admin/AccessLevel/List";
+
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
@@ -53,7 +56,7 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
                 if (!Result.IsSuccess)
                     return _MsgBox.FailMsg(Result.Message);
 
-                return _MsgBox.SucssessDefultMsg();
+                return _MsgBox.SucssessDefultMsg("GoToList()");
 
             }
             catch (ArgumentInvalidException ex)
