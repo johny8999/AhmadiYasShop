@@ -3,6 +3,7 @@ using Framework.Application.Services.Localizer;
 using Framework.Common.ExMethods;
 using Framework.Common.Utilities.Paging;
 using Framework.Infrastructure;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -227,6 +228,85 @@ namespace YasShop.Application.AccessLevel
             {
                 _Logger.Error(ex);
                 return new OperationResult().Failed("Error500");
+            }
+        }
+
+        public async Task<OperationResult<OutGetAccessLevelForEdit>> GetAccessLevelForEditAsync(InpGetAccessLevelForEdit Input)
+        {
+            try
+            {
+                #region Validation
+                {
+                    Input.CheckModelState(_ServiceProvider);
+                }
+                #endregion Validation
+
+                //var _tAccLevel =await _AccessLevelRepository.GetById(Input.Id);
+                var _tAccLevel = await _AccessLevelRepository.GetNoTraking
+                    .Where(a => a.Id == Input.Id.ToGuid())
+                    //.Select(a=>a.Name)
+                    .ProjectToType<OutGetAccessLevelForEdit>()
+                    .SingleOrDefaultAsync();
+
+                if (_tAccLevel is null)
+                    return new OperationResult<OutGetAccessLevelForEdit>().Failed("AccessLevel is invlid");
+
+                return new OperationResult<OutGetAccessLevelForEdit>().Succeeded(_tAccLevel.Adapt<OutGetAccessLevelForEdit>());
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex.Message);
+                return new OperationResult<OutGetAccessLevelForEdit>().Failed("Error500");
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex.Message);
+                return new OperationResult<OutGetAccessLevelForEdit>().Failed("Error500");
+            }
+        }
+
+        public async Task<OperationResult> EditAccessLevelAsync(InpEditAccessLevel Input)
+        {
+            try
+            {
+                #region Validation
+                {
+                    Input.CheckModelState(_ServiceProvider);
+                }
+                #endregion Validation
+
+                #region UpdateAccessLevel
+                {
+                    var _tAccessLevel = await _AccessLevelRepository.GetById(Input.Id);
+
+                    _tAccessLevel.Name = Input.Name;
+
+                    await _AccessLevelRepository.UpdateAsync(_tAccessLevel);
+                }
+                #endregion UpdateAccessLevel
+
+                #region UpdateAccessLevelRoles
+                {
+
+                }
+                #endregion UpdateAccessLevelRoles
+
+                #region UpdateUserRole
+                {
+
+                }
+                #endregion UpdateUserRole
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex.Message);
+                return new OperationResult().Failed("Error500");
+
             }
         }
     }

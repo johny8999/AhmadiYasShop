@@ -1,5 +1,6 @@
 using Framework.Application.Exceptions;
 using Framework.Application.Services.Localizer;
+using Framework.Common.ExMethods;
 using Framework.Infrastructure;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
@@ -40,7 +41,7 @@ public class Compo_ListRolesModel : PageModel
         {
             #region Validation
             {
-
+                Input.CheckModelState(_ServiceProvider);
             }
             #endregion Validation
 
