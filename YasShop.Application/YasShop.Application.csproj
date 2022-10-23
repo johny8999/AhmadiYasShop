@@ -13,8 +13,4 @@
     <ProjectReference Include="..\YasShopApplication.Contracts\YasShop.Application.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UserRole\" />
-  </ItemGroup>
-
 </Project>

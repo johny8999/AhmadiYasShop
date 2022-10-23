@@ -5,7 +5,7 @@ using YasShop.Domain.Users.RoleAgg.Entities;
 
 namespace YasShop.Domain.Users.UserAgg.Entities
 {
-    public class tblUserRole : IdentityUserRole<Guid>, IEntity
+    public  class tblUserRole : IdentityUserRole<Guid>, IEntity
     {
         public Guid Id { get; set; }
 

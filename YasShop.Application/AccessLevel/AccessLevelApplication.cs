@@ -287,13 +287,36 @@ namespace YasShop.Application.AccessLevel
 
                 #region UpdateAccessLevelRoles
                 {
+                    #region Delete Old AccessLevel Roles
+                    {
+                        var qAccessLevelRoles = await _AccessLevelRoleRepository.GetNoTraking
+                                                .Where(a => a.AccessLevelId == Input.Id.ToGuid())
+                                                .ToListAsync();
+                        await _AccessLevelRoleRepository.DeleteRangeAsync(qAccessLevelRoles);
+                    }
+                    #endregion Delete Old AccessLevel Roles
 
+                    #region Add Old AccessLevel Roles
+                    {
+                        await _AccessLevelRoleRepository.AddRangeAsync(Input.RoleNames.Select(a => new tblAccessLevelRoles
+                        {
+                            Id = new Guid().SequentialGuid(),
+                            AccessLevelId = Input.Id.ToGuid(),
+                            RoleId = _RoleApplication.GetIdByRoleNameAsync(new InpGetIdByRoleName
+                            {
+                                RoleName = a
+                            }).Result.Data.ToGuid()
+                        }));
+                    }
+                    #endregion Add Old AccessLevel Roles
                 }
                 #endregion UpdateAccessLevelRoles
 
                 #region UpdateUserRole
                 {
-
+                    var qAccessLevelRole = await _AccessLevelRoleRepository.GetNoTraking
+                                                    .Where(a => a.Id == Input.Id.ToGuid())
+                                                    .ToListAsync();
                 }
                 #endregion UpdateUserRole
             }
