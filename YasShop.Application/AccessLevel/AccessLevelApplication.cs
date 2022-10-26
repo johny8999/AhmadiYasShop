@@ -296,7 +296,7 @@ namespace YasShop.Application.AccessLevel
                     }
                     #endregion Delete Old AccessLevel Roles
 
-                    #region Add Old AccessLevel Roles
+                    #region Add new AccessLevel Roles
                     {
                         await _AccessLevelRoleRepository.AddRangeAsync(Input.RoleNames.Select(a => new tblAccessLevelRoles
                         {
@@ -308,17 +308,21 @@ namespace YasShop.Application.AccessLevel
                             }).Result.Data.ToGuid()
                         }));
                     }
-                    #endregion Add Old AccessLevel Roles
+                    #endregion Add new AccessLevel Roles
                 }
                 #endregion UpdateAccessLevelRoles
 
                 #region UpdateUserRole
                 {
                     var qAccessLevelRole = await _AccessLevelRoleRepository.GetNoTraking
-                                                    .Where(a => a.Id == Input.Id.ToGuid())
+                                                    .Where(a => a.AccessLevelId == Input.Id.ToGuid())
+                                                    .Select(a => a.RoleId)
                                                     .ToListAsync();
+                    var qUserId = await _AccessLevelRoleRepository.GetNoTraking.Where(a => a.== Input.Id);
                 }
                 #endregion UpdateUserRole
+
+
             }
             catch (ArgumentInvalidException ex)
             {
@@ -332,5 +336,33 @@ namespace YasShop.Application.AccessLevel
 
             }
         }
+
+        public async Task<OperationResult<List<string>>> GetUserIdsByAccessLevelIds(InpGetUserIdsByAccessLevelId Input)
+        {
+            try
+            {
+                #region Validation
+                {
+                    Input.CheckModelState(_ServiceProvider);
+                }
+                #endregion Validation
+
+                var Result = await _AccessLevelRepository.GetNoTraking
+                                        .Where(a => a.Id == Input.AccessLevelIds.ToGuid())
+                                        .SelectMany(a => a.tblUsers.Select(b => b.Id.ToString()))
+                                        .ToListAsync();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return new OperationResult<List<string>>().Failed(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                _Logger.Error(ex);
+                return new OperationResult<List<string>>().Failed(ex.Message);
+            }
+        }
+
     }
 }

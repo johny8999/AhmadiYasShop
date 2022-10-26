@@ -2,7 +2,9 @@
 {
     public sealed class InpUpdateUserRolesDto
     {
-        public string Id { get; set; }
+        public string UserId { get; set; }
+
+        public string[] RolesId { get; set; }
 
     }
 }

@@ -21,6 +21,7 @@ namespace Framework.Common.DataAnnotations.Strings
 
                 if (value is not string)
                     return ValidationResult.Success;
+
                 if (value.ToString().Contains(','))
                 {
                     foreach (var item in value.ToString().Split(','))

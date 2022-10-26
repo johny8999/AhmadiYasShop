@@ -1,6 +1,7 @@
 ﻿using Framework.Application.Exceptions;
 using Framework.Common.ExMethods;
 using Framework.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using YasShop.Domain.Users.UserAgg.Entities;
 
 namespace YasShop.Application.UserRole
 {
-    public sealed class UserRoleApplication: IUserRoleApplication
+    public sealed class UserRoleApplication : IUserRoleApplication
     {
         private readonly ILogger _Logger;
         private readonly IServiceProvider _ServiceProvider;
@@ -33,9 +34,31 @@ namespace YasShop.Application.UserRole
                 }
                 #endregion Validation
 
-                var qDeleteUserRole = await _UserRoleRepository.GetNoTraking.Where(a => a.Id == Input.Id.ToGuid()).SingleOrDefault();
+                #region Delete Old User Roles
+                {
+                    var qUserRole = await _UserRoleRepository.GetNoTraking
+                            .Where(a => a.UserId == Input.UserId.ToGuid())
+                            .ToArrayAsync();
+
+                    await _UserRoleRepository.DeleteRangeAsync(qUserRole);
+
+                }
+                #endregion Delete Old User Roles
+
+                #region Add New User Role
+                {
+                    await _UserRoleRepository.AddRangeAsync(Input.RolesId.Select(a => new tblUserRole
+                    {
+                        Id=new Guid().SequentialGuid(),
+                        RoleId=a.ToGuid(),
+                        UserId=Input.UserId.ToGuid()
+                    }));
+                }
+                #endregion Add New User Role
+
+                return new OperationResult().Succeeded();
             }
-            catch(ArgumentInvalidException ex)
+            catch (ArgumentInvalidException ex)
             {
                 return new OperationResult().Failed(ex.Message);
             }
@@ -44,6 +67,8 @@ namespace YasShop.Application.UserRole
                 _Logger.Error(ex);
                 return new OperationResult().Failed("Error500");
             }
+
+
         }
     }
 }

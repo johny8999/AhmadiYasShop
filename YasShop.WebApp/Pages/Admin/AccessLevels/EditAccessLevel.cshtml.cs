@@ -78,7 +78,7 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
             }
             catch (Exception ex)
             {
-
+                return default;
             }
         }
 
