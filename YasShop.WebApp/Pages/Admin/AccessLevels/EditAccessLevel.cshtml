@@ -5,6 +5,8 @@
 @{
     Layout = "~/Pages/shared/_AdminLayout.cshtml";
     ViewData["Title"] = "";
+    var c = Model;
+    var a = Model.Input;
 }
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -51,7 +53,7 @@
                                             <LoadComponet id="CompoListRoles"
                                                           url="/@CultureInfo.CurrentCulture.Parent.Name/Admin/AccessLevel/Compo/ListRoles"
                                                           http-context="HttpContext"
-                                                          data="new viCompoListRoles{AccessLevelId=Model.Input.Id}"></LoadComponet>
+                                                          data='new viCompoListRoles{AccessLevelId=Model.Input.Id}'></LoadComponet>
                                         </div>
                                     </div>
                                 </div>

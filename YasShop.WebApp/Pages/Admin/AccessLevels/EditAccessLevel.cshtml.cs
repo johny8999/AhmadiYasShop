@@ -74,7 +74,13 @@ namespace YasShop.WebApp.Pages.Admin.AccessLevels
                 }
                 #endregion Validation
 
-                return Page();
+
+                var Result = await _AccessLevelApplication.EditAccessLevelAsync(Input.Adapt<InpEditAccessLevel>());
+                if (!Result.IsSuccess)
+                    return _MsgBox.FailMsg(_Localizer[Result.Message]);
+
+                return _MsgBox.SucssessMsg(_Localizer[Result.Message]);
+
             }
             catch (Exception ex)
             {

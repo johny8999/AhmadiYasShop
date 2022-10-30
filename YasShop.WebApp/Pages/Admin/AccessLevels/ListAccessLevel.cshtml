@@ -45,9 +45,9 @@
                                 col.Bound(a=>a.UserCount).Sortable(false).Width(150);
                                 col.Bound(a=>a).Width(50).Title(" ")
                                 .ClientHeaderTemplate("<button class='btn btn-success btn-sm' onclick='add()'><i class='fa fa-plus'></i></button>")
-                                .ClientTemplateId("DropDownCmd");
-                                })
-                                .DataSource(ds=>ds.Ajax().PageSize(10).Read(a=>a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/List?handler=ReadData").Data("ForgeryToken")))
+                                .ClientTemplateId("DropDownCmd");}
+                                    ).
+                                    DataSource(ds => ds.Ajax().PageSize(10).Read(a => a.Url($"/{ViewData["Culture"]}/Admin/AccessLevel/List?handler=ReadData").Data("ForgeryToken")))
 
                                 )
                             </div>
@@ -61,17 +61,20 @@
     <!-- /.content -->
 </div>
 
-<script id="DropDownCmd">
-    <div class="dropdown">
-        <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
-            <i class="fa fa-bars fs-16 text-dark"> </i>
+<script id="DropDownCmd"></script>
+<div class="dropdown">
+    <a href="javascript:void(0)" class="icon" data-toggle="dropdown">
+        <i class="fa fa-bars fs-16 text-dark"> </i>
+    </a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#">
+            <i class="dropdown-icon fa fa-edit "> </i>@Localizer["Edit"]
         </a>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="/@ViewData["Culture"]/Admin/AccessLevel/Edit/#:Id#"> <i class="dropdown-icon fa fa-edit "> </i>@Localizer["Edit"]</a>
-            <a class="dropdown-item" onclick="removeData('/@ViewData["Culture"]/Admin/AccessLevel/List?handler=Delete','#:Id#')"> <i class="dropdown-icon fa fa-trash "> </i>@Localizer["Delete"]</a>
-        </div>
+        <a class="dropdown-item" onclick="removeData('/@ViewData["Culture"]/Admin/AccessLevel/List?handler=Delete','#:Id#')">
+            <i class="dropdown-icon fa fa-trash "> </i>@Localizer["Delete"]
+        </a>
     </div>
-</script>
+</div>
 <script>
     function refreshGrid() {
         refreshDataGrid('ListAccessLevel');

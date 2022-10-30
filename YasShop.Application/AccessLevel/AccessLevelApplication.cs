@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.ApplicationDTO.Role;
+using YasShop.Application.Contracts.ApplicationDTO.UserRole;
 using YasShop.Application.Roles;
+using YasShop.Application.UserRole;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
 using YasShop.Domain.Users.AccessLevelAgg.Entities;
 
@@ -26,9 +28,10 @@ namespace YasShop.Application.AccessLevel
         private readonly IServiceProvider _ServiceProvider;
         private readonly IAccessLevelRoleRepository _AccessLevelRoleRepository;
         private readonly IRoleApplication _RoleApplication;
+        private readonly IUserRoleApplication _UserRoleApplication;
         public AccessLevelApplication(IAccessLevelRepository accessLevelRepository,
                                         ILogger logger, IServiceProvider serviceProvider,
-                                         IAccessLevelRoleRepository accessLevelRoleRepository, ILocalizer localizer, IRoleApplication roleApplication)
+                                         IAccessLevelRoleRepository accessLevelRoleRepository, ILocalizer localizer, IRoleApplication roleApplication, IUserRoleApplication userRoleApplication)
         {
             _AccessLevelRepository = accessLevelRepository;
             _Logger = logger;
@@ -36,6 +39,7 @@ namespace YasShop.Application.AccessLevel
             _AccessLevelRoleRepository = accessLevelRoleRepository;
             _localizer = localizer;
             _RoleApplication = roleApplication;
+            _UserRoleApplication = userRoleApplication;
         }
 
         public async Task<string> GetIdByNameAsync(InpGetIdByName input)
@@ -298,7 +302,7 @@ namespace YasShop.Application.AccessLevel
 
                     #region Add new AccessLevel Roles
                     {
-                        await _AccessLevelRoleRepository.AddRangeAsync(Input.RoleNames.Select(a => new tblAccessLevelRoles
+                        await _AccessLevelRoleRepository.AddRangeAsync(Input.Roles.Select(a => new tblAccessLevelRoles
                         {
                             Id = new Guid().SequentialGuid(),
                             AccessLevelId = Input.Id.ToGuid(),
@@ -316,12 +320,27 @@ namespace YasShop.Application.AccessLevel
                 {
                     var qAccessLevelRole = await _AccessLevelRoleRepository.GetNoTraking
                                                     .Where(a => a.AccessLevelId == Input.Id.ToGuid())
-                                                    .Select(a => a.RoleId)
+                                                    .Select(a => a.RoleId.ToString())
                                                     .ToListAsync();
-                    var qUserId = await _AccessLevelRoleRepository.GetNoTraking.Where(a => a.== Input.Id);
+
+                    var Result = await GetUserIdsByAccessLevelIds(new InpGetUserIdsByAccessLevelId { AccessLevelIds = Input.Id });
+
+                    if (!Result.IsSuccess)
+                        return new OperationResult().Failed(Result.Message);
+
+                    foreach (var item in Result.Data) //Data:UserId
+                    {
+                        var ResultUpdateUserRoles = await _UserRoleApplication.UpdateUserRoles(new InpUpdateUserRolesDto
+                        {
+                            UserId = item,
+                           // RolesId = qAccessLevelRole.Select(a => a.ToString()).ToArray()
+                           RolesId=qAccessLevelRole.ToArray()
+                        });
+                    }
                 }
                 #endregion UpdateUserRole
 
+                return new OperationResult().Succeeded();
 
             }
             catch (ArgumentInvalidException ex)
@@ -351,13 +370,14 @@ namespace YasShop.Application.AccessLevel
                                         .Where(a => a.Id == Input.AccessLevelIds.ToGuid())
                                         .SelectMany(a => a.tblUsers.Select(b => b.Id.ToString()))
                                         .ToListAsync();
+                return new OperationResult<List<string>>().Succeeded(Result);
             }
             catch (ArgumentInvalidException ex)
             {
                 _Logger.Debug(ex);
                 return new OperationResult<List<string>>().Failed(ex.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _Logger.Error(ex);
                 return new OperationResult<List<string>>().Failed(ex.Message);

@@ -8,6 +8,7 @@ using YasShop.Application.AccessLevel;
 using YasShop.Application.Common.ExMethod;
 using YasShop.Application.Languages;
 using YasShop.Application.Roles;
+using YasShop.Application.UserRole;
 using YasShop.Application.Users;
 using YasShop.Domain.Region.LanguageAgg.Contract;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
@@ -64,6 +65,7 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddScoped<ILanguagesApplication, LanguagesApplication>();
             services.AddScoped<IAccessLevelApplication, AccessLevelApplication>();
             services.AddScoped<IRoleApplication, RoleApplication>();
+            services.AddScoped<IUserRoleApplication, UserRoleApplication>();
 
             //Seeds
             services.AddTransient<ISeed_Language, Seed_Language>();

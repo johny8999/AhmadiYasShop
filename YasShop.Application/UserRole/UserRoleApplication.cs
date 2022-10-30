@@ -49,9 +49,9 @@ namespace YasShop.Application.UserRole
                 {
                     await _UserRoleRepository.AddRangeAsync(Input.RolesId.Select(a => new tblUserRole
                     {
-                        Id=new Guid().SequentialGuid(),
-                        RoleId=a.ToGuid(),
-                        UserId=Input.UserId.ToGuid()
+                        Id = new Guid().SequentialGuid(),
+                        RoleId = a.ToGuid(),
+                        UserId = Input.UserId.ToGuid()
                     }));
                 }
                 #endregion Add New User Role

@@ -10,10 +10,12 @@ namespace YasShop.Application.AccessLevel
     {
         Task<OperationResult> AddAccessLevelAsync(InpAddAccessLevel Input);
         Task<OperationResult> DeleteAccessLevelAsync(InputDeleteAccessLevel input);
+        Task<OperationResult> EditAccessLevelAsync(InpEditAccessLevel Input);
         Task<(OutPagingData PageData, List<OutGetAccessLevelForAdmin> LstItems)> GetAccessLevelForAdminAsync(InpGetAccessLevelForAdmin Input);
         Task<OperationResult<OutGetAccessLevelForEdit>> GetAccessLevelForEditAsync(InpGetAccessLevelForEdit Input);
         Task<string> GetAccessLevelIdbyNameAsync(InpGetAccessLevelIdbyName Input);
         Task<string> GetIdByNameAsync(InpGetIdByName input);
+        Task<OperationResult<List<string>>> GetUserIdsByAccessLevelIds(InpGetUserIdsByAccessLevelId Input);
         Task<List<string>> GetUserRoleByAccessId(InpGetUserRoleByAccessId Input);
     }
 }

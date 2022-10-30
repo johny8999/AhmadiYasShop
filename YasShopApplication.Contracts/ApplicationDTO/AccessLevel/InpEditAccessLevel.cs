@@ -14,6 +14,6 @@ namespace YasShop.Application.Contracts.ApplicationDTO.AccessLevel
 
         public string Name { get; set; }
 
-        public IEnumerable<string> RoleNames { get; set; }
+        public IEnumerable<string> Roles { get; set; }
     }
 }
