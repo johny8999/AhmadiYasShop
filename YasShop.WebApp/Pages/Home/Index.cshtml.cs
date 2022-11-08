@@ -21,9 +21,7 @@ namespace YasShop.WebApp.Pages.Home
         {
             try
             {
-                int a = 10;
-                int b = 0;
-                int c = a / b;
+              
             }
             catch (Exception ex)
             {

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace YasShop.WebApp.Authentication
 {
-    public static class ConfiguegIdentityJWT
+    public static class ConfiguegIdentityJwt
     {
         //describe about token
         public static void AddJwtAuthentication(this IServiceCollection services)
@@ -40,9 +40,9 @@ namespace YasShop.WebApp.Authentication
         }
 
         //use token
-        public static void UseJWTAuthentication(this IApplicationBuilder app,string SecretKey,string CookieName)
+        public static void UseJwtAuthentication(this IApplicationBuilder app,string secretKey,string cookieName)
         {
-            app.UseMiddleware<JwtAuthenticationMiddleware>(CookieName, SecretKey);
+            app.UseMiddleware<JwtAuthenticationMiddleware>(cookieName, secretKey);
             app.UseAuthentication();
             app.UseAuthorization();
         }

@@ -10,6 +10,7 @@ namespace YasShop.Application.Users
         Task<OperationResult> ChangeUserAccessLevelAsync(InpChangeUserAccessLevel Input);
         Task<OperationResult> ChangeUserRoleByAccessLevelIdAsync(InpChangeUserRoleByAccessLevelId Input);
         Task<OperationResult> EmailConfirmationAsync(InpEmailConfirmation Input);
+        Task<tblUsers> FindByEmailAsync(string Email);
         Task<tblUsers> FindByIdAsync(string userId);
         Task<OperationResult> ForgetPasswordAsync(InpForgetPassword Input);
         Task<OutIGetAllDetailsForUser> GetAllDetailsForUserAsync(InpGetAllDetailsForUser input);

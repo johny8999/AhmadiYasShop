@@ -67,12 +67,12 @@ WebApplication app = null;
 
     app.UseRouting();
     app.UseCustomLocalization();
-    app.UseJWTAuthentication(AuthConst.SecretKey, AuthConst.CookieName);
+    app.UseJwtAuthentication(AuthConst.SecretKey, AuthConst.CookieName);
 
     app.UseMiddleware<RedirectToValidLangMiddleware>();
+    app.UseMiddleware<RefreshtTokenMiddleWare>();
     app.UseEndpoints(endpoints =>
     {
-
         endpoints.MapRazorPages();
     });
 }

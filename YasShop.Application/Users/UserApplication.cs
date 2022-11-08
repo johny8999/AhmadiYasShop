@@ -44,6 +44,10 @@ namespace YasShop.Application.Users
         {
             return await _UserRepository.FindByIdAsync(userId);
         }
+        public async Task<tblUsers> FindByEmailAsync(string Email)
+        {
+            return await _UserRepository.FindByEmailAsync(Email);
+        }
         public async Task<OperationResult> RegisterByEmailPasswordAsync(InpRegisterByEmailPassword Input)
         {
 
