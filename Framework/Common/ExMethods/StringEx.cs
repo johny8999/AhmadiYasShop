@@ -45,6 +45,10 @@ namespace Framework.Common.ExMethods
             return Encrypt;
         }
 
+        public static string AesKeyGenerator(this string input)
+        {
+            return EncryptProvider.CreateAesKey().Key;
+        }
         /// <summary>
         /// رمز گشایی متن
         /// </summary>

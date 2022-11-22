@@ -335,6 +335,7 @@ namespace YasShop.Application.Users
                 var qUser = await _UserRepository.FindByEmailAsync(Input.Email);
                 if (qUser is null)
                     return new OperationResult().Failed(_Localizer["Username or password is incorect"]);
+
                 var _Result = await LoginAsync(new InpLogin() { UserId = qUser.Id.ToString(), Password = Input.Password });
                 if (_Result.IsSuccess)
                     return _Result;

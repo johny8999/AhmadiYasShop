@@ -1,4 +1,5 @@
-﻿using Framework.Common.ExMethods;
+﻿using Framework.Application.Services.Localizer;
+using Framework.Common.ExMethods;
 using Framework.Const;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,13 @@ public class AuthController : Controller
     private readonly IUserApplication _userApplication;
     private readonly IJwtBuilder _jwtBuilder;
     private readonly IServiceProvider _serviceProvider;
-    public AuthController(IUserApplication userApplication, IJwtBuilder jwtBuilder, IServiceProvider serviceProvider)
+    private readonly ILocalizer _localizer;
+    public AuthController(IUserApplication userApplication, IJwtBuilder jwtBuilder, IServiceProvider serviceProvider, ILocalizer localizer)
     {
         _userApplication = userApplication;
         _jwtBuilder = jwtBuilder;
         _serviceProvider = serviceProvider;
+        _localizer = localizer;
     }
 
     [HttpPost]
@@ -38,17 +41,18 @@ public class AuthController : Controller
     public async Task<JsonResult> LogInAsync([FromForm] InpLoginByEmailPasswordDto input)
     {
         var qResult = await _userApplication.LoginByEmailPasswordAsync(input.Adapt<InpLoginByEmailPassword>());
-        if (qResult.IsSuccess)
-        {
-            string RandomKey = string.Empty.AesKeyGenerator();
-            string Token = (await _jwtBuilder.CreateTokenAsync(qResult.Message)).AesEncrypt(RandomKey);
-            string RefreshToken = RandomKey.AesEncrypt(AuthConst.SecretKey);
-            return new JsonResult(
-                new OperationResult<(string Token, string RefreshToken)>().Succeeded(200, "Success",
-                    (Token, RefreshToken)));
-        }
+        if (!qResult.IsSuccess)
+            return new JsonResult(new OperationResult().Failed(400, _localizer[qResult.Message]));
 
-        return new JsonResult(new OperationResult().Failed(400, qResult.Message));
+        string RandomKey = string.Empty.AesKeyGenerator();
+        string Token = (await _jwtBuilder.CreateTokenAsync(qResult.Message)).AesEncrypt(RandomKey);
+        string RefreshToken = RandomKey.AesEncrypt(AuthConst.SecretKey);
+        return new JsonResult(
+            new OperationResult<(string Token, string RefreshToken)>().Succeeded(200, "Success",
+                (Token, RefreshToken)));
+
+
+
     }
 
     [HttpPost]

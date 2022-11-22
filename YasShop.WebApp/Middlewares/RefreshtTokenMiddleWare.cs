@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
+using YasShop.WebApp.Models.RefreshTokens;
 
 namespace YasShop.WebApp.Middlewares;
 
@@ -21,10 +22,14 @@ public class RefreshtTokenMiddleWare
     {
         if (context.User.Identity.IsAuthenticated)
         {
-            var _JwtBuilder = context.RequestServices.GetService<IJwtBuilder>();
             string UserId = context.User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(b => b.Value).SingleOrDefault();
-            string Token = await _JwtBuilder.CreateTokenAsync(UserId);
-            context.Response.CreateAuthCookies(Token, true);
+            if (RefreshToken.IsInList(UserId))
+            {
+                var _JwtBuilder = context.RequestServices.GetService<IJwtBuilder>();
+                string Token = await _JwtBuilder.CreateTokenAsync(UserId);
+                context.Response.CreateAuthCookies(Token, true);
+                RefreshToken.RemoveUserId(UserId);
+            }
         }
         await _next(context);
     }

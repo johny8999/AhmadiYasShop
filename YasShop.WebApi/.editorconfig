@@ -1,0 +1,5 @@
+[*.cs]
+
+# IDE0008: Use explicit type
+dotnet_diagnostic.CS8602.severity = silent
+dotnet_diagnostic.CS8600.severity = silent

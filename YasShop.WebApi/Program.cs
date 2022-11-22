@@ -4,7 +4,6 @@ using YasShop.Infrastructure.Logger.SeriLoger;
 using YasShop.Infrastructure.Seed.Base.Main;
 using YasShop.WebApp.Authentication;
 using YasShop.WebApp.Config;
-using YasShop.WebApp.Middlewares;
 using ILogger = Framework.Infrastructure.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,9 +16,8 @@ else
 {
     builder.Host.UseSerilog_SqlServer();
 }
-
-builder.Services.AddAntiforgery(a => a.HeaderName = "XSRF-TOKEN");
-builder.Services.AddControllers().AddCustomViewLocalization()
+builder.Services.AddCustomLocalization();
+builder.Services.AddControllers().AddCustomViewLocalization("Localization/Resource")
     .AddCustomDataAnnotationLocalization(builder.Services)
     .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
         new Newtonsoft.Json.Serialization.DefaultContractResolver());
@@ -30,6 +28,7 @@ builder.Services.Config();
 builder.Services.AddInject();
 
 builder.Services.AddCustomIdentity();
+
 builder.Services.AddJwtAuthentication();
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -48,10 +47,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<RefreshtTokenMiddleWare>();
-app.UseHttpsRedirection();
+
 app.UseRouting();
-app.UseCustomLocalization();
 app.UseCustomLocalization();
 app.UseJwtAuthentication(AuthConst.SecretKey, AuthConst.CookieName);
 app.UseAuthorization();

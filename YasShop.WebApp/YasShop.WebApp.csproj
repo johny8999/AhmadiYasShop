@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Authentication\JwtBuild\**" />
+    <Content Remove="Authentication\JwtBuild\**" />
+    <EmbeddedResource Remove="Authentication\JwtBuild\**" />
+    <None Remove="Authentication\JwtBuild\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
@@ -35,8 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authentication\JwtBuild\" />
-    <Folder Include="Models\" />
     <Folder Include="Pages\User\" />
     <Folder Include="wwwroot\admin\" />
     <Folder Include="wwwroot\main\fonts\" />

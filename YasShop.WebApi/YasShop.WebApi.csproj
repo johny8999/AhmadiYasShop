@@ -9,12 +9,24 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.11" />
+        <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3-beta1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\YasShop.Application\YasShop.Application.csproj" />
-      <ProjectReference Include="..\YasShop.WebApp\YasShop.WebApp.csproj" />
+      <ProjectReference Include="..\YasShop.Infrastructure.core\YasShop.Infrastructure.Core.csproj" />
+      <ProjectReference Include="..\YasShop.Infrastructure.Logger.SeriLoger\YasShop.Infrastructure.Logger.SeriLoger.csproj" />
+      <ProjectReference Include="..\YasShop.Infrastructure.Seed\YasShop.Infrastructure.Seed.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EditorConfigFiles Remove="D:\MY Files\YasShop\Project\BackEnd\AhmadiYasShop\YasShop.WebApi\.editorconfig" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="D:\MY Files\YasShop\Project\BackEnd\AhmadiYasShop\YasShop.WebApi\.editorconfig" />
     </ItemGroup>
 
 </Project>
