@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace YasShop.WebApp.Localization
+namespace YasShop.WebApi.Localization
 {
     public class FactoryLocalizer
     {

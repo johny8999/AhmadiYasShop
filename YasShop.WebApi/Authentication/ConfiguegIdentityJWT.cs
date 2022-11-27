@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 
-namespace YasShop.WebApp.Authentication
+namespace YasShop.WebApi.Authentication
 {
     public static class ConfiguegIdentityJwt
     {
@@ -40,7 +40,7 @@ namespace YasShop.WebApp.Authentication
         }
 
         //use token
-        public static void UseJwtAuthentication(this IApplicationBuilder app,string secretKey,string cookieName)
+        public static void UseJwtAuthentication(this IApplicationBuilder app, string secretKey, string cookieName)
         {
             app.UseMiddleware<JwtAuthenticationMiddleware>(cookieName, secretKey);
             app.UseAuthentication();

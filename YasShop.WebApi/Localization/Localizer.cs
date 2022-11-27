@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using YasShop.WebApp.Localization.Resources;
+using YasShop.WebApi.Localization.Resources;
 
-namespace YasShop.WebApp.Localization
+namespace YasShop.WebApi.Localization
 {
     //توضیح داده شود
     public class Localizer : ILocalizer

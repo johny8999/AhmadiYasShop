@@ -1,11 +1,14 @@
 ﻿using Framework.Application.Exceptions;
 using Framework.Application.Services.Email;
 using Framework.Application.Services.Localizer;
+using Framework.Application.Services.SMS;
 using Framework.Common.ExMethods;
 using Framework.Const;
 using Framework.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NETCore.Encrypt.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net;
@@ -27,10 +30,11 @@ namespace YasShop.Application.Users
         private readonly IUserRepository _UserRepository;
         private readonly IAccessLevelApplication _AccessLevelApplication;
         private readonly IEmailSender _EmailSender;
+        private readonly ISmsSender _SmsSender;
 
 
         public UserApplication(ILogger logger, IServiceProvider serviceProvider, ILocalizer localizer,
-            IUserRepository userRepository, IAccessLevelApplication accessLevelApplication, IEmailSender emailSender)
+            IUserRepository userRepository, IAccessLevelApplication accessLevelApplication, IEmailSender emailSender, ISmsSender smsSender)
         {
             _Logger = logger;
             _ServiceProvider = serviceProvider;
@@ -38,6 +42,7 @@ namespace YasShop.Application.Users
             _UserRepository = userRepository;
             _AccessLevelApplication = accessLevelApplication;
             _EmailSender = emailSender;
+            _SmsSender=smsSender;
         }
 
         public async Task<tblUsers> FindByIdAsync(string userId)
@@ -451,7 +456,7 @@ namespace YasShop.Application.Users
 
                     if (!qUser.IsActive)
                         return new OperationResult().Failed("Email not found");
-                    
+
                 }
                 #endregion CheckUser
 
@@ -459,7 +464,7 @@ namespace YasShop.Application.Users
                 string Token = null;
                 {
                     Token = await _UserRepository.GeneratePasswordResetTokenAsync(qUser);
-                    Token = qUser.Id +", "+Token ;
+                    Token = qUser.Id +", "+Token;
                     Token = Token.AesEncrypt(AuthConst.SecretKey);
                     Token= WebUtility.UrlEncode(Token);
                 }
@@ -525,14 +530,85 @@ namespace YasShop.Application.Users
 
                 #region Reset password
                 {
-                   var _Result= await _UserRepository.ResetPasswordAsync(qUser, Token, Input.Password);
+                    var _Result = await _UserRepository.ResetPasswordAsync(qUser, Token, Input.Password);
                     if (_Result.Succeeded)
                         return new OperationResult().Succeeded(_Localizer["Your password has been changed successly"]);
 
                     else
-                        return new OperationResult().Failed(String.Join(',',_Result.Errors.Select(a=>a.Description)));
+                        return new OperationResult().Failed(String.Join(',', _Result.Errors.Select(a => a.Description)));
                 }
                 #endregion Reset password
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
+        }
+
+        public async Task<OperationResult> LoginByPhoneNumberStep1Async(InpLoginByPhoneNumberStep1 Input)
+        {
+            try
+            {
+                #region Validation
+                Input.CheckModelState(_ServiceProvider);
+                #endregion Validation
+
+                #region Fatch User and Validations
+                tblUsers tUser = new();
+                {
+                    tUser = await _UserRepository.Get
+                                            .Where(a => a.PhoneNumber == Input.PhoneNumber)
+                                            .Where(a => a.PhoneNumberConfirmed)
+                                            .SingleOrDefaultAsync();
+
+                    if (tUser == null)
+                        return new OperationResult().Failed("User not found");
+
+                    //if(tUser.PhoneNumberConfirmed == false)
+                    //    return new OperationResult().Failed("User not found");
+                }
+                #endregion
+
+                #region Create Otp Code
+                string _OTPCode = "";
+                string _EncryptedData = "";
+                {
+                    _OTPCode = new Random().Next(1000, 9999).ToString();
+
+                    var _DesrializedJsonData = new
+                    {
+                        otpCode = _OTPCode.MD5(),
+                        dateCreated = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                        dateExpired = DateTime.Now.AddMinutes(5).ToString("yyyy/MM/dd HH:mm:ss")
+                    };
+
+                    var _SerializedJsonData = System.Text.Json.JsonSerializer.Serialize(_DesrializedJsonData);
+
+                    _EncryptedData = _SerializedJsonData.AesEncrypt(AuthConst.SecretKey);
+                }
+                #endregion
+
+                #region Update User
+                {
+                    tUser.OTPData = _EncryptedData;
+
+                    await _UserRepository.UpdateAsync(tUser);
+                }
+                #endregion
+
+                #region Send Sms
+                {
+                    var _Result = _SmsSender.SendLoginCode(tUser.PhoneNumber, _OTPCode);
+                }
+                #endregion
+
+                return new OperationResult().Succeeded();
             }
             catch (ArgumentInvalidException ex)
             {

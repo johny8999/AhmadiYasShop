@@ -2,7 +2,7 @@
 using YasShop.Application.Languages;
 
 
-namespace YasShop.WebApp.Localization
+namespace YasShop.WebApi.Localization
 {
     public class HeaderCultureProvider : RequestCultureProvider
     {

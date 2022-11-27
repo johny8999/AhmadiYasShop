@@ -11,6 +11,7 @@ namespace YasShop.Infrastructure.EfCore.Mapping.Users
         {
             builder.Property(conf => conf.FullName).IsRequired().HasMaxLength(100);
             builder.Property(a => a.AccessLevelId).HasMaxLength(450);//foreignkey
+            builder.Property(a => a.OTPData).HasMaxLength(3000);
 
             builder.HasOne(a => a.tblAccessLevel)
                     .WithMany(a => a.tblUsers)

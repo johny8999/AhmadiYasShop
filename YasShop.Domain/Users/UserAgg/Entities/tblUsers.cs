@@ -12,6 +12,7 @@ namespace YasShop.Domain.Users.UserAgg.Entities
         public string FullName { get; set; }
         public bool IsActive { get; set; }
         public DateTime Date { get; set; }
+        public string OTPData { get; set; }
 
         public virtual tblAccessLevel tblAccessLevel { get; set; }
         public virtual ICollection<tblUserRole> tblUserRole { get; set; }

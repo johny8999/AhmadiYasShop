@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
-using YasShop.WebApp.Localization;
-using YasShop.WebApp.Localization.Resources;
+using YasShop.WebApi.Localization;
+using YasShop.WebApi.Localization.Resources;
 
-namespace YasShop.WebApp.Config
+namespace YasShop.WebApi.Config
 {
     public static class StartupEx
     {

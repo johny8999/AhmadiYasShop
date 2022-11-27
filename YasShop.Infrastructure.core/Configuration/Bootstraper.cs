@@ -1,5 +1,6 @@
 ﻿using Framework.Application.Services.Email;
 using Framework.Application.Services.IpList;
+using Framework.Application.Services.SMS;
 using Framework.Common.Utilities.Downloader;
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ using YasShop.Infrastructure.Seed.Base.Main;
 using YasShop.Infrastructure.Seed.Base.Roles;
 using YasShop.Infrastructure.Seed.Base.Users;
 using YasShop.Infrastructure.Services.Email;
+using YasShop.Infrastructure.Services.SMS;
 
 namespace YasShop.Infrastructure.Core.Configuration
 {
@@ -49,6 +51,7 @@ namespace YasShop.Infrastructure.Core.Configuration
                 services.AddSingleton<IEmailSender, GmailSender>();
                 services.AddSingleton<IDownloader,Downloader>();
                 services.AddScoped<IJwtBuilder, JwtBuilder>();
+                services.AddScoped<ISmsSender, KavenegarSmsSender>();
             }
             #endregion Add Services
 

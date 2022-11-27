@@ -2,8 +2,8 @@ using Framework.Const;
 using YasShop.Infrastructure.Core.Configuration;
 using YasShop.Infrastructure.Logger.SeriLoger;
 using YasShop.Infrastructure.Seed.Base.Main;
-using YasShop.WebApp.Authentication;
-using YasShop.WebApp.Config;
+using YasShop.WebApi.Authentication;
+using YasShop.WebApi.Config;
 using ILogger = Framework.Infrastructure.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +17,7 @@ else
     builder.Host.UseSerilog_SqlServer();
 }
 builder.Services.AddCustomLocalization();
-builder.Services.AddControllers().AddCustomViewLocalization("Localization/Resource")
+builder.Services.AddControllers().AddCustomViewLocalization("Localization/Resources")
     .AddCustomDataAnnotationLocalization(builder.Services)
     .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
         new Newtonsoft.Json.Serialization.DefaultContractResolver());

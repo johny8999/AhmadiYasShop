@@ -12,14 +12,14 @@ using YasShop.Infrastructure.EfCore.Context;
 namespace YasShop.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20220903180701__Initial")]
-    partial class _Initial
+    [Migration("20221127174126_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);

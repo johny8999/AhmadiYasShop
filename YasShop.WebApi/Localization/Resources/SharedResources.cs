@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace YasShop.WebApp.Localization.Resources
+﻿namespace YasShop.WebApi.Localization.Resources
 {
     public class SharedResources
     {

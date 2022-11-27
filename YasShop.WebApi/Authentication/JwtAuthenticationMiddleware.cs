@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace YasShop.WebApp.Authentication
+namespace YasShop.WebApi.Authentication
 {
     public class JwtAuthenticationMiddleware
     {

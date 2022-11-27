@@ -37,8 +37,33 @@ public class AuthController : Controller
     }
 
     [HttpPost]
-    [Route("/Auth/LogIn")]
-    public async Task<JsonResult> LogInAsync([FromForm] InpLoginByEmailPasswordDto input)
+    [Route("/Auth/LogInByPhoneNumberStep1")]
+    public async Task<JsonResult> LoginByPhoneNumberStep1Async(InpLogInByPhoneNumberStep1 Input)
+    {
+        try
+        {
+            #region Validation
+            {
+                input.CheckModelState(_serviceProvider);
+            }
+            #endregion Validation
+
+            return default;
+        }
+        catch (ArgumentException ex)
+        {
+            return new JsonResult(new OperationResult().Failed(400, ex.Message));
+        }
+        catch (Exception)
+        {
+
+            return new JsonResult(new OperationResult().Failed(500, _localizer["Error500"]));
+        }
+    }
+
+    [HttpPost]
+    [Route("/Auth/LogInByEmail")]
+    public async Task<JsonResult> LogInByEmailAsync([FromBody] InpLoginByEmailPasswordDto input)
     {
         var qResult = await _userApplication.LoginByEmailPasswordAsync(input.Adapt<InpLoginByEmailPassword>());
         if (!qResult.IsSuccess)
@@ -50,9 +75,6 @@ public class AuthController : Controller
         return new JsonResult(
             new OperationResult<(string Token, string RefreshToken)>().Succeeded(200, "Success",
                 (Token, RefreshToken)));
-
-
-
     }
 
     [HttpPost]
@@ -89,9 +111,10 @@ public class AuthController : Controller
             });
 
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return new JsonResult(new OperationResult().Failed(400, e.Message));
+            // _Logger.Error(ex);
+            return new JsonResult(new OperationResult().Failed(500, _localizer["Error500"]));
         }
     }
 
