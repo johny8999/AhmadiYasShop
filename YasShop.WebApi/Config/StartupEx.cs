@@ -1,6 +1,9 @@
 ﻿using Framework.Application.Services.Localizer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.Globalization;
 using YasShop.WebApi.Localization;
 using YasShop.WebApi.Localization.Resources;

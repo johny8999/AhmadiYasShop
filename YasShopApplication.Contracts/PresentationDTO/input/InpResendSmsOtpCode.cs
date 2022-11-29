@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace YasShop.Application.Contracts.PresentationDTO.input
 {
-    public class InpLogInByPhoneNumberStep1
+    public class InpResendSmsOtpCode
     {
         [Display(Name = "PhoneNumber")]
         [RequiredString]

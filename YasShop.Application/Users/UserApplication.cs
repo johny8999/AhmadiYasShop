@@ -12,11 +12,14 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using YasShop.Application.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.ApplicationDTO.Users;
+using YasShop.Application.Contracts.PresentationDTO.input;
+using YasShop.Application.Contracts.PresentationDTO.Output;
 using YasShop.Domain.Users.UserAgg.Contracts;
 using YasShop.Domain.Users.UserAgg.Entities;
 
@@ -31,7 +34,6 @@ namespace YasShop.Application.Users
         private readonly IAccessLevelApplication _AccessLevelApplication;
         private readonly IEmailSender _EmailSender;
         private readonly ISmsSender _SmsSender;
-
 
         public UserApplication(ILogger logger, IServiceProvider serviceProvider, ILocalizer localizer,
             IUserRepository userRepository, IAccessLevelApplication accessLevelApplication, IEmailSender emailSender, ISmsSender smsSender)
@@ -560,18 +562,42 @@ namespace YasShop.Application.Users
                 #endregion Validation
 
                 #region Fatch User and Validations
-                tblUsers tUser = new();
+                tblUsers tUser;
                 {
                     tUser = await _UserRepository.Get
                                             .Where(a => a.PhoneNumber == Input.PhoneNumber)
-                                            .Where(a => a.PhoneNumberConfirmed)
+                                            //.Where(a => a.PhoneNumberConfirmed)
                                             .SingleOrDefaultAsync();
 
                     if (tUser == null)
-                        return new OperationResult().Failed("User not found");
+                    {
+                        tUser = new tblUsers
+                        {
+                            Id=new Guid().SequentialGuid(),
+                            PhoneNumber= Input.PhoneNumber,
+                            Date=DateTime.Now,
+                            Email=null,
+                            EmailConfirmed=false,
+                            FullName="",
+                            IsActive=true,
+                            PhoneNumberConfirmed=false,
+                            NormalizedEmail=null,
+                            UserName=Input.PhoneNumber,
+                            NormalizedUserName = Input.PhoneNumber.ToUpper(),
+                            OTPData=null,
+                            PasswordHash=null,
+                            AccessLevelId = (await _AccessLevelApplication.GetIdByNameAsync(new InpGetIdByName()
+                            {
+                                Name = "NotConfirmedUser"
+                            })).ToGuid(),
+                        };
 
-                    //if(tUser.PhoneNumberConfirmed == false)
+                        await _UserRepository.AddAsync(tUser, true);
+                    }
+
+                    //else if (tUser.PhoneNumberConfirmed == false)
                     //    return new OperationResult().Failed("User not found");
+
                 }
                 #endregion
 
@@ -581,7 +607,7 @@ namespace YasShop.Application.Users
                 {
                     _OTPCode = new Random().Next(1000, 9999).ToString();
 
-                    var _DesrializedJsonData = new
+                    var _DesrializedJsonData = new OutOTPData
                     {
                         otpCode = _OTPCode.MD5(),
                         dateCreated = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
@@ -605,6 +631,8 @@ namespace YasShop.Application.Users
                 #region Send Sms
                 {
                     var _Result = _SmsSender.SendLoginCode(tUser.PhoneNumber, _OTPCode);
+                    if (_Result == false)
+                        return new OperationResult().Failed("سرویس دهنده SMS پاسخگو نیست.");
                 }
                 #endregion
 
@@ -619,6 +647,207 @@ namespace YasShop.Application.Users
             {
                 _Logger.Error(ex);
                 return null;
+            }
+        }
+
+        public async Task<OperationResult<string>> LoginByPhoneNumberStep2Async(InpLoginByPhoneNumberStep2 Input)
+        {
+            try
+            {
+                #region Validation
+                Input.CheckModelState(_ServiceProvider);
+                #endregion Validation
+
+                #region Fatch User and Validations
+                tblUsers tUser = new();
+                {
+                    tUser = await _UserRepository.Get
+                                            .Where(a => a.PhoneNumber == Input.PhoneNumber)
+                                            //.Where(a => a.PhoneNumberConfirmed)
+                                            .SingleOrDefaultAsync();
+
+                    if (tUser == null)
+                        return new OperationResult<string>().Failed("User not found");
+
+                    //if(tUser.PhoneNumberConfirmed == false)
+                    //    return new OperationResult().Failed("User not found");
+                }
+                #endregion
+
+                #region Check Otp code
+                {
+                    var _DecryptedData = tUser.OTPData.AesDecrypt(AuthConst.SecretKey);
+
+                    var _DeserializedData = System.Text.Json.JsonSerializer.Deserialize<OutOTPData>(_DecryptedData);
+
+                    if (DateTime.Parse(_DeserializedData.dateExpired) < DateTime.Now)
+                        return new OperationResult<string>().Failed("کد وارد شده منقضی شده است.");
+
+                    if (_DeserializedData.otpCode != Input.OTPCode.MD5())
+                        return new OperationResult<string>().Failed("کد وارد شده صحیح نمیباشد.");
+                }
+                #endregion
+
+                #region PhoneNumber Confirm
+                {
+                    if (tUser.PhoneNumberConfirmed == false)
+                    {
+                        tUser.PhoneNumberConfirmed = true;
+                        await _UserRepository.UpdateAsync(tUser, true);
+                    }
+                }
+                #endregion
+
+                return new OperationResult<string>().Succeeded(tUser.Id.ToString());
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return new OperationResult<string>().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return new OperationResult<string>().Failed("Error500");
+
+            }
+        }
+
+        public async Task<OperationResult> ResendOtpCodeAsync(InpResendOtpCode Input)
+        {
+            try
+            {
+                #region Validation
+                Input.CheckModelState(_ServiceProvider);
+                #endregion Validation
+
+                #region Fatch User and Validations
+                tblUsers tUser = new();
+                {
+                    tUser = await _UserRepository.Get
+                                            .Where(a => a.PhoneNumber == Input.PhoneNumber)
+                                            //.Where(a => a.PhoneNumberConfirmed)
+                                            .SingleOrDefaultAsync();
+
+                    if (tUser == null)
+                        return new OperationResult<string>().Failed("User not found");
+
+                    //if(tUser.PhoneNumberConfirmed == false)
+                    //    return new OperationResult().Failed("User not found");
+                }
+                #endregion
+
+                #region Check Expire Data
+                {
+                    var _DecryptedData = tUser.OTPData.AesDecrypt(AuthConst.SecretKey);
+
+                    var _DeserializedData = System.Text.Json.JsonSerializer.Deserialize<OutOTPData>(_DecryptedData);
+
+                    if (DateTime.Parse(_DeserializedData.dateCreated).AddMinutes(2) >= DateTime.Now)
+                        return new OperationResult().Failed("برای ارسال مجدد کد، 2 دقیقه صبر نمایید");
+                }
+                #endregion
+
+                #region Create Otp Code
+                string _OTPCode = "";
+                string _EncryptedData = "";
+                {
+                    _OTPCode = new Random().Next(1000, 9999).ToString();
+
+                    var _DesrializedJsonData = new OutOTPData
+                    {
+                        otpCode = _OTPCode.MD5(),
+                        dateCreated = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                        dateExpired = DateTime.Now.AddMinutes(5).ToString("yyyy/MM/dd HH:mm:ss")
+                    };
+
+                    var _SerializedJsonData = System.Text.Json.JsonSerializer.Serialize(_DesrializedJsonData);
+
+                    _EncryptedData = _SerializedJsonData.AesEncrypt(AuthConst.SecretKey);
+                }
+                #endregion
+
+                #region Update User
+                {
+                    tUser.OTPData = _EncryptedData;
+
+                    await _UserRepository.UpdateAsync(tUser);
+                }
+                #endregion
+
+                #region Send Sms
+                {
+                    var _Result = _SmsSender.SendLoginCode(tUser.PhoneNumber, _OTPCode);
+                    if (_Result == false)
+                        return new OperationResult().Failed("سرویس دهنده SMS پاسخگو نیست.");
+                }
+                #endregion
+
+                return new OperationResult().Succeeded();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+
+            }
+        }
+
+        public async Task<OperationResult> ChangeUserAccLevelAsync(InpChangeUserAccLevel Input)
+        {
+            try
+            {
+                #region Validation
+                Input.CheckModelState(_ServiceProvider);
+                #endregion Validation
+
+                #region Fetch User
+                tblUsers tUsers;
+                {
+                    tUsers = await _UserRepository.Get.Where(a => a.Id == Input.UserId.ToGuid());
+                    if (tUsers == null)
+                        return new OperationResult().Failed("User not found");
+
+                }
+                #endregion
+
+                #region Check AccLevel Exsit
+                {
+                    var _Result = await _AccessLevelApplication.CheckExistAccLevelAsync(new InpCheckExistAccLevel { AccLevelId= Input.AccLevelId });
+                    if (_Result == false)
+                        return new OperationResult().Failed("AccLevel Not Found");
+                }
+                #endregion
+
+                #region Update User
+                {
+
+                }
+                #endregion
+
+                #region Update UserRoles
+                {
+
+                }
+                #endregion
+
+                return new OperationResult().Succeeded();
+            }
+            catch (ArgumentInvalidException ex)
+            {
+                _Logger.Debug(ex);
+                return new OperationResult().Failed(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return new OperationResult().Failed("Error500");
+
             }
         }
     }

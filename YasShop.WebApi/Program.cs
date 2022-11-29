@@ -1,4 +1,8 @@
 using Framework.Const;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 using YasShop.Infrastructure.Core.Configuration;
 using YasShop.Infrastructure.Logger.SeriLoger;
 using YasShop.Infrastructure.Seed.Base.Main;
@@ -16,6 +20,7 @@ else
 {
     builder.Host.UseSerilog_SqlServer();
 }
+
 builder.Services.AddCustomLocalization();
 builder.Services.AddControllers().AddCustomViewLocalization("Localization/Resources")
     .AddCustomDataAnnotationLocalization(builder.Services)

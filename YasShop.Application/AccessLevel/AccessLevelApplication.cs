@@ -63,6 +63,28 @@ namespace YasShop.Application.AccessLevel
             }
         }
 
+        public async Task<string> CheckExistAccLevelAsync(InpCheckExistAccLevel input)
+        {
+            try
+            {
+                input.CheckModelState(_ServiceProvider);
+                return await _AccessLevelRepository.GetNoTraking
+                                        .Where(a => a.Id == input.AccLevelId.ToGuid())
+                                        .AnyAsync();
+                                           
+            }
+            catch (ArgumentException ex)
+            {
+                _Logger.Debug(ex.Message);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _Logger.Error(ex);
+                return null;
+            }
+        }
+
         public async Task<List<string>> GetUserRoleByAccessId(InpGetUserRoleByAccessId Input)
         {
             try

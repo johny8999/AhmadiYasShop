@@ -23,6 +23,7 @@ namespace YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild
         private readonly IUserApplication _UserApplication;
         private readonly IRoleApplication _RoleApplication;
         private readonly ILogger _Logger;
+
         public JwtBuilder(IUserApplication userApplication, IRoleApplication roleApplication, ILogger logger)
         {
             _UserApplication = userApplication;
@@ -70,12 +71,12 @@ namespace YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild
 
                     Claims.AddRange(new List<Claim>{
                         new Claim(ClaimTypes.NameIdentifier, _User.Id.ToString()),
-                        new Claim(ClaimTypes.Name, _User.Email),
-                        new Claim(ClaimTypes.Email, _User.Email),
+                        new Claim(ClaimTypes.Name, _User.Email?? _User.PhoneNumber),
+                        new Claim(ClaimTypes.Email, _User.Email??""),
                         new Claim(ClaimTypes.MobilePhone, _User.PhoneNumber ?? ""),
                         new Claim("AccessLevel", _User.AccessLevelTitle),
                         new Claim("Date", _User.Date.ToString("yyyy/mm/dd", new CultureInfo("en-us"))),
-                        new Claim(ClaimTypes.GivenName, _User.FullName),
+                        new Claim(ClaimTypes.GivenName, _User.FullName??""),
                     });
 
                     Claims.AddRange(_Roles.Select(a => new Claim(ClaimsIdentity.DefaultRoleClaimType, a)));
