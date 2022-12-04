@@ -1,6 +1,6 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
 
-namespace YasShop.Application.Contracts.PresentationDTO.input;
+namespace YasShop.Application.Contracts.Endpoint.input;
 
 public class InpRefreshLogInDto
 {

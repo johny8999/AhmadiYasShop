@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace YasShop.Application.Contracts.PresentationDTO.input;
+namespace YasShop.Application.Contracts.Endpoint.input;
 
 public sealed class InpRegisterByEmailPasswordDto
 {

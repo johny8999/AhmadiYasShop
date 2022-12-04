@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.ApplicationDTO.Users;
-using YasShop.Application.Contracts.PresentationDTO.input;
+using YasShop.Application.Contracts.Endpoint.input;
 using YasShop.Domain.Users.UserAgg.Entities;
 
 namespace YasShop.Application.Users

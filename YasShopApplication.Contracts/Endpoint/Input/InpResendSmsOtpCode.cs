@@ -1,9 +1,9 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
 using System.ComponentModel.DataAnnotations;
 
-namespace YasShop.Application.Contracts.PresentationDTO.input
+namespace YasShop.Application.Contracts.Endpoint.input
 {
-    public class InpLogInByPhoneNumberStep1
+    public class InpResendSmsOtpCode
     {
         [Display(Name = "PhoneNumber")]
         [RequiredString]

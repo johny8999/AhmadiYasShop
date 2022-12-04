@@ -1,4 +1,4 @@
-﻿namespace YasShop.Application.Contracts.PresentationDTO.Output;
+﻿namespace YasShop.Application.Contracts.Endpoint.Output;
 
 public class OutRefreshLoginDto
 {

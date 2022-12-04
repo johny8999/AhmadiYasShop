@@ -1,7 +1,7 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
 using System.ComponentModel.DataAnnotations;
 
-namespace YasShop.Application.Contracts.PresentationDTO.input
+namespace YasShop.Application.Contracts.Endpoint.input
 {
     public class InpChangeAccLevel
     {

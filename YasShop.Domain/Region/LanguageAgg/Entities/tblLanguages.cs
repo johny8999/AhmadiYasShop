@@ -1,13 +1,11 @@
 ﻿using Framework.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using YasShop.Domain.Category.Entities;
 
 namespace YasShop.Domain.Region.LanguageAgg.Entities
 {
-   public class tblLanguages:IEntity
+    public class tblLanguages : IEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -18,6 +16,6 @@ namespace YasShop.Domain.Region.LanguageAgg.Entities
         public bool IsActive { get; set; }
         public bool UseForSiteLanguage { get; set; }
 
-
+        public virtual ICollection<tblCategoryTranslates> tblCategoryTranslates { get; set; }
     }
 }

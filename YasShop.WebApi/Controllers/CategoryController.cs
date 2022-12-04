@@ -1,28 +1,28 @@
-﻿using Framework.Application.Services.Localizer;
+﻿using Framework.Application.Exceptions;
+using Framework.Application.Services.Localizer;
 using Framework.Common.ExMethods;
 using Framework.Infrastructure;
-using Microsoft.AspNetCore.JsonPatch.Operations;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
-using YasShop.Application.Contracts.Endpoint.input;
+using YasShop.Application.Contracts.Endpoint.Input;
 using YasShop.Application.Users;
 using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
 
 namespace YasShop.WebApi.Controllers
 {
     [ApiController]
-    [Route("/Users")]
-    public class UsersController : Controller
+    [Route("/Category")]
+    public class CategoryController : Controller
     {
         private readonly ILogger _Logger;
-        private readonly IUserApplication _userApplication;
+        private readonly ICate _userApplication;
         private readonly IJwtBuilder _jwtBuilder;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILocalizer _localizer;
 
-        public UsersController(ILogger logger, IUserApplication userApplication, IJwtBuilder jwtBuilder, IServiceProvider serviceProvider, ILocalizer localizer)
+        public CategoryController(ILogger logger, IUserApplication userApplication, IJwtBuilder jwtBuilder, IServiceProvider serviceProvider, ILocalizer localizer)
         {
             _Logger=logger;
             _userApplication=userApplication;
@@ -31,27 +31,27 @@ namespace YasShop.WebApi.Controllers
             _localizer=localizer;
         }
 
-        public async Task<JsonResult> ChangeUserAccLevelAsync(InpChangeAccLevel Input)
+        public async Task<JsonResult> GetListCategoryAsync(InpGetListCategory Input)
         {
             try
             {
                 #region Validation
                 {
-                    Input.CheckModelState(_serviceProvider);
+                    Input.CheckModelState(_serviceProvider) ;
                 }
-                #endregion Validation
+                #endregion
 
-
-
+                var qData = await _
             }
-            catch (ArgumentException ex)
+            catch (ArgumentInvalidException ex)
             {
-                return new JsonResult(new OperationResult().Failed(400, ex.Message));
+                _Logger.Debug(ex);
+                return new JsonResult(new OperationResult().Failed(ex.Message));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return new JsonResult(new OperationResult().Failed(500, _localizer["Error500"]));
+                _Logger.Error(ex);
+                return new JsonResult(new OperationResult().Failed("Error500"));
             }
         }
     }

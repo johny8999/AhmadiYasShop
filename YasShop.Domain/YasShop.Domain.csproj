@@ -19,4 +19,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FileManager\FilePath\Contracts\" />
+    <Folder Include="FileManager\FilePath\Entities\" />
+    <Folder Include="FileManager\Files\Contracts\" />
+  </ItemGroup>
+
 </Project>

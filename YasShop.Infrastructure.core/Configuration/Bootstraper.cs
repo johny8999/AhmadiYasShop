@@ -6,12 +6,17 @@ using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using YasShop.Application.AccessLevel;
+using YasShop.Application.Category;
 using YasShop.Application.Common.ExMethod;
 using YasShop.Application.Languages;
 using YasShop.Application.Roles;
+using YasShop.Application.Topics;
 using YasShop.Application.UserRole;
 using YasShop.Application.Users;
+using YasShop.Domain.Category.Contracts;
+using YasShop.Domain.FileManager.FileServers.Contracts;
 using YasShop.Domain.Region.LanguageAgg.Contract;
+using YasShop.Domain.Topics.Contracts;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
 using YasShop.Domain.Users.RoleAgg.Contract;
 using YasShop.Domain.Users.UserAgg.Contracts;
@@ -19,8 +24,11 @@ using YasShop.Infrastructure.EfCore.Config;
 using YasShop.Infrastructure.EfCore.Context;
 using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
 using YasShop.Infrastructure.EfCore.Repository.AccessLevel;
+using YasShop.Infrastructure.EfCore.Repository.Category;
+using YasShop.Infrastructure.EfCore.Repository.FileServers;
 using YasShop.Infrastructure.EfCore.Repository.Languages;
 using YasShop.Infrastructure.EfCore.Repository.Roles;
+using YasShop.Infrastructure.EfCore.Repository.Topic;
 using YasShop.Infrastructure.EfCore.Repository.Users;
 using YasShop.Infrastructure.Logger.SeriLoger;
 using YasShop.Infrastructure.Seed.Base.AccessLevel;
@@ -62,6 +70,10 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddScoped<IAccessLevelRoleRepository, AccessLevelRoleRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<ICategoryTranslateRepository, CategoryTranslateRepository>();
+            services.AddScoped<IFileServerRepository, FileServerRepository>();
 
             //Add Applications 
             services.AddScoped<IUserApplication, UserApplication>();
@@ -69,6 +81,8 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddScoped<IAccessLevelApplication, AccessLevelApplication>();
             services.AddScoped<IRoleApplication, RoleApplication>();
             services.AddScoped<IUserRoleApplication, UserRoleApplication>();
+            services.AddScoped<ICategoryApplication, CategoryApplication>();
+            services.AddScoped<ITopicApplication, TopicApplication>();
 
             //Seeds
             services.AddTransient<ISeed_Language, Seed_Language>();

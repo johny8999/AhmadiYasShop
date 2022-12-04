@@ -18,8 +18,8 @@ using YasShop.Application.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.AccessLevel;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.ApplicationDTO.Users;
-using YasShop.Application.Contracts.PresentationDTO.input;
-using YasShop.Application.Contracts.PresentationDTO.Output;
+using YasShop.Application.Contracts.Endpoint.input;
+using YasShop.Application.Contracts.Endpoint.Output;
 using YasShop.Domain.Users.UserAgg.Contracts;
 using YasShop.Domain.Users.UserAgg.Entities;
 

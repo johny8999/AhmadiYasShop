@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Framework.Common.DataAnnotations.Strings;
 
-namespace YasShop.Application.Contracts.PresentationDTO.input;
+namespace YasShop.Application.Contracts.Endpoint.input;
 
 public sealed class InpLoginByEmailPasswordDto
 {
