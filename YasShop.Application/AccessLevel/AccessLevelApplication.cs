@@ -63,7 +63,7 @@ namespace YasShop.Application.AccessLevel
             }
         }
 
-        public async Task<string> CheckExistAccLevelAsync(InpCheckExistAccLevel input)
+        public async Task<bool> CheckExistAccLevelAsync(InpCheckExistAccLevel input)
         {
             try
             {
@@ -76,12 +76,12 @@ namespace YasShop.Application.AccessLevel
             catch (ArgumentException ex)
             {
                 _Logger.Debug(ex.Message);
-                return null;
+                return false;
             }
             catch (Exception ex)
             {
                 _Logger.Error(ex);
-                return null;
+                return false;
             }
         }
 

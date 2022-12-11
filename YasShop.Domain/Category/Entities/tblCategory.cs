@@ -1,6 +1,7 @@
 ﻿using Framework.Domain;
 using System;
 using System.Collections.Generic;
+using YasShop.Domain.ProductAgg.Entity;
 using YasShop.Domain.Topics.Entities;
 
 namespace YasShop.Domain.Category.Entities
@@ -13,5 +14,7 @@ namespace YasShop.Domain.Category.Entities
 
         public virtual ICollection<tblCategoryTranslates> tblCategoryTranslates { get; set; }
         public virtual tblTopics tblTopics { get; set; }
+        public virtual ICollection<tblProducts> tblProducts { get; set; }
+
     }
 }

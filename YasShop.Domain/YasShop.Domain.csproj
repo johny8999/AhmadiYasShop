@@ -20,9 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FileManager\FilePath\Contracts\" />
-    <Folder Include="FileManager\FilePath\Entities\" />
-    <Folder Include="FileManager\Files\Contracts\" />
+    <Folder Include="ProductAgg\Contrcats\" />
+    <Folder Include="Region\CityAgg\Contracts\" />
+    <Folder Include="Region\CountryAgg\Contracts\" />
+    <Folder Include="Region\ProvinceAgg\Contracts\" />
+    <Folder Include="Users\AddressAgg\Contracts\" />
   </ItemGroup>
 
 </Project>

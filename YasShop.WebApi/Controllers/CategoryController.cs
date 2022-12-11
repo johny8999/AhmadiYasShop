@@ -5,6 +5,7 @@ using Framework.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using YasShop.Application.Category;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.Endpoint.Input;
 using YasShop.Application.Users;
@@ -17,15 +18,15 @@ namespace YasShop.WebApi.Controllers
     public class CategoryController : Controller
     {
         private readonly ILogger _Logger;
-        private readonly ICate _userApplication;
+        private readonly ICategoryApplication _CategoryApplication;
         private readonly IJwtBuilder _jwtBuilder;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILocalizer _localizer;
 
-        public CategoryController(ILogger logger, IUserApplication userApplication, IJwtBuilder jwtBuilder, IServiceProvider serviceProvider, ILocalizer localizer)
+        public CategoryController(ILogger logger, ICategoryApplication categoryApplication, IJwtBuilder jwtBuilder, IServiceProvider serviceProvider, ILocalizer localizer)
         {
             _Logger=logger;
-            _userApplication=userApplication;
+            _CategoryApplication=categoryApplication;
             _jwtBuilder=jwtBuilder;
             _serviceProvider=serviceProvider;
             _localizer=localizer;
@@ -41,7 +42,8 @@ namespace YasShop.WebApi.Controllers
                 }
                 #endregion
 
-                var qData = await _
+                //var qData = await _
+                return default;
             }
             catch (ArgumentInvalidException ex)
             {

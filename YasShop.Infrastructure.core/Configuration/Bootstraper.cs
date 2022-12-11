@@ -8,13 +8,20 @@ using Microsoft.Extensions.DependencyInjection;
 using YasShop.Application.AccessLevel;
 using YasShop.Application.Category;
 using YasShop.Application.Common.ExMethod;
+using YasShop.Application.FilePath;
+using YasShop.Application.Files;
+using YasShop.Application.FileServer;
+using YasShop.Application.FileType;
 using YasShop.Application.Languages;
 using YasShop.Application.Roles;
 using YasShop.Application.Topics;
 using YasShop.Application.UserRole;
 using YasShop.Application.Users;
 using YasShop.Domain.Category.Contracts;
+using YasShop.Domain.FileManager.FilePath.Contracts;
+using YasShop.Domain.FileManager.Files.Contracts;
 using YasShop.Domain.FileManager.FileServers.Contracts;
+using YasShop.Domain.FileManager.FileTypes.Contracts;
 using YasShop.Domain.Region.LanguageAgg.Contract;
 using YasShop.Domain.Topics.Contracts;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
@@ -25,7 +32,10 @@ using YasShop.Infrastructure.EfCore.Context;
 using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
 using YasShop.Infrastructure.EfCore.Repository.AccessLevel;
 using YasShop.Infrastructure.EfCore.Repository.Category;
+using YasShop.Infrastructure.EfCore.Repository.FilePath;
+using YasShop.Infrastructure.EfCore.Repository.Files;
 using YasShop.Infrastructure.EfCore.Repository.FileServers;
+using YasShop.Infrastructure.EfCore.Repository.FileType;
 using YasShop.Infrastructure.EfCore.Repository.Languages;
 using YasShop.Infrastructure.EfCore.Repository.Roles;
 using YasShop.Infrastructure.EfCore.Repository.Topic;
@@ -57,7 +67,7 @@ namespace YasShop.Infrastructure.Core.Configuration
                 services.AddSingleton<ILogger, SeriLogger>();
                 services.AddSingleton<IIPList, IPList>();
                 services.AddSingleton<IEmailSender, GmailSender>();
-                services.AddSingleton<IDownloader,Downloader>();
+                services.AddSingleton<IDownloader, Downloader>();
                 services.AddScoped<IJwtBuilder, JwtBuilder>();
                 services.AddScoped<ISmsSender, KavenegarSmsSender>();
             }
@@ -74,6 +84,9 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<ICategoryTranslateRepository, CategoryTranslateRepository>();
             services.AddScoped<IFileServerRepository, FileServerRepository>();
+            services.AddScoped<IFilePathRepository, FilePathRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IFileTypeRepository, FileTypeRepository>();
 
             //Add Applications 
             services.AddScoped<IUserApplication, UserApplication>();
@@ -83,6 +96,10 @@ namespace YasShop.Infrastructure.Core.Configuration
             services.AddScoped<IUserRoleApplication, UserRoleApplication>();
             services.AddScoped<ICategoryApplication, CategoryApplication>();
             services.AddScoped<ITopicApplication, TopicApplication>();
+            services.AddScoped<IFileServerApplication, FileServerApplication>();
+            services.AddScoped<IFilePathApplication, FilePathApplication>();
+            services.AddScoped<IFileTypeApplication, FileTypeApplication>();
+
 
             //Seeds
             services.AddTransient<ISeed_Language, Seed_Language>();

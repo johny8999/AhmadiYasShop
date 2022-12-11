@@ -42,7 +42,7 @@ namespace YasShop.WebApi.Controllers
                 #endregion Validation
 
 
-
+                return default;
             }
             catch (ArgumentException ex)
             {

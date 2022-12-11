@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using YasShop.Domain.Category.Entities;
+using YasShop.Domain.ProductAgg.Entity;
 
 namespace YasShop.Domain.Region.LanguageAgg.Entities
 {
@@ -17,5 +18,7 @@ namespace YasShop.Domain.Region.LanguageAgg.Entities
         public bool UseForSiteLanguage { get; set; }
 
         public virtual ICollection<tblCategoryTranslates> tblCategoryTranslates { get; set; }
+        public virtual ICollection<tblProducts> tblProducts { get; set; }
+
     }
 }

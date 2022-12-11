@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using YasShop.Domain.ProductAgg.Entity;
 using YasShop.Domain.Users.AccessLevelAgg.Entities;
+using YasShop.Domain.Users.AddressAgg.Entity;
 
 namespace YasShop.Domain.Users.UserAgg.Entities
 {
@@ -16,6 +18,9 @@ namespace YasShop.Domain.Users.UserAgg.Entities
 
         public virtual tblAccessLevel tblAccessLevel { get; set; }
         public virtual ICollection<tblUserRole> tblUserRole { get; set; }
+        public virtual ICollection<tblAddress> tblAddress { get; set; }
+        public virtual ICollection<tblProducts> tblProducts { get; set; }
+
 
     }
 }

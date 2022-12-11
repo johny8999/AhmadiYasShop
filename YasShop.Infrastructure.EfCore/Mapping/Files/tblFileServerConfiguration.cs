@@ -18,3 +18,4 @@ namespace YasShop.Infrastructure.EfCore.Mapping.Files
             builder.Property(a => a.FtpData).IsRequired();
         }
     }
+}

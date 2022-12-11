@@ -1,5 +1,8 @@
 ﻿using Framework.Domain;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using YasShop.Domain.FileManager.FilePath.Entities;
 
 namespace YasShop.Domain.FileManager.FileServers.Entities
 {
@@ -13,5 +16,7 @@ namespace YasShop.Domain.FileManager.FileServers.Entities
         public long Capacity { get; set; }
         public string FtpData { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<tblFilePath> tblFilePath { get; set; }
     }
 }

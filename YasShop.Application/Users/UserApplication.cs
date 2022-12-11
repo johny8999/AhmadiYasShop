@@ -809,7 +809,7 @@ namespace YasShop.Application.Users
                 #region Fetch User
                 tblUsers tUsers;
                 {
-                    tUsers = await _UserRepository.Get.Where(a => a.Id == Input.UserId.ToGuid());
+                    tUsers = await _UserRepository.Get.Where(a => a.Id == Input.UserId.ToGuid()).SingleOrDefaultAsync();
                     if (tUsers == null)
                         return new OperationResult().Failed("User not found");
 

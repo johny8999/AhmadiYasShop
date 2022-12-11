@@ -9,7 +9,7 @@ namespace YasShop.Application.AccessLevel
     public interface IAccessLevelApplication
     {
         Task<OperationResult> AddAccessLevelAsync(InpAddAccessLevel Input);
-        Task<string> CheckExistAccLevelAsync(InpCheckExistAccLevel input);
+        Task<bool> CheckExistAccLevelAsync(InpCheckExistAccLevel input);
         Task<OperationResult> DeleteAccessLevelAsync(InputDeleteAccessLevel input);
         Task<OperationResult> EditAccessLevelAsync(InpEditAccessLevel Input);
         Task<(OutPagingData PageData, List<OutGetAccessLevelForAdmin> LstItems)> GetAccessLevelForAdminAsync(InpGetAccessLevelForAdmin Input);
