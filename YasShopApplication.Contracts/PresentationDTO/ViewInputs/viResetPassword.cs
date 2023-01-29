@@ -1,6 +1,5 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
 
 namespace YasShop.Application.Contracts.PresentationDTO.ViewInputs
 {

@@ -1,13 +1,9 @@
 ﻿using Framework.Application.Services.Email;
 using Framework.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace YasShop.Infrastructure.Services.Email
 {

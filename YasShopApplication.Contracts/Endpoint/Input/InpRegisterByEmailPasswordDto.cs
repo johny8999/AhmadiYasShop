@@ -1,6 +1,5 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace YasShop.Application.Contracts.Endpoint.input;
 

@@ -1,8 +1,6 @@
 ﻿using Framework.Const;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Framework.Common.ExMethods
 {

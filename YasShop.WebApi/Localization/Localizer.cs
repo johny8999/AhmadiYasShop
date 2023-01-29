@@ -1,9 +1,5 @@
 ﻿using Framework.Application.Services.Localizer;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using YasShop.WebApi.Localization.Resources;
 
 namespace YasShop.WebApi.Localization

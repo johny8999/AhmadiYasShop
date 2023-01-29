@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using YasShop.Application.Category;
 using YasShop.Application.Contracts.ApplicationDTO.Result;
 using YasShop.Application.Contracts.Endpoint.Input;
-using YasShop.Application.Users;
 using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
 
 namespace YasShop.WebApi.Controllers

@@ -1,7 +1,6 @@
 ﻿using Framework.Application.Services.SMS;
 using Kavenegar;
 using Kavenegar.Models;
-using System.Reflection;
 
 namespace YasShop.Infrastructure.Services.SMS
 {

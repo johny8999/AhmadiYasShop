@@ -1,5 +1,4 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace YasShop.Application.Contracts.ApplicationDTO.Users

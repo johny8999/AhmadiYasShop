@@ -12,7 +12,6 @@ using YasShop.Application.Contracts.Endpoint.input;
 using YasShop.Application.Contracts.Endpoint.Output;
 using YasShop.Application.Users;
 using YasShop.Infrastructure.EfCore.Identity.JWT.JwtBuild;
-using YasShop.Infrastructure.EfCore.Migrations;
 
 namespace YasShop.WebApi.Controllers;
 

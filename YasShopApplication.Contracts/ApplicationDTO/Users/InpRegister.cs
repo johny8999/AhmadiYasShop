@@ -1,11 +1,5 @@
 ﻿using Framework.Common.DataAnnotations.Strings;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace YasShop.Application.Contracts.ApplicationDTO.Users
 {

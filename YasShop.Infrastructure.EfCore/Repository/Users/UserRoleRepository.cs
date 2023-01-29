@@ -1,5 +1,4 @@
-﻿using Framework.Domain;
-using YasShop.Domain.Users.UserAgg.Contracts;
+﻿using YasShop.Domain.Users.UserAgg.Contracts;
 using YasShop.Domain.Users.UserAgg.Entities;
 using YasShop.Infrastructure.EfCore.Context;
 

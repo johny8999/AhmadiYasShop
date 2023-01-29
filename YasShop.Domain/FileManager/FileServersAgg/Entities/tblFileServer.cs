@@ -1,6 +1,5 @@
 ﻿using Framework.Domain;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using YasShop.Domain.FileManager.FilePath.Entities;
 

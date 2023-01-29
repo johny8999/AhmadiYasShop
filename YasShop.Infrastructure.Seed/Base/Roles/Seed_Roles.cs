@@ -4,7 +4,6 @@ using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using YasShop.Domain.Users.RoleAgg.Contract;
 using YasShop.Domain.Users.RoleAgg.Entities;

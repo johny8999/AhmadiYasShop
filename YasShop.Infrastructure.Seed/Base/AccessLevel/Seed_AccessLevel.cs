@@ -2,7 +2,6 @@
 using Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using YasShop.Domain.Users.AccessLevelAgg.Contract;
 using YasShop.Domain.Users.AccessLevelAgg.Entities;

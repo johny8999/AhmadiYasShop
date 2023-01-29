@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using YasShop.Infrastructure.EfCore.Contracts;
 
 namespace YasShop.Infrastructure.EfCore.Common.ExMethod
 {

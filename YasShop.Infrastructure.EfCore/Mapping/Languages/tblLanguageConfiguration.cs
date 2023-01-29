@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using YasShop.Domain.Region.LanguageAgg.Entities;
 using YasShop.Infrastructure.EfCore.Contracts;
-using YasShop.Infrastructure.EfCore.Seed;
 
 namespace YasShop.Infrastructure.EfCore.Mapping.Languages
 {
